@@ -168,11 +168,11 @@ body::after{
 .marca{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;cursor:pointer}
 .marca .chispa{
   width:38px;height:38px;border-radius:9px;display:grid;place-items:center;
-  background:var(--grad-fire);color:#160a02;font-size:1.05rem;
-  box-shadow:0 6px 18px -4px rgba(255,90,0,.6);transition:transform .2s var(--ease);
-  user-select:none;padding:3px;
+  background:none;color:#160a02;font-size:1.05rem;
+  box-shadow:0 6px 18px -6px rgba(0,0,0,.55);transition:transform .2s var(--ease);
+  user-select:none;padding:0;overflow:hidden;
 }
-.marca .chispa img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;pointer-events:none}
+.marca .chispa img{width:100%;height:100%;object-fit:cover;border-radius:9px;display:block;pointer-events:none}
 .marca .chispa:active{transform:scale(.9) rotate(-8deg)}
 .marca b{font-weight:400}
 .marca span{color:var(--hot)}
@@ -1438,9 +1438,9 @@ html.scrub .mani-lienzo{padding:0}
         flash.classList.remove('va');void flash.offsetWidth;flash.classList.add('va');
       },i*620);
     });
-  },6200);
+  },5200);
   /* Fin */
-  setTimeout(terminar,6200+3*620+900);
+  setTimeout(terminar,5200+3*620+900);
 })();
 
 /* ================= NAV: fondo + progreso ================= */
@@ -1641,7 +1641,7 @@ html.scrub .mani-lienzo{padding:0}
     setTimeout(function(){
       glitch.className='';glitch.style.display='none';
       document.body.classList.remove('congelado');
-    },8100); /* el regaño dura el doble: hay que darle tiempo a la gente de leer */
+    },11100); /* regaño largo: que le dé tiempo a la gente de leer con calma */
   });
 })();
 
