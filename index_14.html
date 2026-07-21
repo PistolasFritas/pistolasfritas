@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pistolas Fritas — Sin cortes. Sin trucos. Si falla, falla.</title>
+<meta name="description" content="El mundo oficial de Pistolas Fritas: el canal en español de todo lo que echa fuego, hace ruido y explota. Una sola toma, cero ediciones, 2.2 millones de locos suscritos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,500&family=Barlow:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PISTOLAS FRITAS — EL MUNDO DEL PERSONAJE
+   ============================================================ */
+:root{
+  --bg:#0a0908;
+  --bg-2:#100d0a;
+  --panel:#151109;
+  --panel-2:#1b150d;
+  --line:rgba(255,255,255,.08);
+  --line-hot:rgba(255,106,0,.4);
+  --ink:#f5efe6;
+  --ink-dim:#a89f93;
+  --ink-faint:#6e675e;
+  --hot:#ff5a00;
+  --hot-2:#ff9d3c;
+  --grad-fire:linear-gradient(92deg,#ffb347 0%,#ff7a18 38%,#ff3d00 100%);
+  --font-display:'Anton',impact,sans-serif;
+  --font-cond:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',system-ui,sans-serif;
+  --font-loco:'Permanent Marker',cursive;
+  --ease:cubic-bezier(.22,.9,.28,1);
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--font-body);font-size:16.5px;line-height:1.65;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+body.congelado{overflow:hidden}
+::selection{background:var(--hot);color:#fff}
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:#0c0a08}
+::-webkit-scrollbar-thumb{background:#2b2118;border-radius:6px;border:2px solid #0c0a08}
+::-webkit-scrollbar-thumb:hover{background:#4a3423}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+
+/* Grano de película */
+body::after{
+  content:"";position:fixed;inset:-50%;z-index:2000;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grano 9s steps(6) infinite;
+}
+@keyframes grano{
+  0%,100%{transform:translate(0,0)} 20%{transform:translate(-2%,2%)}
+  40%{transform:translate(2%,-1%)} 60%{transform:translate(-1%,-2%)} 80%{transform:translate(1%,2%)}
+}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+
+/* ---------- Tipografía utilitaria ---------- */
+.kicker{
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--font-cond);font-weight:600;font-size:.88rem;
+  text-transform:uppercase;letter-spacing:.34em;color:var(--hot-2);
+}
+.kicker::before{content:"";width:42px;height:1px;background:var(--grad-fire)}
+.kicker .num{color:var(--ink-faint);letter-spacing:.18em}
+.titulo{
+  font-family:var(--font-display);
+  font-size:clamp(2.4rem,5.4vw,4.2rem);
+  line-height:1.02;text-transform:uppercase;letter-spacing:.015em;margin:18px 0 0;
+}
+.titulo .hot{background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--ink-dim);max-width:600px;margin-top:18px;font-size:1.07rem}
+.sub b{color:var(--ink)}
+.garabato{font-family:var(--font-loco);color:var(--hot-2);font-size:1.05rem;transform:rotate(-2deg);display:inline-block}
+
+/* ---------- Botones ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-cond);font-weight:700;font-size:1.02rem;
+  text-transform:uppercase;letter-spacing:.14em;
+  padding:16px 34px;border-radius:8px;cursor:pointer;border:0;
+  color:#160a02;background:var(--grad-fire);
+  overflow:hidden;isolation:isolate;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+  box-shadow:0 10px 30px -8px rgba(255,90,0,.55);
+}
+.btn::before{
+  content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;z-index:-1;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-20deg);transition:left .55s var(--ease);
+}
+.btn:hover{transform:translateY(-3px) rotate(-.5deg);box-shadow:0 16px 42px -8px rgba(255,90,0,.7)}
+.btn:hover::before{left:130%}
+.btn:active{transform:translateY(-1px)}
+.btn.fantasma{background:transparent;color:var(--ink);border:1px solid rgba(255,255,255,.22);box-shadow:none}
+.btn.fantasma:hover{border-color:var(--hot);color:var(--hot-2);box-shadow:0 10px 30px -12px rgba(255,90,0,.4)}
+.btn .ico{font-size:.85em}
+
+/* ---------- Apariciones ---------- */
+.rev{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rev.vis{opacity:1;transform:none}
+.rev[data-d="1"]{transition-delay:.1s}.rev[data-d="2"]{transition-delay:.2s}
+.rev[data-d="3"]{transition-delay:.3s}.rev[data-d="4"]{transition-delay:.4s}
+@media (prefers-reduced-motion:reduce){
+  .rev{opacity:1;transform:none;transition:none}
+  body::after{animation:none}
+}
+
+/* ============================================================
+   INTRO CINEMÁTICA
+   ============================================================ */
+#intro{
+  position:fixed;inset:0;z-index:3000;background:#050403;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .7s var(--ease),visibility .7s;
+}
+#intro.fuera{opacity:0;visibility:hidden;pointer-events:none}
+.intro-escena{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;opacity:0}
+.intro-escena.activa{opacity:1}
+.intro-marca{
+  font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(3rem,11vw,8.5rem);line-height:1;letter-spacing:.01em;
+}
+.intro-marca .l{display:inline-block;opacity:0;transform:translateY(.35em) scale(1.4);filter:blur(6px)}
+.intro-marca .l.va{animation:letraGolpe .38s var(--ease) forwards}
+@keyframes letraGolpe{to{opacity:1;transform:none;filter:blur(0)}}
+.intro-marca .fritas{background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent}
+.intro-lema{
+  margin-top:26px;color:var(--ink-dim);font-family:var(--font-cond);font-style:italic;
+  font-size:clamp(1.05rem,2.4vw,1.5rem);opacity:0;transition:opacity .8s;
+}
+.intro-lema.va{opacity:1}
+.intro-frases{display:flex;flex-direction:column;gap:8px}
+.intro-frase{
+  font-family:var(--font-display);text-transform:uppercase;line-height:1;
+  font-size:clamp(2.4rem,8.5vw,6.5rem);
+  opacity:0;transform:scale(1.6);filter:blur(10px);
+}
+.intro-frase.va{animation:fraseGolpe .34s var(--ease) forwards}
+@keyframes fraseGolpe{to{opacity:1;transform:none;filter:blur(0)}}
+.intro-frase:nth-child(2){color:transparent;-webkit-text-stroke:2px rgba(245,239,230,.9)}
+.intro-frase:nth-child(3){background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent}
+.intro-flash{position:absolute;inset:0;background:#ffb347;opacity:0;pointer-events:none}
+.intro-flash.va{animation:flashazo .5s ease-out}
+@keyframes flashazo{0%{opacity:.85}100%{opacity:0}}
+#saltar{
+  position:absolute;bottom:34px;right:34px;z-index:5;
+  background:none;border:1px solid rgba(255,255,255,.25);border-radius:999px;
+  color:var(--ink-dim);font-family:var(--font-cond);font-weight:600;
+  text-transform:uppercase;letter-spacing:.2em;font-size:.8rem;
+  padding:10px 22px;cursor:pointer;transition:color .2s,border-color .2s;
+}
+#saltar:hover{color:var(--hot-2);border-color:var(--hot)}
+@media (prefers-reduced-motion:reduce){#intro{display:none}}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:900;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+.nav.compacta{background:rgba(10,9,8,.88);backdrop-filter:blur(14px);border-color:var(--line)}
+.nav-in{max-width:1280px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.marca{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;cursor:pointer}
+.marca .chispa{
+  width:36px;height:36px;border-radius:9px;display:grid;place-items:center;
+  background:var(--grad-fire);color:#160a02;font-size:1.05rem;
+  box-shadow:0 6px 18px -4px rgba(255,90,0,.6);transition:transform .2s var(--ease);
+  user-select:none;
+}
+.marca .chispa:active{transform:scale(.9) rotate(-8deg)}
+.marca b{font-weight:400}
+.marca span{color:var(--hot)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{
+  position:relative;font-family:var(--font-cond);font-weight:600;font-size:.94rem;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--ink-dim);padding:6px 0;transition:color .2s;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:0;width:100%;height:2px;
+  background:var(--grad-fire);transform:scaleX(0);transform-origin:right;transition:transform .3s var(--ease);
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-cta{padding:11px 22px;font-size:.9rem}
+.progreso{position:absolute;bottom:-1px;left:0;height:2px;width:0;background:var(--grad-fire)}
+.hamb{display:none;background:none;border:0;cursor:pointer;width:40px;height:40px;position:relative;z-index:960}
+.hamb i{display:block;width:26px;height:2px;background:var(--ink);margin:6px auto;transition:transform .3s var(--ease),opacity .2s}
+.hamb.abierto i:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.hamb.abierto i:nth-child(2){opacity:0}
+.hamb.abierto i:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+.velo-movil{
+  position:fixed;inset:0;z-index:880;background:rgba(6,5,4,.97);backdrop-filter:blur(10px);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;
+  opacity:0;pointer-events:none;transition:opacity .35s;
+}
+.velo-movil.abierto{opacity:1;pointer-events:auto}
+.velo-movil a{font-family:var(--font-display);font-size:clamp(1.7rem,7vw,2.4rem);text-transform:uppercase;color:var(--ink);padding:8px;transition:color .2s}
+.velo-movil a:hover{color:var(--hot-2)}
+.velo-movil small{font-family:var(--font-loco);color:var(--ink-faint);font-size:.95rem;margin-top:18px;transform:rotate(-2deg)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-fondo{
+  position:absolute;inset:0;
+  background:url("https://i.ytimg.com/vi/5Q-EwZ_7h1M/maxresdefault.jpg") center 30%/cover no-repeat;
+  filter:saturate(.85) contrast(1.08);transform:scale(1.06);
+  animation:heroZoom 22s var(--ease) infinite alternate;
+}
+@keyframes heroZoom{from{transform:scale(1.06)}to{transform:scale(1.14)}}
+.hero-velo{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 115%, rgba(255,61,0,.32), transparent 60%),
+    linear-gradient(180deg, rgba(10,9,8,.74) 0%, rgba(10,9,8,.55) 40%, rgba(10,9,8,.93) 82%, var(--bg) 100%);
+}
+#embers{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-in{position:relative;z-index:3;max-width:1240px;margin:0 auto;padding:150px 28px 90px;width:100%}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-cond);font-weight:600;font-size:.86rem;
+  text-transform:uppercase;letter-spacing:.24em;color:var(--ink);
+  border:1px solid rgba(255,255,255,.18);border-radius:999px;
+  padding:9px 20px;background:rgba(10,9,8,.45);backdrop-filter:blur(6px);
+}
+.hero-badge .punto{width:8px;height:8px;border-radius:50%;background:#ff2d00;box-shadow:0 0 0 0 rgba(255,45,0,.7);animation:latido 1.8s infinite}
+@keyframes latido{0%{box-shadow:0 0 0 0 rgba(255,45,0,.7)}70%{box-shadow:0 0 0 9px rgba(255,45,0,0)}100%{box-shadow:0 0 0 0 rgba(255,45,0,0)}}
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(3.6rem,12vw,10.5rem);
+  line-height:.94;text-transform:uppercase;margin:30px 0 0;
+}
+.hero h1 .linea{display:block;white-space:nowrap;width:fit-content;max-width:100%}
+.hero h1 .tilta{display:inline-block}
+.hero h1 .linea:nth-child(1) .tilta{transform:rotate(-1.2deg)}
+.hero h1 .linea:nth-child(2) .tilta{transform:rotate(.9deg)}
+.hero h1 .linea:nth-child(3) .tilta{transform:rotate(-2deg)}
+.hero h1 .linea:not(.fuego){text-shadow:0 4px 0 rgba(0,0,0,.4),0 14px 34px rgba(0,0,0,.55)}
+.hero h1 .contorno{color:transparent;-webkit-text-stroke:2.5px rgba(245,239,230,.85)}
+.hero h1 .fuego{filter:drop-shadow(0 0 34px rgba(255,90,0,.55))}
+.hero h1 .fuego .tilta{
+  background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero h1 .emo,.hero h1 .bum{-webkit-text-fill-color:initial;color:initial}
+.hero h1 .emo{font-size:.72em;vertical-align:.08em}
+/* explosión detrás de la última línea */
+.explota{position:relative}
+.explota::before{
+  content:"";position:absolute;left:52%;top:50%;width:2.2em;height:1.7em;z-index:-1;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse,rgba(255,232,160,.5),rgba(255,130,10,.28) 45%,transparent 72%);
+  filter:blur(8px);animation:bumGlow 2.4s ease-in-out infinite;
+}
+@keyframes bumGlow{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}}
+.bum{display:inline-block;animation:bumPop 2.4s ease-in-out infinite;transform-origin:60% 60%}
+@keyframes bumPop{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.22) rotate(-8deg)}}
+/* humo a la deriva */
+.humo{position:absolute;width:58vw;height:58vw;border-radius:50%;pointer-events:none;z-index:1;filter:blur(70px);opacity:.13;background:radial-gradient(circle,#cfc4b6,transparent 62%)}
+.humo.h1p{top:-22%;right:-12%;animation:humoDeriva 26s ease-in-out infinite alternate}
+.humo.h2p{bottom:-28%;left:-16%;animation:humoDeriva 32s ease-in-out infinite alternate-reverse}
+@keyframes humoDeriva{from{transform:translate(-3%,0)}to{transform:translate(6%,4%)}}
+/* emblema oficial giratorio */
+.emblema{position:absolute;right:5%;bottom:11%;width:158px;height:158px;z-index:3;filter:drop-shadow(0 12px 34px rgba(255,90,0,.4))}
+.emblema svg{width:100%;height:100%}
+.emblema .giraTexto{transform-origin:100px 100px;animation:girar 28s linear infinite}
+@media(max-width:1080px){.emblema{width:112px;height:112px;bottom:8%}}
+@media(max-width:860px){.emblema{display:none}}
+/* Frases del personaje, rotando */
+.boca-suelta{
+  margin-top:30px;min-height:64px;max-width:560px;
+  border-left:2px solid var(--hot);padding-left:18px;
+  display:flex;align-items:center;
+}
+.boca-suelta p{
+  font-family:var(--font-cond);font-style:italic;font-weight:500;
+  font-size:clamp(1.1rem,2.2vw,1.45rem);color:var(--ink-dim);
+  opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s;
+}
+.boca-suelta p.dice{opacity:1;transform:none}
+.boca-suelta b{color:var(--ink)}
+.hero-acciones{display:flex;gap:16px;margin-top:38px;flex-wrap:wrap}
+.hero-datos{display:flex;margin:60px auto 0;border-top:1px solid rgba(255,255,255,.12);max-width:660px;flex-wrap:wrap;justify-content:center}
+.hero-datos div{padding:20px 34px 0 0;margin-right:34px;border-right:1px solid rgba(255,255,255,.1)}
+.hero-datos div:last-child{border-right:0;margin-right:0}
+.hero-datos b{display:block;font-family:var(--font-display);font-size:1.7rem;letter-spacing:.02em}
+.hero-datos span{font-family:var(--font-cond);font-size:.8rem;text-transform:uppercase;letter-spacing:.2em;color:var(--ink-dim)}
+.scroll-hint{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink-faint);
+  font-family:var(--font-cond);font-size:.75rem;text-transform:uppercase;letter-spacing:.3em;
+}
+.scroll-hint::after{
+  content:"";width:1px;height:44px;background:linear-gradient(180deg,var(--hot),transparent);
+  animation:gotea 1.6s var(--ease) infinite;
+}
+@keyframes gotea{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============================================================
+   MARQUESINA
+   ============================================================ */
+.marquesina{
+  position:relative;z-index:4;background:var(--grad-fire);color:#160a02;
+  padding:15px 0;overflow:hidden;white-space:nowrap;
+  transform:rotate(-1.2deg) scale(1.02);margin:-8px 0 0;
+  box-shadow:0 20px 60px -20px rgba(255,90,0,.5);
+}
+.marquesina::before,.marquesina::after{
+  content:"";position:absolute;left:-2%;right:-2%;height:8px;z-index:2;
+  background:repeating-linear-gradient(-45deg,#0d0b09 0 11px,#ffcf24 11px 22px);
+}
+.marquesina::before{top:0}
+.marquesina::after{bottom:0}
+.marquesina .pista{display:inline-flex;animation:desfile 26s linear infinite}
+.marquesina span{
+  font-family:var(--font-display);font-size:1.3rem;text-transform:uppercase;
+  letter-spacing:.06em;padding:0 26px;display:inline-flex;align-items:center;gap:26px;
+}
+.marquesina span::after{content:"✦";font-size:.9rem}
+@keyframes desfile{to{transform:translateX(-50%)}}
+
+/* ============================================================
+   MANIFIESTO — scroll con actitud
+   ============================================================ */
+.manifiesto{position:relative;padding:0;overflow:hidden;background:var(--bg)}
+.manifiesto .fondo-palabra{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--font-display);font-size:clamp(8rem,26vw,22rem);
+  color:transparent;-webkit-text-stroke:1px rgba(255,90,0,.08);
+  text-transform:uppercase;white-space:nowrap;pointer-events:none;user-select:none;
+}
+.manifiesto-lineas{position:relative;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+.mani-linea{
+  font-family:var(--font-display);text-transform:uppercase;line-height:1;
+  font-size:clamp(2.6rem,7.8vw,6rem);
+  opacity:.38;transform:translateY(20px) scale(.98);
+  transition:opacity .5s var(--ease),transform .5s var(--ease),color .5s;
+}
+.mani-linea.pega{opacity:1;transform:none}
+.mani-linea.hueca{color:transparent;-webkit-text-stroke:2px rgba(245,239,230,.85)}
+.mani-linea.flama{background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mani-firma{margin-top:44px;text-align:center}
+.mani-firma .garabato{font-size:1.35rem}
+</style>
+<style>
+/* ============================================================
+   PRUEBAS SIN CORTES (videos)
+   ============================================================ */
+.videos{padding:120px 0}
+.videos-cabeza{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:56px;flex-wrap:wrap}
+.escenario{display:grid;grid-template-columns:1.65fr 1fr;gap:26px;align-items:stretch}
+.principal{position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer;border:1px solid var(--line);min-height:420px;background:#000}
+.principal .fondo{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s var(--ease),filter .4s;filter:saturate(.9)}
+.principal:hover .fondo{transform:scale(1.05);filter:saturate(1.05)}
+.principal .sombra{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(5,4,3,.9) 92%)}
+.principal .contenido{position:absolute;left:0;right:0;bottom:0;padding:34px;z-index:2}
+.etiqueta-top{
+  display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;
+  font-family:var(--font-cond);font-weight:700;font-size:.8rem;
+  text-transform:uppercase;letter-spacing:.22em;color:#160a02;
+  background:var(--grad-fire);padding:7px 16px;border-radius:6px;transform:rotate(-1deg);
+}
+.etiqueta-top.mero-visto{
+  font-size:1.05rem;letter-spacing:.14em;padding:12px 24px;border-radius:9px;
+  transform:rotate(-2deg);border:2px solid #ffe08a;
+  animation:meroBrilla 2s ease-in-out infinite;
+}
+.etiqueta-top.mero-visto b{font-size:1.25em;letter-spacing:.06em}
+@keyframes meroBrilla{
+  0%,100%{box-shadow:0 6px 26px -6px rgba(255,170,30,.8)}
+  50%{box-shadow:0 6px 46px 0 rgba(255,210,80,.95)}
+}
+.principal h3{font-family:var(--font-cond);font-weight:700;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15;max-width:22ch}
+.principal .meta{margin-top:10px;color:var(--ink-dim);font-family:var(--font-cond);font-size:.95rem;letter-spacing:.08em;text-transform:uppercase}
+.play-btn{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);z-index:2;
+  width:92px;height:92px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(10,9,8,.4);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);
+  transition:transform .35s var(--ease);
+}
+.play-btn::before{
+  content:"";width:64px;height:64px;border-radius:50%;background:var(--grad-fire);
+  position:absolute;box-shadow:0 0 44px rgba(255,90,0,.6);transition:transform .35s var(--ease);
+}
+.play-btn::after{
+  content:"";position:relative;z-index:1;border-style:solid;border-width:11px 0 11px 19px;
+  border-color:transparent transparent transparent #160a02;margin-left:5px;
+}
+.principal:hover .play-btn{transform:translate(-50%,-60%) scale(1.07)}
+.principal iframe,.mini iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:5}
+.lista-lateral{display:flex;flex-direction:column;gap:14px}
+.mini{
+  position:relative;display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;
+  padding:12px;border-radius:12px;cursor:pointer;background:var(--panel);border:1px solid var(--line);
+  transition:border-color .25s,background .25s,transform .25s var(--ease);flex:1;
+}
+.mini:hover{border-color:var(--line-hot);background:var(--panel-2);transform:translateX(6px)}
+.mini .tapa{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:#000}
+.mini .tapa img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.mini:hover .tapa img{transform:scale(1.08)}
+.mini .tapa::after{
+  content:"▶";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:.9rem;
+  background:rgba(8,7,6,.35);opacity:0;transition:opacity .25s;
+}
+.mini:hover .tapa::after{opacity:1}
+.mini h4{font-family:var(--font-cond);font-weight:600;font-size:1.02rem;line-height:1.25}
+.mini small{display:block;margin-top:6px;font-family:var(--font-cond);font-size:.78rem;text-transform:uppercase;letter-spacing:.18em;color:var(--hot-2)}
+.mini.activo{border-color:var(--hot);background:var(--panel-2)}
+.videos-pie{margin-top:44px;text-align:center}
+
+/* ============================================================
+   EL CEMENTERIO
+   ============================================================ */
+.cementerio{
+  position:relative;padding:130px 0;overflow:hidden;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(120,130,160,.06), transparent 60%),
+    linear-gradient(180deg,#0b0a0c 0%,#0a0908 100%);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.cementerio .niebla{
+  position:absolute;bottom:-40px;left:-10%;right:-10%;height:220px;pointer-events:none;
+  background:radial-gradient(ellipse 60% 100% at 50% 100%, rgba(160,170,200,.09), transparent 70%);
+  filter:blur(12px);animation:niebla 12s ease-in-out infinite alternate;
+}
+@keyframes niebla{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+.cementerio .kicker{color:#9aa3bd}
+.cementerio .kicker::before{background:linear-gradient(90deg,#9aa3bd,#5a6178)}
+.cementerio .titulo .hot{background:linear-gradient(92deg,#c9d2ee,#8a93b3);-webkit-background-clip:text;background-clip:text}
+.tumbas{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:60px}
+.tumba{
+  position:relative;padding:38px 28px 30px;text-align:center;
+  background:linear-gradient(175deg,#16151a,#100f12);
+  border:1px solid rgba(160,170,200,.16);
+  border-radius:110px 110px 14px 14px;
+  transition:transform .35s var(--ease),border-color .3s,box-shadow .35s;
+}
+.tumba:hover{transform:translateY(-6px) rotate(-.6deg);border-color:rgba(160,170,200,.4);box-shadow:0 24px 50px -22px rgba(90,100,140,.35)}
+.tumba .cruz{font-size:2rem;opacity:.85}
+.tumba h3{font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:.06em;margin-top:12px;color:#c9d2ee}
+.tumba .anios{font-family:var(--font-cond);font-size:.85rem;letter-spacing:.2em;color:#7d86a3;margin-top:4px;text-transform:uppercase}
+.tumba p{color:var(--ink-dim);font-size:.97rem;margin-top:16px;line-height:1.55}
+.tumba .causa{
+  display:inline-block;margin-top:18px;font-family:var(--font-loco);font-size:.92rem;
+  color:#9aa3bd;transform:rotate(-2deg);
+}
+.tumba .flores{position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);font-size:1.3rem;filter:saturate(.7)}
+.cementerio-pie{margin-top:64px;text-align:center}
+.cementerio-pie .garabato{color:#9aa3bd;font-size:1.15rem}
+.cementerio .btn{background:linear-gradient(92deg,#c9d2ee,#8a93b3);box-shadow:0 10px 30px -8px rgba(140,150,190,.4);color:#12121a}
+
+/* ============================================================
+   LAS QUE SÍ SIRVIERON
+   ============================================================ */
+.buenas{padding:130px 0}
+.podio{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px;align-items:end}
+.lugar{
+  position:relative;border-radius:var(--radius);padding:36px 28px;
+  background:linear-gradient(175deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);
+  transition:transform .35s var(--ease),border-color .3s,box-shadow .35s;
+}
+.lugar:hover{transform:translateY(-8px);border-color:var(--line-hot);box-shadow:0 28px 60px -24px rgba(255,61,0,.35)}
+.lugar .medalla{font-size:2.6rem;filter:drop-shadow(0 8px 18px rgba(255,180,0,.35))}
+.lugar h3{font-family:var(--font-cond);font-weight:700;font-size:1.3rem;text-transform:uppercase;letter-spacing:.03em;margin-top:14px}
+.lugar p{color:var(--ink-dim);font-size:.97rem;margin-top:10px;line-height:1.55}
+.lugar .sello-aprobado{
+  position:absolute;top:20px;right:20px;
+  font-family:var(--font-loco);font-size:.8rem;color:var(--hot-2);
+  border:2px solid var(--hot);border-radius:8px;padding:4px 10px;
+  transform:rotate(6deg);opacity:.9;
+}
+.lugar.oro{border-color:rgba(255,180,60,.4);padding-bottom:56px}
+.lugar.oro::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,#ffd76e,#ffb347);
+}
+.buenas-nota{margin-top:44px;text-align:center;color:var(--ink-dim);font-size:1rem}
+.buenas-nota .garabato{font-size:1.1rem}
+
+/* ============================================================
+   EL ARCHIVO — línea de tiempo
+   ============================================================ */
+.archivo{
+  padding:130px 0 110px;background:var(--bg-2);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.archivo-riel{
+  display:flex;gap:22px;margin-top:64px;padding:10px 28px 34px;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-color:#2b2118 transparent;
+  cursor:grab;
+}
+.archivo-riel:active{cursor:grabbing}
+.archivo-riel::-webkit-scrollbar{height:8px}
+.archivo-riel::-webkit-scrollbar-thumb{background:#2b2118;border-radius:4px}
+.hito{
+  position:relative;flex:0 0 320px;scroll-snap-align:start;
+  padding:30px 26px 28px;border-radius:var(--radius);
+  background:var(--panel);border:1px solid var(--line);
+  transition:transform .3s var(--ease),border-color .3s;
+}
+.hito:hover{transform:translateY(-6px);border-color:var(--line-hot)}
+.hito::before{
+  content:"";position:absolute;top:-10px;left:26px;width:20px;height:20px;border-radius:50%;
+  background:var(--grad-fire);box-shadow:0 0 0 5px rgba(255,90,0,.15),0 0 24px rgba(255,90,0,.5);
+}
+.hito .anio{
+  font-family:var(--font-display);font-size:2.2rem;
+  background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hito h3{font-family:var(--font-cond);font-weight:700;font-size:1.18rem;margin-top:10px;line-height:1.25}
+.hito p{color:var(--ink-dim);font-size:.94rem;margin-top:10px;line-height:1.5}
+.hito.hoy{border-color:var(--line-hot);background:linear-gradient(170deg,#1d130a,var(--panel))}
+.archivo-pista{position:relative;height:2px;margin:0 28px;background:linear-gradient(90deg,var(--hot),rgba(255,90,0,.05))}
+.archivo-nota{margin-top:26px;text-align:center;color:var(--ink-faint);font-family:var(--font-cond);text-transform:uppercase;letter-spacing:.22em;font-size:.82rem}
+
+/* ============================================================
+   FILOSOFÍA BARATA (blog)
+   ============================================================ */
+.blog{padding:130px 0}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.post{
+  display:flex;flex-direction:column;border-radius:var(--radius);overflow:hidden;
+  background:var(--panel);border:1px solid var(--line);
+  transition:transform .35s var(--ease),border-color .3s,box-shadow .35s;
+}
+.post:hover{transform:translateY(-8px) rotate(-.4deg);border-color:var(--line-hot);box-shadow:0 28px 60px -24px rgba(255,61,0,.3)}
+.post-arte{position:relative;aspect-ratio:16/8.5;display:flex;align-items:flex-end;padding:18px;border-bottom:1px solid var(--line);overflow:hidden}
+.post-arte::before{content:"";position:absolute;inset:0;transition:transform .6s var(--ease)}
+.post:hover .post-arte::before{transform:scale(1.06)}
+.post-arte.a1::before{background:radial-gradient(circle at 22% 25%,rgba(255,90,0,.45),transparent 55%),linear-gradient(140deg,#2a1204,#0d0b08 70%)}
+.post-arte.a2::before{background:radial-gradient(circle at 80% 20%,rgba(255,157,60,.4),transparent 55%),linear-gradient(220deg,#241104,#0d0b08 70%)}
+.post-arte.a3::before{background:radial-gradient(circle at 50% 110%,rgba(255,61,0,.5),transparent 60%),linear-gradient(180deg,#1c0e05,#0d0b08 75%)}
+.post-arte .glifo-post{position:absolute;top:14px;right:18px;font-size:2.2rem;opacity:.6}
+.post-cat{
+  position:relative;z-index:1;font-family:var(--font-cond);font-weight:700;font-size:.76rem;
+  text-transform:uppercase;letter-spacing:.24em;color:#160a02;
+  background:var(--grad-fire);padding:6px 14px;border-radius:5px;transform:rotate(-1.5deg);
+}
+.post-cuerpo{display:flex;flex-direction:column;flex:1;padding:24px 24px 26px}
+.post h3{font-family:var(--font-cond);font-weight:700;font-size:1.3rem;line-height:1.25}
+.post p{color:var(--ink-dim);font-size:.96rem;margin-top:10px;flex:1;line-height:1.55}
+.post-meta{
+  display:flex;align-items:center;justify-content:space-between;margin-top:20px;
+  padding-top:16px;border-top:1px solid var(--line);
+  font-family:var(--font-cond);font-size:.82rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint);
+}
+.post-meta .leer{color:var(--hot-2);font-weight:700;display:inline-flex;align-items:center;gap:6px;transition:gap .25s var(--ease)}
+.post:hover .post-meta .leer{gap:11px}
+
+/* ============================================================
+   COMPRA ESTAS CHÁCHARAS
+   ============================================================ */
+.tienda{
+  padding:130px 0;background:var(--bg-2);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  position:relative;overflow:hidden;
+}
+.tienda .fondo-palabra{
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-display);font-size:clamp(4rem,14vw,11rem);
+  color:transparent;-webkit-text-stroke:1px rgba(255,90,0,.07);
+  text-transform:uppercase;white-space:nowrap;pointer-events:none;user-select:none;
+}
+.tienda-sub{margin-top:14px}
+.tienda-sub .grande{font-family:var(--font-cond);font-style:italic;font-size:1.35rem;color:var(--ink)}
+.tienda-sub .chico{display:block;color:var(--ink-dim);margin-top:4px}
+.tienda-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:56px}
+.producto{
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(175deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line);
+  transition:transform .35s var(--ease),border-color .3s,box-shadow .35s;
+}
+.producto:hover{transform:translateY(-8px) rotate(.6deg);border-color:var(--line-hot);box-shadow:0 28px 60px -24px rgba(255,61,0,.35)}
+.producto:nth-child(even):hover{transform:translateY(-8px) rotate(-.6deg)}
+.producto-arte{
+  position:relative;aspect-ratio:1/.82;display:grid;place-items:center;
+  background:
+    radial-gradient(circle at 50% 120%, rgba(255,61,0,.3), transparent 60%),
+    radial-gradient(circle at 80% 0%, rgba(255,157,60,.08), transparent 50%),
+    #0d0b08;
+  border-bottom:1px solid var(--line);
+}
+.producto-arte .emoji{font-size:4.6rem;filter:drop-shadow(0 14px 24px rgba(255,90,0,.35));transition:transform .4s var(--ease)}
+.producto:hover .producto-arte .emoji{transform:scale(1.12) rotate(-6deg)}
+.producto-arte .aro{position:absolute;width:150px;height:150px;border-radius:50%;border:1px dashed rgba(255,157,60,.35);animation:girar 20s linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+.producto-cuerpo{padding:22px 22px 26px}
+a.producto{display:block;color:inherit}
+.mezcal-arte{display:block;padding:0}
+.mezcal-arte img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
+.producto:hover .mezcal-arte img{transform:scale(1.06)}
+.ya-link{
+  display:inline-flex;align-items:center;gap:6px;margin-top:16px;
+  font-family:var(--font-cond);font-weight:700;font-size:.85rem;
+  text-transform:uppercase;letter-spacing:.18em;color:var(--hot-2);
+  border-bottom:1px solid var(--line-hot);padding-bottom:3px;transition:gap .25s var(--ease);
+}
+.producto:hover .ya-link{gap:11px}
+.producto h3{font-family:var(--font-cond);font-weight:700;font-size:1.16rem;letter-spacing:.03em;text-transform:uppercase}
+.producto p{color:var(--ink-dim);font-size:.93rem;margin-top:6px;line-height:1.5}
+.pronto{
+  display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+  font-family:var(--font-cond);font-weight:700;font-size:.78rem;
+  text-transform:uppercase;letter-spacing:.2em;color:var(--hot-2);
+}
+.pronto::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--hot);animation:latido 1.8s infinite}
+.tienda-aviso{margin-top:44px;text-align:center}
+.tienda-aviso .garabato{font-size:1.2rem}
+
+/* ============================================================
+   LOS QUE PAGAN ESTA LOCURA
+   ============================================================ */
+.patro{padding:130px 0;position:relative;overflow:hidden}
+.patro::before{
+  content:"";position:absolute;top:-30%;right:-15%;width:60%;height:120%;
+  background:radial-gradient(ellipse,rgba(255,61,0,.1),transparent 65%);pointer-events:none;
+}
+.patro-caja{
+  position:relative;border-radius:22px;overflow:hidden;
+  background:linear-gradient(160deg,#1d130a 0%,#130f0a 55%,#0f0c09 100%);
+  border:1px solid var(--line-hot);
+  display:grid;grid-template-columns:1.05fr 1fr;
+  box-shadow:0 40px 100px -40px rgba(255,61,0,.35);
+}
+.patro-info{padding:64px 58px}
+.patro-info .sub{margin-top:16px}
+.patro-metricas{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px}
+.patro-metricas div{border:1px solid var(--line);border-radius:12px;padding:18px 20px;background:rgba(255,255,255,.02)}
+.patro-metricas b{display:block;font-family:var(--font-display);font-size:1.6rem;background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent}
+.patro-metricas span{font-family:var(--font-cond);font-size:.78rem;text-transform:uppercase;letter-spacing:.18em;color:var(--ink-dim)}
+.patro-form{padding:64px 58px;background:rgba(0,0,0,.25);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:18px}
+.campo label{display:block;font-family:var(--font-cond);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.2em;color:var(--ink-dim);margin-bottom:8px}
+.campo input,.campo textarea{
+  width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;
+  padding:15px 17px;color:var(--ink);font-family:var(--font-body);font-size:1rem;
+  transition:border-color .25s,background .25s,box-shadow .25s;
+}
+.campo input::placeholder,.campo textarea::placeholder{color:var(--ink-faint)}
+.campo input:focus,.campo textarea:focus{outline:none;border-color:var(--hot);background:rgba(255,90,0,.05);box-shadow:0 0 0 3px rgba(255,90,0,.15)}
+.campo textarea{resize:vertical;min-height:120px}
+.patro-form .btn{justify-content:center;margin-top:4px}
+.patro-nota{font-size:.85rem;color:var(--ink-faint);text-align:center}
+
+/* ============================================================
+   ¿QUIÉN ES ESTE LOCO?
+   ============================================================ */
+.loco{padding:130px 0;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.loco-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:80px;align-items:center}
+.collage{position:relative;aspect-ratio:4/4.6}
+.collage img{
+  position:absolute;border-radius:12px;object-fit:cover;
+  border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 60px -20px rgba(0,0,0,.7);
+  transition:transform .5s var(--ease);
+}
+.collage img:nth-child(1){width:74%;aspect-ratio:16/10;top:0;left:0;transform:rotate(-2.5deg);z-index:1}
+.collage img:nth-child(2){width:60%;aspect-ratio:16/11;bottom:16%;right:0;transform:rotate(2deg);z-index:2}
+.collage img:nth-child(3){width:52%;aspect-ratio:16/11;bottom:-4%;left:6%;transform:rotate(-1deg);z-index:3}
+.collage:hover img:nth-child(1){transform:rotate(-2.5deg) translateY(-8px)}
+.collage:hover img:nth-child(2){transform:rotate(2deg) translateY(-8px)}
+.collage:hover img:nth-child(3){transform:rotate(-1deg) translateY(-8px)}
+.collage .sello{
+  position:absolute;top:48%;right:2%;z-index:4;width:120px;height:120px;border-radius:50%;
+  display:grid;place-items:center;text-align:center;
+  background:var(--grad-fire);color:#160a02;
+  font-family:var(--font-display);font-size:1.2rem;line-height:1.08;text-transform:uppercase;
+  box-shadow:0 16px 40px -8px rgba(255,90,0,.55);animation:girar 14s linear infinite;
+}
+.loco-txt p{color:var(--ink-dim);margin-top:20px;font-size:1.06rem}
+.loco-txt p b{color:var(--ink)}
+.rasgos{margin-top:38px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rasgo{
+  display:flex;gap:14px;align-items:flex-start;
+  background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:12px;padding:18px;
+  transition:border-color .25s,background .25s;
+}
+.rasgo:hover{border-color:var(--line-hot);background:rgba(255,90,0,.05)}
+.rasgo .ic{
+  flex:0 0 auto;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(140deg,rgba(255,90,0,.22),rgba(255,90,0,.08));
+  border:1px solid var(--line-hot);font-size:1.05rem;
+}
+.rasgo b{display:block;font-family:var(--font-cond);font-size:1.04rem;letter-spacing:.02em}
+.rasgo span{color:var(--ink-dim);font-size:.92rem;line-height:1.45;display:block;margin-top:2px}
+.cita{
+  margin-top:38px;padding:26px 30px;border-radius:12px;
+  border-left:3px solid var(--hot);background:rgba(255,90,0,.06);
+  font-family:var(--font-cond);font-size:1.3rem;font-weight:500;font-style:italic;color:var(--ink);
+}
+.cita small{display:block;margin-top:8px;font-style:normal;font-size:.82rem;text-transform:uppercase;letter-spacing:.22em;color:var(--hot-2)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{position:relative;padding:90px 0 40px;background:#080706;border-top:1px solid var(--line);overflow:hidden}
+.footer-marca{
+  font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(3rem,9vw,7rem);line-height:1;letter-spacing:.01em;
+  color:transparent;-webkit-text-stroke:1px rgba(245,239,230,.16);
+  user-select:none;white-space:nowrap;text-align:center;
+}
+.footer-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-top:56px;padding-top:46px;border-top:1px solid var(--line)}
+.footer-col p{color:var(--ink-dim);max-width:360px;margin-top:14px;font-size:.96rem}
+.footer-col h4{font-family:var(--font-cond);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.26em;color:var(--ink-faint);margin-bottom:18px}
+.footer-col ul{list-style:none;display:grid;gap:10px}
+.footer-col ul a{color:var(--ink-dim);font-size:.98rem;transition:color .2s}
+.footer-col ul a:hover{color:var(--hot-2)}
+.sociales{display:flex;gap:12px;margin-top:20px}
+.sociales a{
+  width:44px;height:44px;border-radius:11px;display:grid;place-items:center;
+  border:1px solid var(--line);color:var(--ink-dim);font-size:1.05rem;
+  transition:border-color .25s,color .25s,transform .25s var(--ease),background .25s;
+}
+.sociales a:hover{border-color:var(--hot);color:var(--hot-2);transform:translateY(-3px);background:rgba(255,90,0,.07)}
+.aviso{
+  margin-top:56px;padding-top:26px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  color:var(--ink-faint);font-size:.85rem;
+}
+.aviso b{color:var(--ink-dim)}
+.aviso .no-grande{
+  font-size:1.35em;font-weight:800;color:var(--hot-2);letter-spacing:.04em;
+}
+
+/* ============================================================
+   EASTER EGGS
+   ============================================================ */
+#botonProhibido{
+  position:fixed;bottom:26px;left:26px;z-index:850;
+  background:#12100d;border:2px dashed var(--hot);border-radius:12px;
+  color:var(--hot-2);font-family:var(--font-loco);font-size:.9rem;
+  padding:12px 18px;cursor:pointer;transform:rotate(-2deg);
+  opacity:0;pointer-events:none;transition:opacity .5s,transform .25s var(--ease);
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.6);
+}
+#botonProhibido.asoma{opacity:1;pointer-events:auto}
+#botonProhibido:hover{transform:rotate(-2deg) scale(1.05)}
+#glitch{
+  position:fixed;inset:0;z-index:2500;background:#000;display:none;
+  align-items:center;justify-content:center;flex-direction:column;gap:18px;text-align:center;padding:24px;
+}
+#glitch.roto{display:flex;animation:romperse .12s steps(2) 8}
+@keyframes romperse{
+  0%{transform:translate(0,0);filter:hue-rotate(0)}
+  25%{transform:translate(-14px,6px) skewX(4deg);filter:hue-rotate(90deg) saturate(3)}
+  50%{transform:translate(10px,-8px) skewX(-6deg);filter:invert(1)}
+  75%{transform:translate(-6px,10px);filter:hue-rotate(-90deg)}
+  100%{transform:translate(0,0);filter:none}
+}
+#glitch .error-falso{font-family:monospace;color:#3aff5e;font-size:.95rem;opacity:.9}
+#glitch .reganio{
+  display:none;font-family:var(--font-cond);font-style:italic;
+  font-size:clamp(1.2rem,3.4vw,1.9rem);color:var(--ink);max-width:640px;line-height:1.4;
+}
+#glitch.reganiando{display:flex;background:#0a0908;animation:none}
+#glitch.reganiando .error-falso{display:none}
+#glitch.reganiando .reganio{display:block}
+#glitch .reganio small{display:block;margin-top:14px;font-family:var(--font-loco);font-style:normal;font-size:1rem;color:var(--hot-2)}
+.lluvia-emoji{position:fixed;top:-60px;z-index:2600;font-size:1.9rem;pointer-events:none;animation:caer linear forwards}
+@keyframes caer{to{transform:translateY(110vh) rotate(360deg)}}
+#toast{
+  position:fixed;bottom:30px;left:50%;transform:translate(-50%,80px);z-index:2700;
+  background:#1b150d;border:1px solid var(--line-hot);border-radius:10px;
+  padding:14px 26px;font-family:var(--font-cond);font-style:italic;font-size:1.05rem;color:var(--ink);
+  transition:transform .4s var(--ease);box-shadow:0 16px 40px -10px rgba(0,0,0,.7);
+  max-width:90vw;text-align:center;
+}
+#toast.dice{transform:translate(-50%,0)}
+
+/* ============================================================
+   ALTA TECNOLOGÍA — cursor, shader, tilt, tipografía cinética
+   ============================================================ */
+/* Cursor mira telescópica (solo puntero fino) */
+#cursor{display:none}
+@media (pointer:fine){
+  body.con-cursor,body.con-cursor *{cursor:none!important}
+  #cursor{
+    display:block;position:fixed;top:0;left:0;z-index:3500;pointer-events:none;
+    width:24px;height:24px;margin:-12px 0 0 -12px;
+    transition:opacity .25s;opacity:0;
+  }
+  body.con-cursor #cursor{opacity:1}
+  #cursor .aro{
+    position:absolute;inset:0;border:1.5px solid rgba(255,157,60,.9);border-radius:50%;
+    transition:transform .28s var(--ease),border-color .28s,background .28s;
+  }
+  #cursor .cruz-h,#cursor .cruz-v{position:absolute;background:rgba(255,157,60,.9);transition:opacity .2s}
+  #cursor .cruz-h{top:50%;left:-4px;right:-4px;height:1px;transform:translateY(-.5px)}
+  #cursor .cruz-v{left:50%;top:-4px;bottom:-4px;width:1px;transform:translateX(-.5px)}
+  #cursor .punto-c{
+    position:absolute;top:50%;left:50%;width:3px;height:3px;margin:-1.5px 0 0 -1.5px;
+    border-radius:50%;background:#ffb347;
+  }
+  #cursor.apunta .aro{transform:scale(1.55);border-color:var(--hot);background:rgba(255,90,0,.08)}
+  #cursor.apunta .cruz-h,#cursor.apunta .cruz-v{opacity:0}
+  #cursor.dispara .aro{transform:scale(.6);border-color:#fff}
+}
+/* Fogonazo y agujeros de bala */
+.fogonazo{
+  position:fixed;z-index:3400;pointer-events:none;width:120px;height:120px;margin:-60px 0 0 -60px;
+  background:radial-gradient(circle,rgba(255,220,150,.95) 0%,rgba(255,140,40,.55) 30%,rgba(255,60,0,0) 70%);
+  border-radius:50%;animation:fogonazo .28s ease-out forwards;
+}
+@keyframes fogonazo{0%{transform:scale(.3);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.balazo{
+  position:absolute;z-index:5;pointer-events:none;width:26px;height:26px;margin:-13px 0 0 -13px;
+  background:
+    radial-gradient(circle at 50% 50%, #000 0%, #000 24%, rgba(30,22,16,.9) 34%, rgba(60,45,30,.5) 48%, transparent 60%),
+    radial-gradient(circle at 42% 40%, rgba(255,157,60,.25), transparent 55%);
+  border-radius:50%;
+  animation:balazoAparece .18s ease-out, balazoVase 1s ease 3.4s forwards;
+}
+@keyframes balazoAparece{from{transform:scale(2.2);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes balazoVase{to{opacity:0}}
+/* casquillos de latón volando */
+.casquillo{
+  position:fixed;z-index:3450;width:9px;height:20px;border-radius:3px;pointer-events:none;
+  background:linear-gradient(90deg,#7a5c18,#ecc75f 45%,#8a6a1f);
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.45),0 2px 6px rgba(0,0,0,.4);
+  animation:casqVuela .9s cubic-bezier(.25,.46,.45,.94) forwards;
+}
+@keyframes casqVuela{
+  0%{transform:translate(0,0) rotate(0);opacity:1}
+  45%{transform:translate(calc(var(--dx)*.55),-85px) rotate(300deg);opacity:1}
+  100%{transform:translate(var(--dx),80px) rotate(560deg);opacity:0}
+}
+/* Lienzo del shader de fuego */
+#fuegoGL{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:.85;mix-blend-mode:screen}
+.hero-velo{z-index:2}
+#embers{z-index:2}
+/* Tarjetas con profundidad 3D */
+.tilt{transform-style:preserve-3d;will-change:transform;position:relative}
+.tilt::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:6;
+  background:radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(255,220,170,.14), transparent 55%);
+  opacity:0;transition:opacity .3s;
+}
+.tilt:hover::after{opacity:1}
+/* Tipografía cinética: títulos que suben letra por letra */
+.titulo .palabra{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.titulo .char{display:inline-block;transform:translateY(115%);transition:transform .7s var(--ease)}
+.titulo.armado .char{transform:none}
+.titulo:hover{text-shadow:2px 0 rgba(255,0,60,.28),-2px 0 rgba(0,170,255,.22)}
+/* Contador de carga en la intro */
+#cargando{
+  position:absolute;bottom:36px;left:38px;z-index:5;
+  font-family:var(--font-cond);font-size:.85rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink-faint);
+}
+#cargando b{color:var(--hot-2);font-weight:600}
+/* Manifiesto en modo scrub (activado por JS) */
+html.scrub .manifiesto{height:280vh;padding:0;overflow:visible}
+html.scrub .mani-lienzo{
+  position:sticky;top:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;
+}
+html.scrub .mani-linea{transition:none}
+.mani-lienzo{position:relative;padding:150px 0}
+html.scrub .mani-lienzo{padding:0}
+@media (prefers-reduced-motion:reduce){
+  #cursor,.fogonazo,.balazo,#fuegoGL{display:none!important}
+  .titulo .char{transform:none;transition:none}
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+@media (max-width:1080px){
+  .escenario{grid-template-columns:1fr}
+  .principal{min-height:380px}
+  .lista-lateral{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .tienda-grid{grid-template-columns:repeat(2,1fr)}
+  .tumbas,.podio{grid-template-columns:1fr 1fr}
+  .patro-caja{grid-template-columns:1fr}
+  .patro-form{border-left:0;border-top:1px solid var(--line)}
+  .loco-grid{grid-template-columns:1fr;gap:70px}
+  .collage{width:100%;max-width:520px;margin:0 auto}
+}
+@media (max-width:860px){
+  .nav-links,.nav .nav-cta{display:none}
+  .hamb{display:block}
+  .blog-grid{grid-template-columns:1fr}
+  .lista-lateral{grid-template-columns:1fr}
+  .tumbas,.podio{grid-template-columns:1fr}
+  .hero-datos div{border-right:0;padding-right:0;margin-right:24px}
+  .patro-info,.patro-form{padding:44px 30px}
+  .rasgos{grid-template-columns:1fr}
+  .videos,.cementerio,.buenas,.archivo,.blog,.tienda,.patro,.loco,.manifiesto{padding-top:84px;padding-bottom:84px}
+  #botonProhibido{bottom:18px;left:18px;font-size:.8rem;padding:10px 14px}
+}
+@media (max-width:560px){
+  .tienda-grid{grid-template-columns:1fr}
+  .mini{grid-template-columns:120px 1fr}
+  .hero h1{font-size:clamp(2.4rem,13vw,3.4rem)}
+  .hero-in{padding-top:120px}
+  .marquesina span{font-size:1.05rem}
+  .hito{flex:0 0 280px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ INTRO ============ -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-flash" id="introFlash"></div>
+  <div class="intro-escena" id="escena1">
+    <div class="intro-marca" id="introMarca"></div>
+    <p class="intro-lema" id="introLema">«A mí me gusta todo lo que echa fuego, hace ruido y explota.»</p>
+  </div>
+  <div id="cargando">Cargando pólvora… <b>0%</b></div>
+  <div class="intro-escena" id="escena2">
+    <div class="intro-frases">
+      <div class="intro-frase">Sin cortes.</div>
+      <div class="intro-frase">Sin trucos.</div>
+      <div class="intro-frase">Si falla, falla.</div>
+    </div>
+  </div>
+  <button id="saltar">Sáltatelo, impaciente →</button>
+</div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a class="marca" href="#inicio"><span class="chispa" id="chispaLogo">🔥</span><b>Pistolas&nbsp;<span>Fritas</span></b></a>
+    <div class="nav-links">
+      <a href="#pruebas">Pruebas</a>
+      <a href="#cementerio">Cementerio</a>
+      <a href="#archivo">Archivo</a>
+      <a href="#filosofia">Filosofía</a>
+      <a href="#chacharas">Tienda</a>
+      <a href="#patrocinios">Patrocinios</a>
+    </div>
+    <a class="btn nav-cta" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA?sub_confirmation=1" target="_blank" rel="noopener"><span class="ico">▶</span> Suscríbete</a>
+    <button class="hamb" id="hamb" aria-label="Menú"><i></i><i></i><i></i></button>
+  </div>
+  <div class="progreso" id="progreso"></div>
+</nav>
+<div class="velo-movil" id="veloMovil">
+  <a href="#pruebas">Pruebas sin cortes</a>
+  <a href="#cementerio">El cementerio</a>
+  <a href="#buenas">Las que sí sirvieron</a>
+  <a href="#archivo">El archivo</a>
+  <a href="#filosofia">Filosofía barata</a>
+  <a href="#chacharas">Compra cosas en la tienda</a>
+  <a href="#patrocinios">Los que pagan esto</a>
+  <a href="#loco">¿Quién es este loco?</a>
+  <small>Sí, los nombres del menú son en serio.</small>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="inicio">
+  <div class="hero-fondo"></div>
+  <canvas id="fuegoGL"></canvas>
+  <div class="humo h1p"></div>
+  <div class="humo h2p"></div>
+  <div class="hero-velo"></div>
+  <canvas id="embers"></canvas>
+  <div class="emblema" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <defs>
+        <linearGradient id="gFuego" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ffb347"/><stop offset=".5" stop-color="#ff7a18"/><stop offset="1" stop-color="#ff3d00"/>
+        </linearGradient>
+        <path id="rutaTxt" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/>
+      </defs>
+      <circle cx="100" cy="100" r="97" fill="rgba(10,9,8,.6)" stroke="url(#gFuego)" stroke-width="2.5"/>
+      <circle cx="100" cy="100" r="57" fill="rgba(255,90,0,.1)" stroke="rgba(255,157,60,.7)" stroke-width="2" stroke-dasharray="5 4"/>
+      <g class="giraTexto">
+        <text font-family="'Barlow Condensed',sans-serif" font-size="15.5" font-weight="700" letter-spacing="3.2" fill="#ffd9a8">
+          <textPath href="#rutaTxt">PISTOLAS FRITAS ★ DESDE 2013 ★ FUEGO · RUIDO · EXPLOSIONES ★ </textPath>
+        </text>
+      </g>
+      <text x="100" y="99" text-anchor="middle" font-family="'Anton',sans-serif" font-size="40" fill="url(#gFuego)">PF</text>
+      <text x="100" y="129" text-anchor="middle" font-size="21">🔥</text>
+    </svg>
+  </div>
+  <div class="hero-in">
+    <span class="hero-badge"><span class="punto"></span> Directo desde el campo pistolero frito · 2.2 millones de locos suscritos</span>
+    <h1>
+      <span class="linea"><span class="tilta">Hace fuego,</span></span>
+      <span class="linea contorno"><span class="tilta">echa ruido…</span></span>
+      <span class="linea fuego explota"><span class="tilta">¡Y explota!</span></span>
+    </h1>
+    <div class="boca-suelta"><p id="fraseViva" class="dice"><b>Pistolas Fritas</b> — una sola toma, cero ediciones. Lo que sale, sale.</p></div>
+    <div class="hero-acciones">
+      <a class="btn" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA?sub_confirmation=1" target="_blank" rel="noopener"><span class="ico">▶</span> Suscríbete al relajo</a>
+      <a class="btn fantasma" href="#pruebas">A ver qué tanto truena</a>
+    </div>
+    <div class="hero-datos">
+      <div><b data-contar="2.2" data-sufijo="M">0</b><span>Locos suscritos</span></div>
+      <div><b data-contar="257.5" data-sufijo="M">0</b><span>Millones de vistas</span></div>
+      <div><b data-contar="341" data-sufijo="">0</b><span>Videos sin cortes</span></div>
+      <div><b data-contar="80" data-sufijo="%">0</b><span>Desmonetizados por YouTube 🏆</span></div>
+      <div><b data-contar="0" data-sufijo="">0</b><span>Ediciones. Cero.</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Desliza, no muerde</div>
+</header>
+
+<!-- ============ MARQUESINA ============ -->
+<div class="marquesina" aria-hidden="true">
+  <div class="pista" id="pista">
+    <span>Pistolas Fritas</span><span>Una sola toma</span><span>Sin edición</span><span>Si falla, falla</span><span>Si sirve, sirve</span><span>Del .22 al .50 BMG</span><span>Sin trucos</span><span>Desmonetizados con orgullo</span>
+  </div>
+</div>
+
+<!-- ============ MANIFIESTO ============ -->
+<section class="manifiesto" id="manifiesto">
+ <div class="mani-lienzo">
+  <div class="fondo-palabra">HONESTO</div>
+  <div class="wrap">
+    <div class="manifiesto-lineas">
+      <div class="mani-linea">Una sola toma.</div>
+      <div class="mani-linea hueca">Sin guion.</div>
+      <div class="mani-linea">Sin edición.</div>
+      <div class="mani-linea hueca">Si falla… falla.</div>
+      <div class="mani-linea flama">Si sirve… sirve.</div>
+      <div class="mani-linea">Así de fácil.</div>
+    </div>
+    <div class="mani-firma rev">
+      <span class="garabato">— El que edita, algo esconde.</span>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ PRUEBAS SIN CORTES ============ -->
+<section class="videos" id="pruebas">
+  <div class="wrap">
+    <div class="videos-cabeza">
+      <div class="rev">
+        <div class="kicker"><span class="num">01</span> Lo más tronado</div>
+        <h2 class="titulo">Pruebas <span class="hot">sin cortes</span></h2>
+        <p class="sub">Sin guion, sin repeticiones, sin piedad. Lo que ves es lo que pasó — para bien o para mal.</p>
+      </div>
+      <a class="btn fantasma rev" data-d="2" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA/videos" target="_blank" rel="noopener">Los 341 videos →</a>
+    </div>
+    <div class="escenario">
+      <div class="principal rev" id="principal" data-id="jLCxXILit-A">
+        <div class="fondo" style="background-image:url('https://i.ytimg.com/vi/jLCxXILit-A/maxresdefault.jpg')"></div>
+        <div class="sombra"></div>
+        <div class="play-btn"></div>
+        <div class="contenido">
+          <span class="etiqueta-top mero-visto">★ El más visto · <b>32.5 MILLONES</b> de vistas</span>
+          <h3 id="principal-titulo">¡¡¡Qué Emoción!!! Vivir el Sueño de Disparar Armas de Fuego, Calibre .22 hasta el .50</h3>
+          <div class="meta" id="principal-meta">4K · Campo de tiro · Una sola toma, obviamente</div>
+        </div>
+      </div>
+      <div class="lista-lateral rev" data-d="2">
+        <div class="mini" data-id="apCbkgdY9oA" data-titulo="Calibres Fuertes en Español 4K" data-meta="Calibres · 4K">
+          <div class="tapa"><img src="https://i.ytimg.com/vi/apCbkgdY9oA/hqdefault.jpg" alt="Calibres Fuertes en Español 4K" loading="lazy"></div>
+          <div><h4>Calibres Fuertes en Español 4K</h4><small>Calibres</small></div>
+        </div>
+        <div class="mini" data-id="2pusIJuzerg" data-titulo="Disparando Toda mi Colección de Pistolas en un Vídeo Épico" data-meta="Colección completa">
+          <div class="tapa"><img src="https://i.ytimg.com/vi/2pusIJuzerg/hqdefault.jpg" alt="Disparando Toda mi Colección de Pistolas" loading="lazy"></div>
+          <div><h4>Disparando Toda mi Colección de Pistolas en un Vídeo Épico</h4><small>Colección</small></div>
+        </div>
+        <div class="mini" data-id="H80WB9fedHw" data-titulo="Pasa o No Pasa, desde el Cal 22 al 50 BMG" data-meta="Pruebas de calibre">
+          <div class="tapa"><img src="https://i.ytimg.com/vi/H80WB9fedHw/hqdefault.jpg" alt="Pasa o No Pasa, del 22 al 50 BMG" loading="lazy"></div>
+          <div><h4>Pasa o No Pasa, desde el Cal 22 al 50 BMG</h4><small>Pruebas</small></div>
+        </div>
+        <div class="mini" data-id="U-rbQM0x9oQ" data-titulo="La Mejor Arma de Fuego de 2022" data-meta="Reseñas">
+          <div class="tapa"><img src="https://i.ytimg.com/vi/U-rbQM0x9oQ/hqdefault.jpg" alt="La Mejor Arma de Fuego de 2022" loading="lazy"></div>
+          <div><h4>La Mejor Arma de Fuego de 2022</h4><small>Reseñas</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="videos-pie rev">
+      <a class="btn" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA/videos" target="_blank" rel="noopener"><span class="ico">▶</span> Ver todo el arsenal en YouTube</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EL CEMENTERIO ============ -->
+<section class="cementerio" id="cementerio">
+  <div class="niebla"></div>
+  <div class="wrap">
+    <div class="rev">
+      <div class="kicker"><span class="num">02</span> En paz descansen</div>
+      <h2 class="titulo">El <span class="hot">cementerio</span></h2>
+      <p class="sub">Aquí honramos a las que nos quedaron mal frente a cámara. Otros canales esconden sus fallas. Nosotros les hacemos funeral.</p>
+    </div>
+    <div class="tumbas">
+      <div class="tumba rev">
+        <div class="cruz">🪦</div>
+        <h3>La "Infalible"</h3>
+        <div class="anios">Duró 3 tiros</div>
+        <p>El vendedor juró que nunca fallaba. Se trabó al tercer disparo, en vivo, sin cortes, como debe ser.</p>
+        <span class="causa">Causa: exceso de confianza</span>
+        <div class="flores">💐</div>
+      </div>
+      <div class="tumba rev" data-d="1">
+        <div class="cruz">🪦</div>
+        <h3>El cargador saltarín</h3>
+        <div class="anios">Cayó en acto de servicio</div>
+        <p>Se soltó solito a media prueba. Nadie lo tocó. La gravedad hizo lo suyo y la cámara lo grabó todo.</p>
+        <span class="causa">Causa: la gravedad y la vergüenza</span>
+        <div class="flores">💐</div>
+      </div>
+      <div class="tumba rev" data-d="2">
+        <div class="cruz">🪦</div>
+        <h3>Mi dignidad</h3>
+        <div class="anios">2013 — presente (intermitente)</div>
+        <p>Muere en cada video donde algo truena mal. Revive con cada like. Es un ciclo. Ya lo aceptamos.</p>
+        <span class="causa">Causa: una sola toma, cero ediciones</span>
+        <div class="flores">🥀</div>
+      </div>
+      <div class="tumba rev" data-d="3">
+        <div class="cruz">💰</div>
+        <h3>La monetización</h3>
+        <div class="anios">Descansa en paz en el 80% del canal</div>
+        <p>8 de cada 10 videos terminaron peleándose con YouTube… y perdieron la monetización. Les quitó el sueldo, pero no la gracia.</p>
+        <span class="causa">Causa: ser demasiado auténticos</span>
+        <div class="flores">🪙</div>
+      </div>
+    </div>
+    <div class="cementerio-pie rev">
+      <p class="garabato" style="display:block;margin-bottom:22px">Si falla, se queda en el video. Punto.</p>
+      <a class="btn" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA/videos" target="_blank" rel="noopener">Ver los funerales completos ⚰️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LAS QUE SÍ SIRVIERON ============ -->
+<section class="buenas" id="buenas">
+  <div class="wrap">
+    <div class="rev">
+      <div class="kicker"><span class="num">03</span> El podio</div>
+      <h2 class="titulo">Las que <span class="hot">sí sirvieron</span></h2>
+      <p class="sub">Cuando algo aguanta el trato que le damos aquí, se lo ha ganado. Nadie nos paga por decir esto — y se nota, porque decimos de todo.</p>
+    </div>
+    <div class="podio">
+      <div class="lugar rev" data-d="1">
+        <span class="medalla">🥈</span>
+        <h3>La sorpresa barata</h3>
+        <p>Costó poco y tira como cara. Nadie le tenía fe. Ahora es la consentida del rancho.</p>
+        <span class="sello-aprobado">Aprobada</span>
+      </div>
+      <div class="lugar oro rev">
+        <span class="medalla">🥇</span>
+        <h3>La que aguantó todo</h3>
+        <p>Polvo, barro, calor del rancho y cientos de tiros seguidos sin quejarse ni una vez. Respeto.</p>
+        <span class="sello-aprobado">Aprobadísima</span>
+      </div>
+      <div class="lugar rev" data-d="2">
+        <span class="medalla">🥉</span>
+        <h3>La veterana</h3>
+        <p>Más vieja que el canal y sigue cumpliendo. Como los buenos: sin hacer ruido… bueno, ruido del malo.</p>
+        <span class="sello-aprobado">Leyenda</span>
+      </div>
+    </div>
+    <p class="buenas-nota rev">¿Quieres saber cuáles son? <span class="garabato">Está todo en los videos. Aquí no vendemos humo — solo lo producimos.</span></p>
+  </div>
+</section>
+
+<!-- ============ EL ARCHIVO ============ -->
+<section class="archivo" id="archivo">
+  <div class="wrap">
+    <div class="rev">
+      <div class="kicker"><span class="num">04</span> La historia</div>
+      <h2 class="titulo">El <span class="hot">archivo</span></h2>
+      <p class="sub">Trece años de tiros, risas y una que otra tragedia grabada en 4K. Arrastra para recorrer la historia.</p>
+    </div>
+  </div>
+  <div class="archivo-riel" id="riel">
+    <div class="hito">
+      <div class="anio">2013</div>
+      <h3>Nace el canal</h3>
+      <p>Nadie lo vio venir. Literal: casi nadie lo vio. Pero el rancho ya olía a pólvora y a futuro.</p>
+    </div>
+    <div class="hito">
+      <div class="anio">~2015</div>
+      <h3>La banda crece</h3>
+      <p>Los primeros miles de suscriptores. La "banda" todavía cabía en una banquita, pero ya gritaba.</p>
+    </div>
+    <div class="hito">
+      <div class="anio">~2018</div>
+      <h3>El primer video que explotó</h3>
+      <p>El video, no el rifle. Bueno… esa vez. Millones de vistas y la fórmula quedó clara: sin cortes, sin trucos.</p>
+    </div>
+    <div class="hito">
+      <div class="anio">2022</div>
+      <h3>"La Mejor Arma de Fuego de 2022"</h3>
+      <p>Un clásico instantáneo del canal. Opiniones fuertes, cero filtro, como siempre.</p>
+    </div>
+    <div class="hito">
+      <div class="anio">2024</div>
+      <h3>El susto: "¡Vendí todas mis armas!"</h3>
+      <p>Medio internet lloró. El título hizo su trabajo. La historia completa está en el video — véanlo antes de opinar.</p>
+    </div>
+    <div class="hito hoy">
+      <div class="anio">HOY</div>
+      <h3>2.2 millones de locos</h3>
+      <p>257.5 millones de vistas, 6.1 millones de likes y cero ediciones. Y esto apenas está calentando — literal.</p>
+    </div>
+  </div>
+  <div class="archivo-nota">← Arrastra el riel · Cada punto naranja es una historia →</div>
+</section>
+
+<!-- ============ FILOSOFÍA BARATA ============ -->
+<section class="blog" id="filosofia">
+  <div class="wrap">
+    <div class="rev">
+      <div class="kicker"><span class="num">05</span> Para leer en el baño</div>
+      <h2 class="titulo">Filosofía <span class="hot">barata</span></h2>
+      <p class="sub">El blog del canal. Pensamientos profundos de un señor que grita frente a explosivos.</p>
+    </div>
+    <div class="blog-grid">
+      <article class="post rev">
+        <div class="post-arte a1"><span class="glifo-post">🎬</span><span class="post-cat">Detrás de cámaras</span></div>
+        <div class="post-cuerpo">
+          <h3>Por qué grabo todo en una sola toma (y no, no es flojera… bueno, un poquito)</h3>
+          <p>La filosofía completa del canal: por qué editar mata la gracia, por qué las fallas se quedan, y por qué así es más divertido para todos.</p>
+          <div class="post-meta"><span>Próximamente</span><span class="leer">Leer <b>→</b></span></div>
+        </div>
+      </article>
+      <article class="post rev" data-d="1">
+        <div class="post-arte a2"><span class="glifo-post">🎯</span><span class="post-cat">Guías</span></div>
+        <div class="post-cuerpo">
+          <h3>Guía de calibres para principiantes: del .22 "tierno" al .50 "¿para qué?"</h3>
+          <p>Qué significa cada calibre, cuál conviene para empezar y cuáles hemos tronado en el canal. En español y sin tecnicismos aburridos.</p>
+          <div class="post-meta"><span>Próximamente</span><span class="leer">Leer <b>→</b></span></div>
+        </div>
+      </article>
+      <article class="post rev" data-d="2">
+        <div class="post-arte a3"><span class="glifo-post">🛡️</span><span class="post-cat">Seguridad · En serio</span></div>
+        <div class="post-cuerpo">
+          <h3>Las reglas de oro de la seguridad</h3>
+          <p>Aquí no hay chistes: las reglas son las reglas. Lo único que en este canal jamás se toma a broma es el manejo seguro y responsable de las armas.</p>
+          <div class="post-meta"><span>Próximamente</span><span class="leer">Leer <b>→</b></span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPRA ESTAS CHÁCHARAS ============ -->
+<section class="tienda" id="chacharas">
+  <div class="fondo-palabra">CHÁCHARAS</div>
+  <div class="wrap">
+    <div class="rev">
+      <div class="kicker"><span class="num">06</span> Comercio de primera necesidad</div>
+      <h2 class="titulo">Compra cosas en <span class="hot">la tienda</span></h2>
+      <div class="tienda-sub">
+        <span class="grande">¡¡¡No las necesitas!!!</span>
+        <span class="chico">Nosotros necesitamos que las compres, así de simple es la economía.</span>
+      </div>
+    </div>
+    <div class="tienda-grid">
+      <div class="producto rev">
+        <div class="producto-arte"><div class="aro"></div><span class="emoji">👕</span></div>
+        <div class="producto-cuerpo"><h3>Playera "Si falla, falla"</h3><p>Algodón 100%. Honestidad 100%. Combina con todo, hasta con tus malas decisiones.</p><span class="pronto">Próximamente</span></div>
+      </div>
+      <div class="producto rev" data-d="1">
+        <div class="producto-arte"><div class="aro"></div><span class="emoji">🧢</span></div>
+        <div class="producto-cuerpo"><h3>Gorra del rancho</h3><p>Tapa el sol. No tapa tus malas puntadas. Nadie es perfecto.</p><span class="pronto">Próximamente</span></div>
+      </div>
+      <a class="producto rev" data-d="2" href="https://mrmezcal.com" target="_blank" rel="noopener">
+        <div class="producto-arte mezcal-arte"><img src="https://mrmezcal.com/og-image.jpg" alt="Mr. Mezcal — mezcal artesanal de Oaxaca" loading="lazy"></div>
+        <div class="producto-cuerpo"><h3>Mezcal reglamentario</h3><p>Para un coctelito después de ir a disparar. Nunca al revés — eso sí es regla.</p><span class="ya-link">MrMezcal.com →</span></div>
+      </a>
+      <div class="producto rev" data-d="3">
+        <div class="producto-arte"><div class="aro"></div><span class="emoji">🎯</span></div>
+        <div class="producto-cuerpo"><h3>Calcomanías y parches</h3><p>Para la troca, la hielera o el estuche. Pégalas donde tú ya sabes quién no las vea.</p><span class="pronto">Próximamente</span></div>
+      </div>
+    </div>
+    <div class="tienda-aviso rev">
+      <span class="garabato">La tienda abre pronto. No me presionen, estoy grabando.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOS QUE PAGAN ESTA LOCURA ============ -->
+<section class="patro" id="patrocinios">
+  <div class="wrap">
+    <div class="patro-caja rev">
+      <div class="patro-info">
+        <div class="kicker"><span class="num">07</span> Para marcas valientes</div>
+        <h2 class="titulo" style="font-size:clamp(2rem,3.6vw,3rem)">Los que pagan <span class="hot">esta locura</span></h2>
+        <p class="sub"><b>Confesión:</b> en 13 años, el único que ha pagado esta locura es el mismo loco que la graba. Las armas son tan tabú que ninguna compañía de armas nos ha mandado ni un centavo. Bueno… unas cuantas me mandaron una gorra. Pero pagar, lo que se dice pagar: nunca. Este canal está financiado al 100% por mi propia cartera — y mi cartera ya pidió vacaciones. ¿Tu marca quiere hacer historia y ser la primera valiente? El formulario está ahí. No muerde. Yo tampoco… casi nunca.</p>
+        <div class="patro-metricas">
+          <div><b>2.2M</b><span>Suscriptores reales</span></div>
+          <div><b>257.5M</b><span>Vistas totales</span></div>
+          <div><b>6.1M</b><span>Likes (y ni uno comprado)</span></div>
+          <div><b>654K</b><span>Veces compartido</span></div>
+          <div><b>EE.UU. + LatAm</b><span>Audiencia en español</span></div>
+          <div><b>13 años</b><span>Sin fallar un solo año (excepto el año pasado, porque me dio flojera)</span></div>
+        </div>
+      </div>
+      <form class="patro-form" action="mailto:contacto@pistolasfritas.com" method="post" enctype="text/plain">
+        <div class="campo">
+          <label for="nombre">Nombre / Empresa</label>
+          <input id="nombre" name="nombre" type="text" placeholder="Tu nombre o el de tu marca" required>
+        </div>
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+          <input id="correo" name="correo" type="email" placeholder="tu@correo.com" required>
+        </div>
+        <div class="campo">
+          <label for="mensaje">Tu propuesta</label>
+          <textarea id="mensaje" name="mensaje" placeholder="Convéncenos. Somos fáciles, pero no tanto." required></textarea>
+        </div>
+        <button class="btn" type="submit">Enviar propuesta 🔥</button>
+        <p class="patro-nota">Las propuestas serias se responden rápido. El spam se fusila. Literal.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ¿QUIÉN ES ESTE LOCO? ============ -->
+<section class="loco" id="loco">
+  <div class="wrap">
+    <div class="loco-grid">
+      <div class="collage rev">
+        <img src="https://i.ytimg.com/vi/5Q-EwZ_7h1M/hqdefault.jpg" alt="Pistolas Fritas en el campo de tiro" loading="lazy">
+        <img src="https://i.ytimg.com/vi/2pusIJuzerg/hqdefault.jpg" alt="Colección de pistolas" loading="lazy">
+        <img src="https://i.ytimg.com/vi/H80WB9fedHw/hqdefault.jpg" alt="Pruebas de calibre" loading="lazy">
+        <div class="sello">Desde<br>2013</div>
+      </div>
+      <div class="loco-txt rev" data-d="1">
+        <div class="kicker"><span class="num">08</span> El responsable</div>
+        <h2 class="titulo">¿Quién es <span class="hot">este loco?</span></h2>
+        <p>Detrás de Pistolas Fritas hay un señor que <b>habla rápido, dispara derecho y no repite tomas</b>. Desde 2013 prueba pistolas, revólveres, rifles y escopetas — del .22 al .50 BMG — en campos de tiro naturales, con la cámara rodando y la boca sin filtro.</p>
+        <p>El personaje improvisa, se burla de sus propias fallas y dice lo que piensa de cada fierro que pasa por sus manos. <b>Si el fierro falla, sale en el video. Si sirve, también.</b> Nadie edita nada, porque editar es esconder.</p>
+        <div class="rasgos">
+          <div class="rasgo"><div class="ic">🎬</div><div><b>Una sola toma</b><span>Sin guion, sin repetir, sin red de seguridad.</span></div></div>
+          <div class="rasgo"><div class="ic">🗣️</div><div><b>Boca sin filtro</b><span>Los chistes salen al vuelo. Igual que las balas.</span></div></div>
+          <div class="rasgo"><div class="ic">🌵</div><div><b>Campo de tiro, no estudio</b><span>Al aire libre, con polvo de verdad.</span></div></div>
+          <div class="rasgo"><div class="ic">🛡️</div><div><b>Seguridad: sagrada</b><span>El personaje es un loco. El manejo de armas, jamás.</span></div></div>
+        </div>
+        <div class="cita">
+          "A mí me gusta todo lo que echa fuego, hace ruido y explota."
+          <small>— Pistolas Fritas, filosofía completa del canal</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-marca">Pistolas Fritas</div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a class="marca" href="#inicio"><span class="chispa">🔥</span><b>Pistolas&nbsp;<span>Fritas</span></b></a>
+        <p>El canal en español de todo lo que echa fuego, hace ruido y explota. Una sola toma, cero ediciones, cero trucos.</p>
+        <div class="sociales">
+          <a href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+          <a href="https://x.com/PistolasFritas" target="_blank" rel="noopener" aria-label="X">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>El mundo</h4>
+        <ul>
+          <li><a href="#pruebas">Pruebas sin cortes</a></li>
+          <li><a href="#cementerio">El cementerio</a></li>
+          <li><a href="#buenas">Las que sí sirvieron</a></li>
+          <li><a href="#archivo">El archivo</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Lo demás</h4>
+        <ul>
+          <li><a href="#filosofia">Filosofía barata</a></li>
+          <li><a href="#chacharas">La tienda</a></li>
+          <li><a href="#patrocinios">Patrocinios</a></li>
+          <li><a href="#loco">¿Quién es este loco?</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="aviso">
+      <span>© <span id="anio">2026</span> Pistolas Fritas · Todos los derechos reservados.</span>
+      <span><b>El personaje es broma. La seguridad <span class="no-grande">NO</span>.</b> Promovemos siempre el manejo legal, seguro y responsable de las armas de fuego.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ EASTER EGGS ============ -->
+<button id="botonProhibido">NO TOQUES ESTE BOTÓN</button>
+<div id="cursor"><span class="aro"></span><span class="cruz-h"></span><span class="cruz-v"></span><span class="punto-c"></span></div>
+<div id="glitch">
+  <div class="error-falso">FATAL ERROR 0x50F: sitio_web.exe dejó de funcionar<br>&gt; culpable: TÚ<br>&gt; reiniciando…</div>
+  <div class="reganio">
+    "¿Ves? Te dije que no le picaras. Pero nooooo… ahí vas de curioso. Así empezó lo del cargador saltarín."
+    <small>— Pistolas Fritas, decepcionado pero no sorprendido</small>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+/* ================= INTRO CINEMÁTICA ================= */
+(function(){
+  var intro=document.getElementById('intro');
+  if(!intro)return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();return}
+  document.body.classList.add('congelado');
+  var terminada=false;
+  function terminar(){
+    if(terminada)return;terminada=true;
+    intro.classList.add('fuera');
+    document.body.classList.remove('congelado');
+    setTimeout(function(){intro.remove()},800);
+  }
+  document.getElementById('saltar').addEventListener('click',terminar);
+
+  /* Escena 1: el nombre, letra por letra */
+  var marca=document.getElementById('introMarca');
+  var texto1='PISTOLAS ', texto2='FRITAS';
+  texto1.split('').forEach(function(c){
+    var s=document.createElement('span');s.className='l';s.textContent=c==' '?' ':c;marca.appendChild(s);
+  });
+  texto2.split('').forEach(function(c){
+    var s=document.createElement('span');s.className='l fritas';s.textContent=c;marca.appendChild(s);
+  });
+  var e1=document.getElementById('escena1'),e2=document.getElementById('escena2'),flash=document.getElementById('introFlash');
+  e1.classList.add('activa');
+  var letras=marca.querySelectorAll('.l');
+  letras.forEach(function(l,i){setTimeout(function(){l.classList.add('va')},180+i*70)});
+  setTimeout(function(){document.getElementById('introLema').classList.add('va')},180+letras.length*70+200);
+
+  /* Escena 2: las tres frases, con flashazos */
+  var frases=e2.querySelectorAll('.intro-frase');
+  setTimeout(function(){
+    e1.classList.remove('activa');e2.classList.add('activa');
+    frases.forEach(function(f,i){
+      setTimeout(function(){
+        f.classList.add('va');
+        flash.classList.remove('va');void flash.offsetWidth;flash.classList.add('va');
+      },i*620);
+    });
+  },3200);
+  /* Fin */
+  setTimeout(terminar,3200+3*620+900);
+})();
+
+/* ================= NAV: fondo + progreso ================= */
+(function(){
+  var nav=document.getElementById('nav'), barra=document.getElementById('progreso');
+  function alScroll(){
+    nav.classList.toggle('compacta', scrollY>40);
+    var h=document.documentElement, total=h.scrollHeight-h.clientHeight;
+    barra.style.width=(total? (scrollY/total)*100 : 0)+'%';
+  }
+  addEventListener('scroll',alScroll,{passive:true}); alScroll();
+})();
+
+/* ================= Menú móvil ================= */
+(function(){
+  var hamb=document.getElementById('hamb'), velo=document.getElementById('veloMovil');
+  hamb.addEventListener('click',function(){
+    var abierto=velo.classList.toggle('abierto');
+    hamb.classList.toggle('abierto',abierto);
+    document.body.style.overflow=abierto?'hidden':'';
+  });
+  velo.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      velo.classList.remove('abierto');hamb.classList.remove('abierto');
+      document.body.style.overflow='';
+    });
+  });
+})();
+
+/* ================= Marquesina: bucle perfecto ================= */
+(function(){var p=document.getElementById('pista');p.innerHTML+=p.innerHTML})();
+
+/* ================= Frases del personaje, rotando ================= */
+(function(){
+  var frases=[
+    '<b>Pistolas Fritas</b> — una sola toma, cero ediciones. Lo que sale, sale.',
+    '«Esto no es un canal serio. Es un canal <b>honesto</b>. Hay diferencia.»',
+    '«Si falla, se queda en el video. <b>Punto.</b>»',
+    '«El que edita, algo esconde. Yo no escondo <b>nada</b>… bueno, las llaves del gabinete sí.»',
+    '«Del .22 al .50 BMG. Del cariñito al <b>escarmiento</b>.»',
+    '«¿Guion? ¿Cuál guion? Aquí el guion lo escribe la <b>pólvora</b>.»'
+  ];
+  var el=document.getElementById('fraseViva'),i=0;
+  setInterval(function(){
+    el.classList.remove('dice');
+    setTimeout(function(){
+      i=(i+1)%frases.length;el.innerHTML=frases[i];el.classList.add('dice');
+    },420);
+  },5200);
+})();
+
+/* ================= Apariciones al hacer scroll ================= */
+(function(){
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.rev').forEach(function(el){el.classList.add('vis')});return;
+  }
+  var obs=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+  },{threshold:.14,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rev').forEach(function(el){obs.observe(el)});
+})();
+
+/* ================= Manifiesto: líneas que pegan una a una ================= */
+(function(){
+  var lineas=document.querySelectorAll('.mani-linea');
+  if(!lineas.length)return;
+  var obs=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        var idx=Array.prototype.indexOf.call(lineas,e.target);
+        setTimeout(function(){e.target.classList.add('pega')},idx*140);
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:.5});
+  lineas.forEach(function(l){obs.observe(l)});
+})();
+
+/* ================= Contadores ================= */
+(function(){
+  function animar(el){
+    var fin=parseFloat(el.dataset.contar), suf=el.dataset.sufijo||'';
+    var dec=(''+el.dataset.contar).includes('.')?1:0;
+    if(fin===0){el.textContent='0'+suf;return}
+    var dur=1600, inicio=null;
+    function paso(t){
+      if(!inicio)inicio=t;
+      var p=Math.min((t-inicio)/dur,1);p=1-Math.pow(1-p,3);
+      el.textContent=(fin*p).toFixed(dec)+suf;
+      if(p<1)requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+  var obs=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){animar(e.target);obs.unobserve(e.target)}});
+  },{threshold:.6});
+  document.querySelectorAll('[data-contar]').forEach(function(el){obs.observe(el)});
+})();
+
+/* ================= Reproductor ================= */
+(function(){
+  var principal=document.getElementById('principal');
+  function reproducir(cont,id){
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    f.title='Video de Pistolas Fritas';
+    f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen=true;cont.appendChild(f);
+  }
+  principal.addEventListener('click',function(){
+    if(principal.querySelector('iframe'))return;
+    reproducir(principal,principal.dataset.id);
+  });
+  document.querySelectorAll('.mini').forEach(function(mini){
+    mini.addEventListener('click',function(){
+      var vieja=principal.querySelector('iframe');if(vieja)vieja.remove();
+      principal.dataset.id=mini.dataset.id;
+      principal.querySelector('.fondo').style.backgroundImage="url('https://i.ytimg.com/vi/"+mini.dataset.id+"/maxresdefault.jpg')";
+      document.getElementById('principal-titulo').textContent=mini.dataset.titulo;
+      document.getElementById('principal-meta').textContent=mini.dataset.meta;
+      document.querySelectorAll('.mini').forEach(function(m){m.classList.remove('activo')});
+      mini.classList.add('activo');
+      reproducir(principal,mini.dataset.id);
+      principal.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+  });
+})();
+
+/* ================= El archivo: arrastrar con el mouse ================= */
+(function(){
+  var riel=document.getElementById('riel');
+  var abajo=false,inicioX,scrollIni;
+  riel.addEventListener('mousedown',function(e){abajo=true;inicioX=e.pageX;scrollIni=riel.scrollLeft});
+  addEventListener('mouseup',function(){abajo=false});
+  riel.addEventListener('mouseleave',function(){abajo=false});
+  riel.addEventListener('mousemove',function(e){
+    if(!abajo)return;e.preventDefault();
+    riel.scrollLeft=scrollIni-(e.pageX-inicioX)*1.4;
+  });
+})();
+
+/* ================= Brasas en el hero ================= */
+(function(){
+  var cv=document.getElementById('embers');
+  if(!cv||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var cx=cv.getContext('2d'),W,H,brasas=[];
+  function medir(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight}
+  medir();addEventListener('resize',medir);
+  function nueva(inicial){
+    return{x:Math.random()*W,y:inicial?Math.random()*H:H+10,r:Math.random()*2.4+.6,
+      vy:Math.random()*.9+.35,vx:(Math.random()-.5)*.5,vida:Math.random()*.5+.35,osc:Math.random()*Math.PI*2};
+  }
+  for(var i=0;i<70;i++)brasas.push(nueva(true));
+  (function dibujar(){
+    cx.clearRect(0,0,W,H);
+    brasas.forEach(function(b,i){
+      b.y-=b.vy;b.osc+=.02;b.x+=b.vx+Math.sin(b.osc)*.3;
+      var alfa=b.vida*Math.max(0,Math.min(1,b.y/H+.15));
+      var g=cx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*3.5);
+      g.addColorStop(0,'rgba(255,170,80,'+alfa+')');
+      g.addColorStop(.5,'rgba(255,90,0,'+alfa*.5+')');
+      g.addColorStop(1,'rgba(255,60,0,0)');
+      cx.fillStyle=g;cx.beginPath();cx.arc(b.x,b.y,b.r*3.5,0,Math.PI*2);cx.fill();
+      if(b.y<-12)brasas[i]=nueva(false);
+    });
+    requestAnimationFrame(dibujar);
+  })();
+})();
+
+/* ================= Titular: ajustar líneas al ancho ================= */
+(function(){
+  var h1=document.querySelector('.hero h1');
+  function ajustar(){
+    h1.querySelectorAll('.linea').forEach(function(l){
+      l.style.fontSize='';
+      var disponible=h1.clientWidth, tam=parseFloat(getComputedStyle(l).fontSize), guard=40;
+      while(l.scrollWidth>disponible && tam>18 && guard--){tam-=2;l.style.fontSize=tam+'px'}
+    });
+  }
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(ajustar)}
+  ajustar();addEventListener('resize',ajustar);addEventListener('load',ajustar);
+})();
+
+/* ================= EASTER EGG 1: el botón prohibido ================= */
+(function(){
+  var boton=document.getElementById('botonProhibido'),glitch=document.getElementById('glitch');
+  var usado=false;
+  addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var pct=scrollY/(h.scrollHeight-h.clientHeight);
+    boton.classList.toggle('asoma',pct>.35&&pct<.92&&!usado);
+  },{passive:true});
+  boton.addEventListener('click',function(){
+    usado=true;boton.classList.remove('asoma');
+    document.body.classList.add('congelado');
+    glitch.className='';glitch.classList.add('roto');
+    setTimeout(function(){glitch.classList.add('reganiando')},1100);
+    setTimeout(function(){
+      glitch.className='';glitch.style.display='none';
+      document.body.classList.remove('congelado');
+    },8100); /* el regaño dura el doble: hay que darle tiempo a la gente de leer */
+  });
+})();
+
+/* ================= EASTER EGG 2: la flama del logo ================= */
+(function(){
+  var chispa=document.getElementById('chispaLogo'),toast=document.getElementById('toast');
+  var clicks=0,timer;
+  function avisar(msj,ms){
+    toast.textContent=msj;toast.classList.add('dice');
+    clearTimeout(timer);timer=setTimeout(function(){toast.classList.remove('dice')},ms||2600);
+  }
+  chispa.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    clicks++;
+    if(clicks===3)avisar('¿Qué le picas? Eso no hace nada… ¿o sí?');
+    if(clicks>=5){
+      clicks=0;
+      for(var i=0;i<26;i++){
+        (function(i){
+          setTimeout(function(){
+            var em=document.createElement('div');
+            em.className='lluvia-emoji';
+            em.textContent=['🔥','🌮','💥','🎯'][i%4];
+            em.style.left=Math.random()*100+'vw';
+            em.style.animationDuration=(Math.random()*1.6+1.4)+'s';
+            document.body.appendChild(em);
+            setTimeout(function(){em.remove()},3400);
+          },i*70);
+        })(i);
+      }
+      avisar('¿Contento? Ya suéltalo, que tengo que grabar.',3200);
+    }
+  });
+})();
+
+/* ================= Año actual ================= */
+document.getElementById('anio').textContent=new Date().getFullYear();
+</script>
+
+<script>
+/* ============================================================
+   MOTOR DE ALTA TECNOLOGÍA — sin librerías, todo a mano
+   (técnicas de sitios premiados: scroll choreography, shader
+   WebGL, cursor personalizado, tipografía cinética, tilt 3D)
+   ============================================================ */
+(function(){
+'use strict';
+var reducido=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var finto=matchMedia('(pointer: fine)').matches;
+var escritorio=matchMedia('(min-width: 861px)').matches;
+
+/* ---------- 1. MOTOR DE SCROLL (velocidad + progreso, estilo Lenis/ScrollTrigger) ---------- */
+var scrollY_s=scrollY, velocidad=0;
+var suscriptores=[];
+function enScroll(fn){suscriptores.push(fn)}
+(function bucle(){
+  var objetivo=scrollY;
+  velocidad=(objetivo-scrollY_s);
+  scrollY_s+=(objetivo-scrollY_s)*.16; /* lerp con peso */
+  if(Math.abs(objetivo-scrollY_s)<.05)scrollY_s=objetivo;
+  for(var i=0;i<suscriptores.length;i++)suscriptores[i](scrollY_s,velocidad);
+  requestAnimationFrame(bucle);
+})();
+function progresoDe(el,margen){
+  var r=el.getBoundingClientRect();
+  var total=r.height-innerHeight;
+  if(total<=0)return 0;
+  return Math.max(0,Math.min(1,-r.top/total));
+}
+
+/* ---------- 2. TIPOGRAFÍA CINÉTICA: títulos letra por letra ---------- */
+if(!reducido){
+  document.querySelectorAll('.titulo').forEach(function(t){
+    var nodos=Array.prototype.slice.call(t.childNodes);
+    t.innerHTML='';
+    var cuenta=0;
+    nodos.forEach(function(n){
+      if(n.nodeType===3){
+        /* texto normal: letra por letra */
+        n.textContent.split(/(\s+)/).forEach(function(pal){
+          if(!pal)return;
+          if(/^\s+$/.test(pal)){t.appendChild(document.createTextNode(' '));return}
+          var w=document.createElement('span');w.className='palabra';
+          pal.split('').forEach(function(c){
+            var s=document.createElement('span');s.className='char';
+            s.style.transitionDelay=(cuenta*34)+'ms';s.textContent=c;w.appendChild(s);cuenta++;
+          });
+          t.appendChild(w);
+        });
+      }else if(n.nodeType===1){
+        /* palabras con degradado: suben en bloque para no romper el clip del gradiente */
+        var w=document.createElement('span');w.className='palabra';
+        var clon=n.cloneNode(true);clon.classList.add('char');
+        clon.style.transitionDelay=(cuenta*34)+'ms';cuenta+=Math.min(n.textContent.length,6);
+        w.appendChild(clon);t.appendChild(w);
+      }
+    });
+  });
+  var obsTitulos=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('armado');obsTitulos.unobserve(e.target)}});
+  },{threshold:.4});
+  document.querySelectorAll('.titulo').forEach(function(t){obsTitulos.observe(t)});
+}
+
+/* ---------- 3. MANIFIESTO: escena fija con scrub (pin de ScrollTrigger, hecho con sticky) ---------- */
+if(!reducido&&escritorio){
+  document.documentElement.classList.add('scrub');
+  var mani=document.querySelector('.manifiesto');
+  var lineas=mani.querySelectorAll('.mani-linea');
+  var fondoPal=mani.querySelector('.fondo-palabra');
+  var firma=mani.querySelector('.mani-firma');
+  var N=lineas.length;
+  enScroll(function(){
+    var p=progresoDe(mani);
+    lineas.forEach(function(l,i){
+      /* cada línea se enciende temprano y sin desenfoque: siempre legible */
+      var ini=i/(N+2), fin=(i+1)/(N+2);
+      var lp=Math.max(0,Math.min(1,(p-ini)/(fin-ini)));
+      var suave=1-Math.pow(1-lp,3);
+      l.style.opacity=.38+suave*.62;
+      l.style.transform='translateY('+(18-suave*18)+'px)';
+    });
+    fondoPal.style.transform='translate(-50%,-50%) translateX('+((p-.5)*160)+'px) rotate('+((p-.5)*4)+'deg)';
+    var fp=Math.max(0,Math.min(1,(p-(N/(N+2)))/(1/(N+2))));
+    firma.style.opacity=fp;firma.style.transform='translateY('+(20-fp*20)+'px)';
+    firma.classList.add('vis');
+  });
+}
+
+/* ---------- 4. PARALLAX del hero + marquesina con velocidad ---------- */
+if(!reducido){
+  var lineasH1=document.querySelectorAll('.hero h1 .linea');
+  var heroBadge=document.querySelector('.hero-badge');
+  var heroFondo=document.querySelector('.hero-fondo');
+  var boca=document.querySelector('.boca-suelta');
+  enScroll(function(y){
+    if(y<innerHeight*1.2){
+      lineasH1.forEach(function(l,i){l.style.transform='translateY('+y*(0.08+i*0.07)+'px)'});
+      if(heroFondo)heroFondo.style.setProperty('translate','0 '+y*.18+'px');
+      if(heroBadge)heroBadge.style.opacity=Math.max(0,1-y/420);
+      if(boca)boca.style.opacity=Math.max(0,1-y/560);
+    }
+  });
+  /* Marquesina: velocidad del scroll la acelera y la ladea */
+  var pista=document.getElementById('pista');
+  var marquesina=document.querySelector('.marquesina');
+  var despl=0, mitad=0;
+  addEventListener('load',function(){mitad=pista.scrollWidth/2});
+  setTimeout(function(){mitad=pista.scrollWidth/2},600);
+  pista.style.animation='none';
+  var inclina=0;
+  enScroll(function(y,v){
+    var extra=Math.min(Math.abs(v)*.12,4);
+    despl+=0.7+extra;
+    if(mitad>0&&despl>=mitad)despl-=mitad;
+    pista.style.transform='translateX('+(-despl)+'px)';
+    inclina+=((Math.max(-10,Math.min(10,v*.5)))-inclina)*.08;
+    marquesina.style.transform='rotate(-1.2deg) scale(1.02) skewX('+inclina+'deg)';
+  });
+}
+
+/* ---------- 5. CURSOR MIRA + botones magnéticos ---------- */
+if(!reducido&&finto){
+  var cursor=document.getElementById('cursor');
+  var cx=innerWidth/2,cy=innerHeight/2,mx=cx,my=cy,visible=false;
+  document.body.classList.add('con-cursor');
+  addEventListener('mousemove',function(e){
+    mx=e.clientX;my=e.clientY;
+    if(!visible){visible=true;cursor.style.opacity=''}
+  },{passive:true});
+  document.documentElement.addEventListener('mouseleave',function(){cursor.style.opacity='0'});
+  document.documentElement.addEventListener('mouseenter',function(){cursor.style.opacity=''});
+  (function sigue(){
+    cx+=(mx-cx)*.22;cy+=(my-cy)*.22;
+    cursor.style.transform='translate('+cx+'px,'+cy+'px)';
+    requestAnimationFrame(sigue);
+  })();
+  var interactivos='a,button,.mini,.principal,.producto,.tumba,.lugar,.post,input,textarea,.hito';
+  document.addEventListener('mouseover',function(e){
+    if(e.target.closest(interactivos))cursor.classList.add('apunta');
+  });
+  document.addEventListener('mouseout',function(e){
+    if(e.target.closest(interactivos))cursor.classList.remove('apunta');
+  });
+  addEventListener('mousedown',function(){cursor.classList.add('dispara')});
+  addEventListener('mouseup',function(){cursor.classList.remove('dispara')});
+  /* Botones magnéticos: se acercan al cursor */
+  document.querySelectorAll('.btn').forEach(function(b){
+    b.addEventListener('mousemove',function(e){
+      var r=b.getBoundingClientRect();
+      var dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2);
+      b.style.translate=(dx*.14)+'px '+(dy*.28)+'px';
+    });
+    b.addEventListener('mouseleave',function(){b.style.translate='0 0'});
+  });
+}
+
+/* ---------- 6. FOGONAZO + agujeros de bala al hacer clic ---------- */
+if(!reducido&&finto){
+  var balazos=[];
+  addEventListener('click',function(e){
+    if(e.target.closest('a,button,input,textarea,label,.mini,.principal,iframe,#cursor,#intro,#glitch,.velo-movil'))return;
+    var f=document.createElement('div');f.className='fogonazo';
+    f.style.left=e.clientX+'px';f.style.top=e.clientY+'px';
+    document.body.appendChild(f);setTimeout(function(){f.remove()},320);
+    var b=document.createElement('div');b.className='balazo';
+    b.style.left=(e.pageX)+'px';b.style.top=(e.pageY)+'px';
+    document.body.appendChild(b);balazos.push(b);
+    /* casquillos que saltan */
+    for(var c=0;c<2;c++){
+      var q=document.createElement('div');q.className='casquillo';
+      q.style.left=e.clientX+'px';q.style.top=e.clientY+'px';
+      q.style.setProperty('--dx',((40+Math.random()*75)*(Math.random()<.22?-1:1))+'px');
+      q.style.animationDelay=(c*0.06)+'s';
+      document.body.appendChild(q);
+      (function(q){setTimeout(function(){q.remove()},1100)})(q);
+    }
+    if(balazos.length>14){var viejo=balazos.shift();viejo.remove()}
+    setTimeout(function(){b.remove();var i=balazos.indexOf(b);if(i>-1)balazos.splice(i,1)},4600);
+  });
+}
+
+/* ---------- 7. TILT 3D con brillo en tarjetas ---------- */
+if(!reducido&&finto){
+  document.querySelectorAll('.producto,.tumba,.lugar,.post,.principal,.hito').forEach(function(card){
+    card.classList.add('tilt');
+    var max=card.classList.contains('principal')?4:8;
+    card.addEventListener('mousemove',function(e){
+      var r=card.getBoundingClientRect();
+      var px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      card.style.transform='perspective(900px) rotateY('+((px-.5)*max)+'deg) rotateX('+((.5-py)*max)+'deg)';
+      card.style.setProperty('--gx',(px*100)+'%');
+      card.style.setProperty('--gy',(py*100)+'%');
+    });
+    card.addEventListener('mouseleave',function(){card.style.transform=''});
+  });
+}
+
+/* ---------- 8. SHADER WEBGL: fuego vivo en el hero ---------- */
+if(!reducido&&escritorio){(function(){
+  var cv=document.getElementById('fuegoGL');
+  var gl=cv.getContext('webgl',{alpha:true,antialias:false,powerPreference:'low-power'});
+  if(!gl){cv.remove();return}
+  var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+  var fs='precision mediump float;uniform vec2 R;uniform float T;uniform vec2 M;'+
+  'float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}'+
+  'float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);'+
+  'return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}'+
+  'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*noise(p);p*=2.03;a*=.5;}return v;}'+
+  'void main(){vec2 uv=gl_FragCoord.xy/R;vec2 q=uv;q.x*=R.x/R.y;'+
+  'float t=T*.55;'+
+  'vec2 tir=vec2(q.x*3.2+(M.x-.5)*.8, q.y*2.2 - t);'+
+  'float n=fbm(tir+fbm(tir+vec2(0.,t*.4))*.9);'+
+  /* banda de fuego arriba-centro: ancha, sin tapar la cara (izquierda libre) */
+  'float franja=smoothstep(.55,.95,uv.y);'+
+  'float campana=exp(-pow((uv.x-.64)*3.6,2.));'+
+  'float cara=smoothstep(.30,.50,uv.x);'+
+  'float f=franja*campana*cara*(n*1.6+.2);'+
+  'f+=pow(max(0.,uv.y),9.)*campana*cara*.5;'+ /* brasa del borde superior */
+  'f=clamp(f,0.,1.);'+
+  'vec3 col=vec3(0.);'+
+  'col=mix(col,vec3(.45,.05,0.),smoothstep(.12,.35,f));'+
+  'col=mix(col,vec3(1.,.35,.02),smoothstep(.35,.62,f));'+
+  'col=mix(col,vec3(1.,.78,.35),smoothstep(.66,.9,f));'+
+  'float a=smoothstep(.1,.5,f)*.9;'+
+  'gl_FragColor=vec4(col,a);}';
+  function shader(tipo,src){var s=gl.createShader(tipo);gl.shaderSource(s,src);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(s);return s}
+  var prog=gl.createProgram();
+  try{
+    gl.attachShader(prog,shader(gl.VERTEX_SHADER,vs));
+    gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,fs));
+    gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw 'link';
+  }catch(e){cv.remove();return}
+  gl.useProgram(prog);
+  var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  var locP=gl.getAttribLocation(prog,'p');
+  gl.enableVertexAttribArray(locP);gl.vertexAttribPointer(locP,2,gl.FLOAT,false,0,0);
+  var uR=gl.getUniformLocation(prog,'R'),uT=gl.getUniformLocation(prog,'T'),uM=gl.getUniformLocation(prog,'M');
+  gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+  var mX=.5,mY=.5,smX=.5,smY=.5,activo=true,t0=performance.now();
+  addEventListener('mousemove',function(e){mX=e.clientX/innerWidth;mY=e.clientY/innerHeight},{passive:true});
+  function medir(){
+    var esc=.5; /* media resolución = 60fps fácil */
+    cv.width=Math.floor(cv.offsetWidth*esc);cv.height=Math.floor(cv.offsetHeight*esc);
+    gl.viewport(0,0,cv.width,cv.height);
+  }
+  medir();addEventListener('resize',medir);
+  new IntersectionObserver(function(es){activo=es[0].isIntersecting},{threshold:0}).observe(cv);
+  document.addEventListener('visibilitychange',function(){activo=!document.hidden});
+  (function pinta(){
+    requestAnimationFrame(pinta);
+    if(!activo)return;
+    smX+=(mX-smX)*.04;smY+=(mY-smY)*.04;
+    gl.uniform2f(uR,cv.width,cv.height);
+    gl.uniform1f(uT,(performance.now()-t0)/1000);
+    gl.uniform2f(uM,smX,smY);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+  })();
+})()}
+
+/* ---------- 9. CONTADOR DE CARGA en la intro ---------- */
+(function(){
+  var carg=document.getElementById('cargando');
+  if(!carg||!document.getElementById('intro'))return;
+  var b=carg.querySelector('b'),v=0;
+  var iv=setInterval(function(){
+    v+=Math.random()*7+2;
+    if(v>=100){v=100;clearInterval(iv);carg.style.opacity='0';carg.style.transition='opacity .4s'}
+    b.textContent=Math.floor(v)+'%';
+  },95);
+})();
+})();
+</script>
+
+</body>
+</html>
