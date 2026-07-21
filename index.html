@@ -188,7 +188,19 @@ body::after{
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
 .nav-cta{padding:11px 22px;font-size:.9rem}
-.progreso{position:absolute;bottom:-1px;left:0;height:2px;width:0;background:var(--grad-fire)}
+/* Bala trazadora: el progreso del scroll baja como bala con estela */
+#trazadora{position:fixed;left:16px;top:12px;bottom:12px;width:3px;z-index:850;pointer-events:none}
+#trazadora .estela{
+  position:absolute;top:0;left:0;width:3px;height:0;border-radius:3px;
+  background:linear-gradient(180deg,transparent 0%,rgba(255,90,0,.12) 25%,rgba(255,122,24,.55) 80%,#ffb347 100%);
+}
+#trazadora .bala{
+  position:absolute;left:50%;top:0;width:6px;height:16px;margin-left:-3px;
+  border-radius:3px 3px 5px 5px;
+  background:linear-gradient(180deg,#ffe0b0,#ff7a18 55%,#b8400f);
+  box-shadow:0 0 12px rgba(255,150,50,.95),0 0 34px rgba(255,90,0,.5);
+}
+@media(max-width:860px){#trazadora{display:none}}
 .hamb{display:none;background:none;border:0;cursor:pointer;width:40px;height:40px;position:relative;z-index:960}
 .hamb i{display:block;width:26px;height:2px;background:var(--ink);margin:6px auto;transition:transform .3s var(--ease),opacity .2s}
 .hamb.abierto i:nth-child(1){transform:translateY(8px) rotate(45deg)}
@@ -942,8 +954,8 @@ html.scrub .mani-lienzo{padding:0}
     <a class="btn nav-cta" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA?sub_confirmation=1" target="_blank" rel="noopener"><span class="ico">▶</span> Suscríbete</a>
     <button class="hamb" id="hamb" aria-label="Menú"><i></i><i></i><i></i></button>
   </div>
-  <div class="progreso" id="progreso"></div>
 </nav>
+<div id="trazadora" aria-hidden="true"><div class="estela"></div><div class="bala"></div></div>
 <div class="velo-movil" id="veloMovil">
   <a href="#pruebas">Pruebas sin cortes</a>
   <a href="#cementerio">El cementerio</a>
@@ -1266,7 +1278,7 @@ html.scrub .mani-lienzo{padding:0}
       </div>
       <a class="producto rev" data-d="2" href="https://mrmezcal.com" target="_blank" rel="noopener">
         <div class="producto-arte mezcal-arte"><img src="https://mrmezcal.com/og-image.jpg" alt="Mr. Mezcal — mezcal artesanal de Oaxaca" loading="lazy"></div>
-        <div class="producto-cuerpo"><h3>Mezcal reglamentario</h3><p>Para un coctelito después de ir a disparar. Nunca al revés — eso sí es regla.</p><span class="ya-link">MrMezcal.com →</span></div>
+        <div class="producto-cuerpo"><span class="ya-link" style="margin-top:0;margin-bottom:14px">MrMezcal.com →</span><h3>Mi otra mala decisión</h3><p>Pícale, así comienzan todas las compras innecesarias.</p></div>
       </a>
       <div class="producto rev" data-d="3">
         <div class="producto-arte"><div class="aro"></div><span class="emoji">🎯</span></div>
@@ -1445,13 +1457,20 @@ html.scrub .mani-lienzo{padding:0}
 
 /* ================= NAV: fondo + progreso ================= */
 (function(){
-  var nav=document.getElementById('nav'), barra=document.getElementById('progreso');
+  var nav=document.getElementById('nav');
+  var traz=document.getElementById('trazadora');
+  var estela=traz.querySelector('.estela'), bala=traz.querySelector('.bala');
   function alScroll(){
     nav.classList.toggle('compacta', scrollY>40);
     var h=document.documentElement, total=h.scrollHeight-h.clientHeight;
-    barra.style.width=(total? (scrollY/total)*100 : 0)+'%';
+    var p=total? scrollY/total : 0;
+    var alto=traz.offsetHeight-18;
+    estela.style.height=(p*alto)+'px';
+    bala.style.top=(p*alto)+'px';
   }
-  addEventListener('scroll',alScroll,{passive:true}); alScroll();
+  addEventListener('scroll',alScroll,{passive:true});
+  addEventListener('resize',alScroll);
+  alScroll();
 })();
 
 /* ================= Menú móvil ================= */
