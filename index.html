@@ -51,6 +51,7 @@ body{
   overflow-x:hidden;-webkit-font-smoothing:antialiased;
 }
 body.congelado{overflow:hidden}
+body.rafaga{user-select:none;-webkit-user-select:none}
 ::selection{background:var(--hot);color:#fff}
 ::-webkit-scrollbar{width:11px}
 ::-webkit-scrollbar-track{background:#0c0a08}
@@ -310,7 +311,16 @@ body::after{
 }
 .boca-suelta p.dice{opacity:1;transform:none}
 .boca-suelta b{color:var(--ink)}
-.hero-acciones{display:flex;gap:16px;margin-top:38px;flex-wrap:wrap}
+.tip-disparo{
+  margin-top:22px;font-family:var(--font-cond);font-weight:600;font-size:.92rem;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint);
+  animation:tipParpadea 3s ease-in-out infinite;
+}
+.tip-disparo b{color:var(--hot-2)}
+@keyframes tipParpadea{0%,100%{opacity:.55}50%{opacity:1}}
+@media (pointer:coarse){.tip-disparo{display:none}}
+@media (max-width:860px){.tip-disparo{display:none}}
+.hero-acciones{display:flex;gap:16px;margin-top:26px;flex-wrap:wrap}
 .hero-datos{display:flex;margin:60px auto 0;border-top:1px solid rgba(255,255,255,.12);max-width:660px;flex-wrap:wrap;justify-content:center}
 .hero-datos div{padding:20px 34px 0 0;margin-right:34px;border-right:1px solid rgba(255,255,255,.1)}
 .hero-datos div:last-child{border-right:0;margin-right:0}
@@ -1143,6 +1153,7 @@ html.scrub .mani-lienzo{padding:0}
       <span class="linea fuego explota"><span class="tilta">¡Y explota!</span></span>
     </h1>
     <div class="boca-suelta"><p id="fraseViva" class="dice"><b>Pistolas Fritas</b> — una sola toma, cero ediciones. Lo que sale, sale.</p></div>
+    <p class="tip-disparo">🎯 Presiona tu mouse para disparar · mantenlo presionado: <b>modo automático</b></p>
     <div class="hero-acciones">
       <a class="btn" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA?sub_confirmation=1" target="_blank" rel="noopener"><span class="ico">▶</span> Suscríbete al relajo</a>
       <a class="btn fantasma" href="#pruebas">A ver qué tanto truena</a>
@@ -2049,26 +2060,26 @@ window.__recoil=function(mult){
 window.__disparos=0;
 if(!reducido&&finto){
   var balazos=[];
-  addEventListener('click',function(e){
-    var esBlanco=e.target.closest('.blanco-item');
-    if(!esBlanco&&e.target.closest('a,button,input,textarea,label,.mini,.principal,iframe,#cursor,#intro,#glitch,.velo-movil'))return;
+  var miraX=innerWidth/2,miraY=innerHeight/2;
+  addEventListener('mousemove',function(e){miraX=e.clientX;miraY=e.clientY},{passive:true});
+  function disparar(cx,cy){
     var f=document.createElement('div');f.className='fogonazo';
-    f.style.left=e.clientX+'px';f.style.top=e.clientY+'px';
+    f.style.left=cx+'px';f.style.top=cy+'px';
     document.body.appendChild(f);setTimeout(function(){f.remove()},320);
     var b=document.createElement('div');b.className='balazo';
-    b.style.left=(e.pageX)+'px';b.style.top=(e.pageY)+'px';
+    b.style.left=(cx+scrollX)+'px';b.style.top=(cy+scrollY)+'px';
     b.style.setProperty('--rot',Math.floor(Math.random()*360)+'deg');
     document.body.appendChild(b);balazos.push(b);
     /* casquillos que saltan */
     for(var c=0;c<2;c++){
       var q=document.createElement('div');q.className='casquillo';
-      q.style.left=e.clientX+'px';q.style.top=e.clientY+'px';
+      q.style.left=cx+'px';q.style.top=cy+'px';
       q.style.setProperty('--dx',((40+Math.random()*75)*(Math.random()<.22?-1:1))+'px');
       q.style.animationDelay=(c*0.06)+'s';
       document.body.appendChild(q);
       (function(q){setTimeout(function(){q.remove()},1100)})(q);
     }
-    if(balazos.length>14){var viejo=balazos.shift();viejo.remove()}
+    if(balazos.length>34){var viejo=balazos.shift();viejo.remove()}
     setTimeout(function(){b.remove();var i=balazos.indexOf(b);if(i>-1)balazos.splice(i,1)},4600);
     /* game feel: retroceso, sonido, contador y casquillo que aterriza */
     __recoil(1);
@@ -2087,8 +2098,35 @@ if(!reducido&&finto){
         var todos=pila.querySelectorAll('.casq-piso');
         if(todos.length>40){todos[0].style.opacity='0';setTimeout(function(){todos[0].remove()},800)}
       },850);
-    })(e.clientX);
+    })(cx);
+  }
+  /* MODO METRALLETA: mantén presionado y dispara en ráfaga */
+  var rafagaInt=null,rafagaTO=null;
+  function altoAlFuego(){
+    if(rafagaInt){clearInterval(rafagaInt);rafagaInt=null}
+    if(rafagaTO){clearTimeout(rafagaTO);rafagaTO=null}
+    document.body.classList.remove('rafaga');
+  }
+  addEventListener('mousedown',function(e){
+    if(e.button!==0)return;
+    var t=e.target;
+    var esBlanco=t.closest&&t.closest('.blanco-item');
+    if(!esBlanco&&t.closest&&t.closest('a,button,input,textarea,label,.mini,.principal,iframe,#cursor,#intro,#glitch,.velo-movil,.archivo-riel'))return;
+    e.preventDefault();
+    document.body.classList.add('rafaga');
+    disparar(e.clientX,e.clientY); /* un click = un disparo */
+    clearInterval(rafagaInt);clearTimeout(rafagaTO);
+    /* solo si lo MANTIENES presionado entra el modo automático */
+    rafagaTO=setTimeout(function(){
+      rafagaInt=setInterval(function(){
+        disparar(miraX+(Math.random()*18-9), miraY+(Math.random()*18-9));
+      },115);
+    },280);
   });
+  addEventListener('mouseup',altoAlFuego);
+  addEventListener('blur',altoAlFuego);
+  document.addEventListener('mouseleave',altoAlFuego);
+  document.addEventListener('visibilitychange',altoAlFuego);
 }
 
 /* ---------- 7. TILT 3D con brillo en tarjetas ---------- */
