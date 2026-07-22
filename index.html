@@ -312,8 +312,8 @@ body::after{
 .boca-suelta p.dice{opacity:1;transform:none}
 .boca-suelta b{color:var(--ink)}
 .tip-disparo{
-  position:absolute;right:5%;top:42%;z-index:3;max-width:330px;
-  font-family:var(--font-cond);font-weight:600;font-size:.95rem;line-height:1.6;
+  position:absolute;right:1.5%;top:23%;z-index:3;max-width:272px;
+  font-family:var(--font-cond);font-weight:600;font-size:.85rem;line-height:1.6;
   text-transform:uppercase;letter-spacing:.12em;color:var(--ink);text-align:center;
   background:rgba(10,9,8,.55);backdrop-filter:blur(6px);
   border:1px solid rgba(255,157,60,.4);border-radius:12px;padding:14px 20px;
@@ -1182,7 +1182,6 @@ html.scrub .mani-lienzo{padding:0}
 <!-- ============ MANIFIESTO ============ -->
 <section class="manifiesto" id="manifiesto">
  <div class="mani-lienzo">
-  <div class="fondo-palabra">HONESTO</div>
   <div class="wrap">
     <div class="manifiesto-lineas">
       <div class="mani-linea">Una sola toma.</div>
@@ -1438,7 +1437,6 @@ html.scrub .mani-lienzo{padding:0}
 
 <!-- ============ COMPRA ESTAS CHÁCHARAS ============ -->
 <section class="tienda" id="chacharas">
-  <div class="fondo-palabra">CHÁCHARAS</div>
   <div class="wrap">
     <div class="rev">
       <div class="kicker"><span class="num">06</span> Comercio de primera necesidad</div>
@@ -1503,7 +1501,7 @@ html.scrub .mani-lienzo{padding:0}
           <textarea id="mensaje" name="mensaje" placeholder="Convéncenos. Somos fáciles, pero no tanto." required></textarea>
         </div>
         <button class="btn" type="submit">Enviar propuesta 🔥</button>
-        <p class="patro-nota">Las propuestas serias se responden rápido. El spam se fusila. Literal.</p>
+        <p class="patro-nota">Las propuestas serias se responden rápido. El spam se fusila. Literalmente.</p>
       </form>
     </div>
   </div>
@@ -1974,7 +1972,7 @@ if(!reducido&&escritorio){
       l.style.opacity=.38+suave*.62;
       l.style.transform='translateY('+(18-suave*18)+'px)';
     });
-    fondoPal.style.transform='translate(-50%,-50%) translateX('+((p-.5)*160)+'px) rotate('+((p-.5)*4)+'deg)';
+    if(fondoPal)fondoPal.style.transform='translate(-50%,-50%) translateX('+((p-.5)*160)+'px) rotate('+((p-.5)*4)+'deg)';
     var fp=Math.max(0,Math.min(1,(p-(N/(N+2)))/(1/(N+2))));
     firma.style.opacity=fp;firma.style.transform='translateY('+(20-fp*20)+'px)';
     firma.classList.add('vis');
