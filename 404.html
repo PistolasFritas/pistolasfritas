@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Fallaste el tiro | Pistolas Fritas</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,600;0,700;1,500&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0908;--ink:#f5efe6;--ink-dim:#a89f93;--hot:#ff5a00;--hot-2:#ff9d3c;
+  --grad-fire:linear-gradient(92deg,#ffb347 0%,#ff7a18 38%,#ff3d00 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 115%, rgba(255,61,0,.18), transparent 60%),
+    var(--bg);
+  color:var(--ink);font-family:'Barlow',system-ui,sans-serif;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;overflow:hidden;padding:24px;
+}
+body::after{
+  content:"";position:fixed;inset:-50%;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.caja{max-width:640px;position:relative;z-index:2}
+.blanco{
+  width:190px;height:190px;margin:0 auto 34px;border-radius:50%;position:relative;
+  background:
+    radial-gradient(circle, #f5efe6 0 12%, #d43a10 12% 26%, #f5efe6 26% 40%, #d43a10 40% 54%, #f5efe6 54% 68%, #d43a10 68% 82%, #f5efe6 82% 100%);
+  box-shadow:0 24px 60px -18px rgba(0,0,0,.8), 0 0 0 6px #1b150d;
+  animation:balancea 4s ease-in-out infinite;
+  transform-origin:top center;
+}
+@keyframes balancea{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+.blanco::before{
+  content:"";position:absolute;top:-40px;left:50%;width:3px;height:40px;margin-left:-1.5px;
+  background:#4a3423;
+}
+/* el balazo... en la esquina, bien lejos del centro */
+.hoyo{
+  position:absolute;right:-26px;top:18px;width:24px;height:24px;border-radius:50%;
+  background:radial-gradient(circle,#000 0 38%,rgba(30,22,16,.9) 55%,rgba(60,45,30,.4) 75%,transparent 100%);
+}
+.num{
+  font-family:'Anton',impact,sans-serif;font-size:clamp(5rem,17vw,9.5rem);line-height:1;
+  background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 30px rgba(255,90,0,.4));
+}
+h1{
+  font-family:'Anton',impact,sans-serif;font-size:clamp(1.8rem,5.5vw,3rem);
+  text-transform:uppercase;letter-spacing:.02em;margin-top:6px;
+}
+p{color:var(--ink-dim);font-size:1.08rem;margin:18px auto 0;max-width:460px;line-height:1.6}
+p b{color:var(--ink)}
+.firma{font-family:'Barlow Condensed',sans-serif;font-style:italic;color:var(--hot-2);margin-top:14px;font-size:1rem}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;margin-top:36px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.05rem;
+  text-transform:uppercase;letter-spacing:.14em;color:#160a02;
+  background:var(--grad-fire);padding:16px 36px;border-radius:8px;text-decoration:none;
+  box-shadow:0 10px 30px -8px rgba(255,90,0,.55);
+  transition:transform .25s cubic-bezier(.22,.9,.28,1),box-shadow .25s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 16px 42px -8px rgba(255,90,0,.7)}
+.mini{margin-top:26px;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.26em;color:#6e675e}
+</style>
+</head>
+<body>
+<div class="caja">
+  <div class="blanco"><div class="hoyo"></div></div>
+  <div class="num">404</div>
+  <h1>Fallaste el tiro.</h1>
+  <p>Esta página no existe. Le pegaste a la esquina del blanco, al aire, o de plano a la cerca del vecino. <b>Tranquilo:</b> aquí las fallas no se editan… se celebran.</p>
+  <p class="firma">"Ni el mejor tirador le pega a todo." — Pistolas Fritas</p>
+  <a class="btn" href="/">▶ Volver al rancho</a>
+  <div class="mini">Error 404 · Blanco no encontrado</div>
+</div>
+</body>
+</html>
