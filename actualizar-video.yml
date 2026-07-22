@@ -37,7 +37,7 @@ jobs:
           bloque = f'''<!--ULTIMO_INICIO-->
         <div class="mini" data-id="{video_id}" data-titulo="{titulo}" data-meta="Lo más nuevo del canal">
           <div class="tapa"><img src="https://i.ytimg.com/vi/{video_id}/hqdefault.jpg" alt="Lo más nuevo de Pistolas Fritas" loading="lazy"></div>
-          <div><h4>{titulo}</h4><small>🆕 Lo más nuevo</small></div>
+          <div><h4>{titulo}</h4><small>🆕 Lo más nuevo</small><a class="mini-yt" href="https://www.youtube.com/watch?v={video_id}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ YouTube</a></div>
         </div>
         <!--ULTIMO_FIN-->'''
 

@@ -454,6 +454,42 @@ body::after{
 .mini small{display:block;margin-top:6px;font-family:var(--font-cond);font-size:.78rem;text-transform:uppercase;letter-spacing:.18em;color:var(--hot-2)}
 .mini.activo{border-color:var(--hot);background:var(--panel-2)}
 .videos-pie{margin-top:44px;text-align:center}
+.ver-yt{
+  display:inline-flex;align-items:center;gap:6px;margin-top:12px;
+  font-family:var(--font-cond);font-weight:700;font-size:.85rem;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--hot-2);
+  border-bottom:1px solid var(--line-hot);padding-bottom:2px;
+}
+.ver-yt:hover{color:#ffd9a8}
+.mini-yt{
+  display:inline-block;margin-top:6px;margin-left:12px;
+  font-family:var(--font-cond);font-weight:700;font-size:.74rem;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint);
+}
+.mini-yt:hover{color:var(--hot-2)}
+.vt-abre{text-align:center;margin-top:22px}
+
+/* ============================================================
+   LA VIDEOTECA (playlist completa incrustada)
+   ============================================================ */
+.videoteca{padding:120px 0;border-top:1px solid var(--line)}
+.videoteca-caja{
+  position:relative;max-width:1000px;margin:48px auto 0;aspect-ratio:16/9;
+  border-radius:16px;overflow:hidden;cursor:pointer;background:#000;
+  border:1px solid var(--line);
+  transition:border-color .3s,box-shadow .35s,transform .35s var(--ease);
+}
+.videoteca-caja:hover{border-color:var(--line-hot);transform:translateY(-4px);box-shadow:0 28px 70px -24px rgba(255,61,0,.35)}
+.vt-fondo{
+  position:absolute;inset:0;
+  background:url("https://i.ytimg.com/vi/H3dCmbfnbLs/maxresdefault.jpg") center/cover no-repeat;
+  filter:saturate(.9);transition:transform .8s var(--ease);
+}
+.videoteca-caja:hover .vt-fondo{transform:scale(1.05)}
+.vt-sombra{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(5,4,3,.92) 92%)}
+.vt-contenido{position:absolute;left:0;right:0;bottom:0;padding:30px;z-index:2}
+.vt-contenido h3{font-family:var(--font-cond);font-weight:700;font-size:clamp(1.3rem,2.2vw,1.8rem);line-height:1.2;margin-top:12px}
+.videoteca-caja iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:5}
 
 /* ============================================================
    EL CEMENTERIO
@@ -1157,6 +1193,7 @@ html.scrub .mani-lienzo{padding:0}
 <div id="trazadora" aria-hidden="true"><div class="estela"></div><div class="bala"></div></div>
 <div class="velo-movil" id="veloMovil">
   <a href="#pruebas">Pruebas sin cortes</a>
+  <a href="#videoteca">La videoteca (los 345)</a>
   <a href="#cementerio">El cementerio</a>
   <a href="#buenas">Las que sí sirvieron</a>
   <a href="#archivo">El archivo</a>
@@ -1267,36 +1304,58 @@ html.scrub .mani-lienzo{padding:0}
           <span class="etiqueta-top mero-visto">★ El más visto · <b>32.5 MILLONES</b> de vistas</span>
           <h3 id="principal-titulo">¡Qué Emoción! Disparando Armas de Fuego Calibre .22 hasta el .50</h3>
           <div class="meta" id="principal-meta">4K · Campo de tiro · Una sola toma, obviamente</div>
+          <a class="ver-yt" id="principalYT" href="https://www.youtube.com/watch?v=H3dCmbfnbLs" target="_blank" rel="noopener" onclick="event.stopPropagation()">Ver en YouTube ↗</a>
         </div>
       </div>
       <div class="lista-lateral rev" data-d="2">
         <!--ULTIMO_INICIO-->
         <div class="mini" data-id="H3dCmbfnbLs" data-titulo="¡Qué Emoción! Disparando Armas de Fuego Calibre .22 hasta el .50" data-meta="Lo más nuevo del canal">
           <div class="tapa"><img src="https://i.ytimg.com/vi/H3dCmbfnbLs/hqdefault.jpg" alt="Lo más nuevo de Pistolas Fritas" loading="lazy"></div>
-          <div><h4>¡Qué Emoción! Disparando Armas de Fuego Calibre .22 hasta el .50</h4><small>🆕 Lo más nuevo</small></div>
+          <div><h4>¡Qué Emoción! Disparando Armas de Fuego Calibre .22 hasta el .50</h4><small>🆕 Lo más nuevo</small><a class="mini-yt" href="https://www.youtube.com/watch?v=H3dCmbfnbLs" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ YouTube</a></div>
         </div>
         <!--ULTIMO_FIN-->
         <div class="mini" data-id="apCbkgdY9oA" data-titulo="Calibres Fuertes en Español 4K" data-meta="Calibres · 4K">
           <div class="tapa"><img src="https://i.ytimg.com/vi/apCbkgdY9oA/hqdefault.jpg" alt="Calibres Fuertes en Español 4K" loading="lazy"></div>
-          <div><h4>Calibres Fuertes en Español 4K</h4><small>Calibres</small></div>
+          <div><h4>Calibres Fuertes en Español 4K</h4><small>Calibres</small><a class="mini-yt" href="https://www.youtube.com/watch?v=apCbkgdY9oA" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ YouTube</a></div>
         </div>
         <div class="mini" data-id="2pusIJuzerg" data-titulo="Disparando Toda mi Colección de Pistolas en un Vídeo Épico" data-meta="Colección completa">
           <div class="tapa"><img src="https://i.ytimg.com/vi/2pusIJuzerg/hqdefault.jpg" alt="Disparando Toda mi Colección de Pistolas" loading="lazy"></div>
-          <div><h4>Disparando Toda mi Colección de Pistolas en un Vídeo Épico</h4><small>Colección</small></div>
+          <div><h4>Disparando Toda mi Colección de Pistolas en un Vídeo Épico</h4><small>Colección</small><a class="mini-yt" href="https://www.youtube.com/watch?v=2pusIJuzerg" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ YouTube</a></div>
         </div>
         <div class="mini" data-id="H80WB9fedHw" data-titulo="Pasa o No Pasa, desde el Cal 22 al 50 BMG" data-meta="Pruebas de calibre">
           <div class="tapa"><img src="https://i.ytimg.com/vi/H80WB9fedHw/hqdefault.jpg" alt="Pasa o No Pasa, del 22 al 50 BMG" loading="lazy"></div>
-          <div><h4>Pasa o No Pasa, desde el Cal 22 al 50 BMG</h4><small>Pruebas</small></div>
+          <div><h4>Pasa o No Pasa, desde el Cal 22 al 50 BMG</h4><small>Pruebas</small><a class="mini-yt" href="https://www.youtube.com/watch?v=H80WB9fedHw" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ YouTube</a></div>
         </div>
         <div class="mini" data-id="U-rbQM0x9oQ" data-titulo="La Mejor Arma de Fuego de 2022" data-meta="Reseñas">
           <div class="tapa"><img src="https://i.ytimg.com/vi/U-rbQM0x9oQ/hqdefault.jpg" alt="La Mejor Arma de Fuego de 2022" loading="lazy"></div>
-          <div><h4>La Mejor Arma de Fuego de 2022</h4><small>Reseñas</small></div>
+          <div><h4>La Mejor Arma de Fuego de 2022</h4><small>Reseñas</small><a class="mini-yt" href="https://www.youtube.com/watch?v=U-rbQM0x9oQ" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗ YouTube</a></div>
         </div>
       </div>
     </div>
     <div class="videos-pie rev">
       <a class="btn" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA/videos" target="_blank" rel="noopener"><span class="ico">▶</span> Ver todo el arsenal en YouTube</a>
     </div>
+  </div>
+</section>
+
+<!-- ============ LA VIDEOTECA ============ -->
+<section class="videoteca" id="videoteca">
+  <div class="wrap">
+    <div class="rev">
+      <div class="kicker"><span class="num">345</span> El arsenal completo</div>
+      <h2 class="titulo">La <span class="hot">Videoteca</span></h2>
+      <p class="sub">Los 345 videos del canal, uno tras otro, sin salir de aquí. Prepárate un café… o tres. <b>Cada vista cuenta para el canal</b>, así que dale sin culpa.</p>
+    </div>
+    <div class="videoteca-caja rev" id="videotecaCaja">
+      <div class="vt-fondo"></div>
+      <div class="vt-sombra"></div>
+      <div class="play-btn"></div>
+      <div class="vt-contenido">
+        <span class="etiqueta-top">📼 Lista completa · del primer video al último</span>
+        <h3>Dale play y navega todo el canal aquí mismo</h3>
+      </div>
+    </div>
+    <p class="vt-abre"><a class="ver-yt" href="https://www.youtube.com/playlist?list=UU0XDoSl8rSdW3WiZuK9v8fA" target="_blank" rel="noopener">Abrir la lista completa en YouTube ↗</a></p>
   </div>
 </section>
 
@@ -1609,6 +1668,7 @@ html.scrub .mani-lienzo{padding:0}
         <h4>El mundo</h4>
         <ul>
           <li><a href="#pruebas">Pruebas sin cortes</a></li>
+          <li><a href="#videoteca">La videoteca</a></li>
           <li><a href="#cementerio">El cementerio</a></li>
           <li><a href="#buenas">Las que sí sirvieron</a></li>
           <li><a href="#archivo">El archivo</a></li>
@@ -1846,12 +1906,28 @@ html.scrub .mani-lienzo{padding:0}
       principal.dataset.id=mini.dataset.id;
       principal.querySelector('.fondo').style.backgroundImage="url('https://i.ytimg.com/vi/"+mini.dataset.id+"/maxresdefault.jpg')";
       document.getElementById('principal-titulo').textContent=mini.dataset.titulo;
+      var vy=document.getElementById('principalYT');if(vy)vy.href='https://www.youtube.com/watch?v='+mini.dataset.id;
       document.getElementById('principal-meta').textContent=mini.dataset.meta;
       document.querySelectorAll('.mini').forEach(function(m){m.classList.remove('activo')});
       mini.classList.add('activo');
       reproducir(principal,mini.dataset.id);
       principal.scrollIntoView({behavior:'smooth',block:'center'});
     });
+  });
+})();
+
+/* ================= La videoteca: playlist completa al hacer clic ================= */
+(function(){
+  var c=document.getElementById('videotecaCaja');
+  if(!c)return;
+  c.addEventListener('click',function(){
+    if(c.querySelector('iframe'))return;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/videoseries?list=UU0XDoSl8rSdW3WiZuK9v8fA&autoplay=1&rel=0';
+    f.title='Videoteca completa de Pistolas Fritas';
+    f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullscreen=true;
+    c.appendChild(f);
   });
 })();
 
