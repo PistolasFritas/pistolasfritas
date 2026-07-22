@@ -2357,19 +2357,28 @@ window.Sonido=(function(){
       ruido(.16,.5,'lowpass',420);
       tono(130,.2,'sine',.5,38);
     },
-    _ping:function(f,vol){
-      /* campanita metálica: parciales inarmónicos como latón de verdad */
-      tono(f,.1,'sine',vol);
-      tono(f*2.76,.08,'sine',vol*.5);
-      tono(f*5.04,.05,'sine',vol*.28);
-      ruido(.012,vol*.5,'highpass',6000);
+    _clink:function(f,vol){
+      /* CLINK de latón: tick de ataque + racimo de parciales inarmónicos, decaimiento rapidísimo */
+      ruido(.008,vol*1.1,'highpass',7500);                    /* el "tick" del impacto */
+      tono(f,.045,'square',vol*.32);
+      tono(f*1.34,.05,'square',vol*.26);
+      tono(f*1.83,.04,'triangle',vol*.3);
+      tono(f*2.46,.035,'sine',vol*.22);
+      tono(f*3.17,.03,'sine',vol*.14);
     },
     casquillo:function(){
+      /* rebotes en concreto: cada vez más rápidos y más queditos, como latón de verdad */
       var S=this;
-      var f=3400+Math.random()*1400;
-      setTimeout(function(){S._ping(f,.14)},360);              /* primer rebote */
-      setTimeout(function(){S._ping(f*1.13,.09)},360+95);      /* segundo, más agudo y corto */
-      setTimeout(function(){S._ping(f*.94,.05)},360+165);      /* último tintineo */
+      var f=3000+Math.random()*1600;
+      var tiempos=[0,105,185,248,295,332];
+      var vols=[.2,.13,.09,.06,.04,.024];
+      for(var i=0;i<tiempos.length;i++){
+        (function(i){
+          setTimeout(function(){
+            S._clink(f*(0.94+Math.random()*.14), vols[i]);
+          },360+tiempos[i]+Math.random()*14);
+        })(i);
+      }
     },
     tick:function(){tono(1300,.03,'square',.05)},
     pop:function(){tono(500,.09,'square',.18,950)},
