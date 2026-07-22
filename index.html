@@ -312,7 +312,7 @@ body::after{
 .boca-suelta p.dice{opacity:1;transform:none}
 .boca-suelta b{color:var(--ink)}
 .tip-disparo{
-  position:absolute;right:1.5%;top:23%;z-index:3;max-width:272px;
+  position:absolute;right:4.5%;top:27%;z-index:3;max-width:272px;
   font-family:var(--font-cond);font-weight:600;font-size:.85rem;line-height:1.6;
   text-transform:uppercase;letter-spacing:.12em;color:var(--ink);text-align:center;
   background:rgba(10,9,8,.55);backdrop-filter:blur(6px);
@@ -1015,7 +1015,7 @@ html.scrub .mani-lienzo{padding:0}
    MODO RUIDOSO — botón de sonido
    ============================================================ */
 #modoRuidoso{
-  position:fixed;bottom:26px;right:26px;z-index:860;
+  position:absolute;top:170px;right:4.5%;z-index:860;
   width:52px;height:52px;border-radius:50%;cursor:pointer;
   background:#141009;border:1px solid var(--line);color:var(--ink-dim);
   font-size:1.3rem;display:grid;place-items:center;
@@ -1028,7 +1028,7 @@ html.scrub .mani-lienzo{padding:0}
   box-shadow:0 0 0 3px rgba(255,90,0,.2),0 10px 30px -8px rgba(255,90,0,.5);
   animation:latido 2s infinite;
 }
-@media(max-width:860px){#modoRuidoso{bottom:18px;right:18px;width:46px;height:46px}}
+@media(max-width:860px){#modoRuidoso{position:fixed;top:auto;bottom:18px;right:18px;width:46px;height:46px}}
 
 /* ============================================================
    GAME FEEL — hitmarker y pila de casquillos
@@ -1055,7 +1055,7 @@ html.scrub .mani-lienzo{padding:0}
    CHAT DEL PERSONAJE
    ============================================================ */
 #chatBoton{
-  position:fixed;bottom:92px;right:26px;z-index:860;
+  position:fixed;bottom:26px;right:26px;z-index:860;
   width:52px;height:52px;border-radius:50%;cursor:pointer;
   background:var(--grad-fire);border:0;font-size:1.4rem;display:grid;place-items:center;
   box-shadow:0 10px 30px -8px rgba(255,90,0,.6);
@@ -1063,7 +1063,7 @@ html.scrub .mani-lienzo{padding:0}
 }
 #chatBoton:hover{transform:translateY(-3px) rotate(-6deg)}
 #chatPanel{
-  position:fixed;bottom:92px;right:26px;z-index:2900;width:min(360px,calc(100vw - 32px));
+  position:fixed;bottom:90px;right:26px;z-index:2900;width:min(360px,calc(100vw - 32px));
   background:#14100b;border:1px solid var(--line-hot);border-radius:16px;overflow:hidden;
   box-shadow:0 30px 80px -20px rgba(0,0,0,.85),0 0 60px -30px rgba(255,90,0,.5);
   display:flex;flex-direction:column;max-height:min(480px,70vh);
