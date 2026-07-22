@@ -312,7 +312,7 @@ body::after{
 .boca-suelta p.dice{opacity:1;transform:none}
 .boca-suelta b{color:var(--ink)}
 .tip-disparo{
-  position:absolute;right:4.5%;top:27%;z-index:3;max-width:272px;
+  position:absolute;right:4.5%;top:236px;z-index:3;max-width:272px;
   font-family:var(--font-cond);font-weight:600;font-size:.85rem;line-height:1.6;
   text-transform:uppercase;letter-spacing:.12em;color:var(--ink);text-align:center;
   background:rgba(10,9,8,.55);backdrop-filter:blur(6px);
@@ -1015,7 +1015,7 @@ html.scrub .mani-lienzo{padding:0}
    MODO RUIDOSO — botón de sonido
    ============================================================ */
 #modoRuidoso{
-  position:absolute;top:170px;right:4.5%;z-index:860;
+  position:absolute;top:148px;right:4.5%;z-index:860;
   width:52px;height:52px;border-radius:50%;cursor:pointer;
   background:#141009;border:1px solid var(--line);color:var(--ink-dim);
   font-size:1.3rem;display:grid;place-items:center;
@@ -1055,7 +1055,7 @@ html.scrub .mani-lienzo{padding:0}
    CHAT DEL PERSONAJE
    ============================================================ */
 #chatBoton{
-  position:fixed;bottom:26px;right:26px;z-index:860;
+  position:fixed;bottom:54px;right:26px;z-index:860;
   width:52px;height:52px;border-radius:50%;cursor:pointer;
   background:var(--grad-fire);border:0;font-size:1.4rem;display:grid;place-items:center;
   box-shadow:0 10px 30px -8px rgba(255,90,0,.6);
@@ -1063,7 +1063,7 @@ html.scrub .mani-lienzo{padding:0}
 }
 #chatBoton:hover{transform:translateY(-3px) rotate(-6deg)}
 #chatPanel{
-  position:fixed;bottom:90px;right:26px;z-index:2900;width:min(360px,calc(100vw - 32px));
+  position:fixed;bottom:118px;right:26px;z-index:2900;width:min(360px,calc(100vw - 32px));
   background:#14100b;border:1px solid var(--line-hot);border-radius:16px;overflow:hidden;
   box-shadow:0 30px 80px -20px rgba(0,0,0,.85),0 0 60px -30px rgba(255,90,0,.5);
   display:flex;flex-direction:column;max-height:min(480px,70vh);
@@ -2351,8 +2351,26 @@ window.Sonido=(function(){
   return {
     get activo(){return act},
     alternar:function(){act=!act;if(act)asegurar();return act},
-    dispara:function(){ruido(.09,.5,'lowpass',600);tono(150,.13,'sine',.4,55)},
-    casquillo:function(){var q=this;setTimeout(function(){tono(2600+Math.random()*900,.05,'triangle',.11);setTimeout(function(){tono(1900+Math.random()*700,.045,'triangle',.07)},65)},380)},
+    dispara:function(){
+      /* crack agudo + cuerpo + golpe grave: capas de un disparo real */
+      ruido(.028,.65,'highpass',2500);
+      ruido(.16,.5,'lowpass',420);
+      tono(130,.2,'sine',.5,38);
+    },
+    _ping:function(f,vol){
+      /* campanita metálica: parciales inarmónicos como latón de verdad */
+      tono(f,.1,'sine',vol);
+      tono(f*2.76,.08,'sine',vol*.5);
+      tono(f*5.04,.05,'sine',vol*.28);
+      ruido(.012,vol*.5,'highpass',6000);
+    },
+    casquillo:function(){
+      var S=this;
+      var f=3400+Math.random()*1400;
+      setTimeout(function(){S._ping(f,.14)},360);              /* primer rebote */
+      setTimeout(function(){S._ping(f*1.13,.09)},360+95);      /* segundo, más agudo y corto */
+      setTimeout(function(){S._ping(f*.94,.05)},360+165);      /* último tintineo */
+    },
     tick:function(){tono(1300,.03,'square',.05)},
     pop:function(){tono(500,.09,'square',.18,950)},
     mal:function(){tono(170,.28,'sawtooth',.2,70)},
