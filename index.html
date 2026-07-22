@@ -1055,9 +1055,10 @@ html.scrub .mani-lienzo{padding:0}
    CHAT DEL PERSONAJE
    ============================================================ */
 #chatBoton{
+  display:none; /* chat desactivado por ahora; para reactivarlo, quitar esta línea */
   position:fixed;bottom:54px;right:26px;z-index:860;
   width:52px;height:52px;border-radius:50%;cursor:pointer;
-  background:var(--grad-fire);border:0;font-size:1.4rem;display:grid;place-items:center;
+  background:var(--grad-fire);border:0;font-size:1.4rem;display:none;place-items:center; /* chat desactivado: cambiar none por grid para reactivar */
   box-shadow:0 10px 30px -8px rgba(255,90,0,.6);
   transition:transform .25s var(--ease);
 }
@@ -2434,12 +2435,15 @@ if(!reducido&&finto){
   });
 }
 
-/* ---------- CHAT: el cerebro local del personaje ---------- */
+/* ---------- CHAT: Claude (si está conectado) + cerebro local de respaldo ---------- */
+/* Cuando tengas tu Worker de Cloudflare, pega aquí su URL entre las comillas: */
+var PF_IA_URL='';
 (function(){
   var boton=document.getElementById('chatBoton'),panel=document.getElementById('chatPanel'),
       cerrar=document.getElementById('chatCerrar'),forma=document.getElementById('chatForma'),
       entrada=document.getElementById('chatEntrada'),caja=document.getElementById('chatMensajes');
   if(!boton)return;
+  var historial=[];
   var abierto=false,saludado=false;
   function msj(texto,quien){
     var d=document.createElement('div');d.className='chat-msj '+quien;d.textContent=texto;
@@ -2481,17 +2485,44 @@ if(!reducido&&finto){
   ];
   var FALLBACK=['Esa no me la sé, y no la voy a inventar: aquí no se edita ni se finge. Pregúntame del canal, la tienda o el mezcal.','Mira, yo sé de cosas que echan fuego, hacen ruido y explotan. De eso pregúntame lo que quieras.','Hmm… esa pregunta se me trabó como La Infalible. Inténtale con otra.'];
   var fbi=0;
+  function respuestaLocal(t){
+    var bajo=t.toLowerCase();
+    for(var i=0;i<RESP.length;i++){if(RESP[i][0].test(bajo)){var ops=RESP[i][1];return ops[Math.floor(Math.random()*ops.length)]}}
+    var r=FALLBACK[fbi%FALLBACK.length];fbi++;return r;
+  }
   forma.addEventListener('submit',function(ev){
     ev.preventDefault();
     var t=entrada.value.trim();
     if(!t)return;
     entrada.value='';
     msj(t,'tu');
-    var bajo=t.toLowerCase();
-    var r=null;
-    for(var i=0;i<RESP.length;i++){if(RESP[i][0].test(bajo)){var ops=RESP[i][1];r=ops[Math.floor(Math.random()*ops.length)];break}}
-    if(!r){r=FALLBACK[fbi%FALLBACK.length];fbi++}
-    responderDirecto(r);
+    historial.push({role:'user',content:t});
+    if(historial.length>10)historial=historial.slice(-10);
+    if(PF_IA_URL){
+      /* Claude de verdad, vía el Worker */
+      var e=msj('está escribiendo…','pf escribe');
+      var listo=false;
+      var reloj=setTimeout(function(){
+        if(listo)return;listo=true;
+        e.classList.remove('escribe');e.textContent=respuestaLocal(t);
+      },15000);
+      fetch(PF_IA_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({mensajes:historial})
+      }).then(function(r){return r.json()}).then(function(d){
+        if(listo)return;listo=true;clearTimeout(reloj);
+        var texto=(d&&d.respuesta)?d.respuesta:respuestaLocal(t);
+        e.classList.remove('escribe');e.textContent=texto;
+        historial.push({role:'assistant',content:texto});
+        caja.scrollTop=caja.scrollHeight;
+      }).catch(function(){
+        if(listo)return;listo=true;clearTimeout(reloj);
+        e.classList.remove('escribe');e.textContent=respuestaLocal(t);
+      });
+    }else{
+      responderDirecto(respuestaLocal(t));
+    }
   });
 })();
 
