@@ -2366,20 +2366,7 @@ window.Sonido=(function(){
       tono(f*2.46,.035,'sine',vol*.22);
       tono(f*3.17,.03,'sine',vol*.14);
     },
-    casquillo:function(){
-      /* rebotes en concreto: cada vez más rápidos y más queditos, como latón de verdad */
-      var S=this;
-      var f=3000+Math.random()*1600;
-      var tiempos=[0,105,185,248,295,332];
-      var vols=[.2,.13,.09,.06,.04,.024];
-      for(var i=0;i<tiempos.length;i++){
-        (function(i){
-          setTimeout(function(){
-            S._clink(f*(0.94+Math.random()*.14), vols[i]);
-          },360+tiempos[i]+Math.random()*14);
-        })(i);
-      }
-    },
+    casquillo:function(){ /* silenciado a petición del patrón: solo suena el disparo */ },
     tick:function(){tono(1300,.03,'square',.05)},
     pop:function(){tono(500,.09,'square',.18,950)},
     mal:function(){tono(170,.28,'sawtooth',.2,70)},
