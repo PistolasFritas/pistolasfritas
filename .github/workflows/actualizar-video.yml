@@ -1,0 +1,56 @@
+name: Actualizar último video
+on:
+  schedule:
+    - cron: '0 14 * * *'   # todos los días a las 8am hora de México (14:00 UTC)
+  workflow_dispatch:        # botón para correrlo a mano
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Buscar el video más reciente y actualizar index.html
+        run: |
+          python3 << 'EOF'
+          import urllib.request, re, html
+
+          CANAL = 'UC0XDoSl8rSdW3WiZuK9v8fA'
+          url = f'https://www.youtube.com/feeds/videos.xml?channel_id={CANAL}'
+          xml = urllib.request.urlopen(url, timeout=30).read().decode('utf-8')
+
+          vid = re.search(r'<yt:videoId>([^<]+)</yt:videoId>', xml)
+          tit = re.search(r'<media:title>([^<]+)</media:title>', xml)
+          if not vid or not tit:
+              raise SystemExit('No se pudo leer el RSS')
+          video_id = vid.group(1)
+          titulo = html.escape(html.unescape(tit.group(1)), quote=True)
+
+          bloque = f'''<!--ULTIMO_INICIO-->
+        <div class="mini" data-id="{video_id}" data-titulo="{titulo}" data-meta="Lo más nuevo del canal">
+          <div class="tapa"><img src="https://i.ytimg.com/vi/{video_id}/hqdefault.jpg" alt="Lo más nuevo de Pistolas Fritas" loading="lazy"></div>
+          <div><h4>{titulo}</h4><small>🆕 Lo más nuevo</small></div>
+        </div>
+        <!--ULTIMO_FIN-->'''
+
+          with open('index.html', encoding='utf-8') as f:
+              s = f.read()
+          nuevo = re.sub(r'<!--ULTIMO_INICIO-->.*?<!--ULTIMO_FIN-->', bloque, s, flags=re.S)
+          if nuevo != s:
+              with open('index.html', 'w', encoding='utf-8') as f:
+                  f.write(nuevo)
+              print(f'Actualizado al video {video_id}: {titulo}')
+          else:
+              print('Sin cambios — ya estaba el video más reciente.')
+          EOF
+
+      - name: Guardar cambios
+        run: |
+          git config user.name 'pistolas-fritas-bot'
+          git config user.email 'bot@pistolasfritas.com'
+          git add index.html
+          git diff --cached --quiet || git commit -m '🆕 Video más reciente actualizado automáticamente'
+          git push
