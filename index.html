@@ -177,10 +177,10 @@ body::after{
 .marca .chispa:active{transform:scale(.9) rotate(-8deg)}
 .marca b{font-weight:400}
 .marca span{color:var(--hot)}
-.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links{display:flex;gap:15px;align-items:center}
 .nav-links a{
-  position:relative;font-family:var(--font-cond);font-weight:600;font-size:.94rem;
-  text-transform:uppercase;letter-spacing:.14em;color:var(--ink-dim);padding:6px 0;transition:color .2s;
+  position:relative;font-family:var(--font-cond);font-weight:600;font-size:.9rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--ink-dim);padding:6px 0;transition:color .2s;
   white-space:nowrap;
 }
 .nav-links a::after{
@@ -189,7 +189,7 @@ body::after{
 }
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
-.nav-cta{padding:11px 22px;font-size:.9rem}
+.nav-cta{padding:10px 18px;font-size:.86rem;white-space:nowrap}
 /* Bala trazadora: el progreso del scroll baja como bala con estela */
 #trazadora{position:fixed;left:16px;top:12px;bottom:12px;width:3px;z-index:850;pointer-events:none}
 #trazadora .estela{
@@ -754,13 +754,13 @@ footer{position:relative;padding:90px 0 40px;background:#080706;border-top:1px s
 #botonProhibido{
   position:fixed;bottom:26px;left:26px;z-index:850;
   background:#12100d;border:2px dashed var(--hot);border-radius:12px;
-  color:var(--hot-2);font-family:var(--font-loco);font-size:.9rem;
-  padding:12px 18px;cursor:pointer;transform:rotate(-2deg);
+  color:var(--hot-2);font-family:var(--font-loco);font-size:1.15rem;
+  padding:16px 24px;cursor:pointer;transform:rotate(-4deg);
   opacity:0;pointer-events:none;transition:opacity .5s,transform .25s var(--ease);
   box-shadow:0 10px 30px -10px rgba(0,0,0,.6);
 }
 #botonProhibido.asoma{opacity:1;pointer-events:auto}
-#botonProhibido:hover{transform:rotate(-2deg) scale(1.05)}
+#botonProhibido:hover{transform:rotate(-4deg) scale(1.06)}
 #glitch{
   position:fixed;inset:0;z-index:2500;background:#000;display:none;
   align-items:center;justify-content:center;flex-direction:column;gap:18px;text-align:center;padding:24px;
@@ -829,11 +829,23 @@ footer{position:relative;padding:90px 0 40px;background:#080706;border-top:1px s
 }
 @keyframes fogonazo{0%{transform:scale(.3);opacity:1}100%{transform:scale(1.5);opacity:0}}
 .balazo{
-  position:absolute;z-index:5;pointer-events:none;width:48px;height:48px;margin:-24px 0 0 -24px;
-  background:radial-gradient(circle, #ffffff 0 38%, #f3ede2 62%, #d9d0bf 88%, #c4baa6 100%);
-  clip-path:polygon(50% 0%, 62% 10%, 77% 4%, 81% 19%, 97% 25%, 88% 39%, 100% 51%, 87% 61%, 94% 77%, 78% 79%, 71% 97%, 56% 86%, 41% 100%, 34% 84%, 15% 89%, 18% 71%, 2% 62%, 13% 49%, 0% 35%, 14% 28%, 9% 11%, 27% 14%, 33% 2%);
+  position:absolute;z-index:5;pointer-events:none;width:36px;height:36px;margin:-18px 0 0 -18px;
   transform:rotate(var(--rot,0deg));
   animation:balazoAparece .18s ease-out, balazoVase 1s ease 3.4s forwards;
+}
+/* fleco de fibras rasgadas alrededor */
+.balazo::before{
+  content:"";position:absolute;inset:-10%;
+  background:radial-gradient(circle, rgba(216,206,188,.55) 0 60%, rgba(190,180,160,.25) 80%, rgba(170,160,140,.12) 100%);
+  clip-path:polygon(99.3% 50.0%, 98.7% 59.1%, 95.7% 67.7%, 85.5% 72.0%, 84.2% 81.2%, 77.0% 85.8%, 70.4% 91.0%, 61.5% 90.6%, 53.9% 92.5%, 45.8% 94.8%, 38.2% 91.3%, 29.9% 90.4%, 25.2% 82.9%, 19.1% 78.1%, 9.7% 74.9%, 8.2% 66.2%, 5.2% 58.4%, 2.4% 50.0%, 6.5% 41.9%, 11.3% 35.0%, 9.1% 24.7%, 15.8% 18.8%, 21.7% 12.6%, 29.2% 8.3%, 36.4% 2.2%, 45.9% 5.9%, 54.4% 2.4%, 62.1% 7.4%, 70.6% 8.7%, 78.3% 12.5%, 82.4% 20.5%, 85.5% 28.0%, 92.2% 33.6%, 96.7% 41.3%);
+}
+/* papel blanco desgarrado con el hoyo oscuro real en el centro */
+.balazo::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 50% 50%, #070503 0 15%, rgba(10,7,5,.92) 21%, rgba(30,24,18,.4) 27%, transparent 33%),
+    radial-gradient(circle at 44% 41%, #ffffff 0 32%, #f4eee2 55%, #ddd3c0 80%, #c2b59e 100%);
+  clip-path:polygon(94.3% 50.0%, 91.8% 58.9%, 93.0% 69.1%, 84.1% 74.8%, 80.8% 84.2%, 72.3% 88.6%, 63.0% 89.9%, 54.8% 95.6%, 45.6% 91.6%, 36.0% 93.0%, 29.0% 86.5%, 21.7% 81.4%, 13.5% 76.5%, 5.7% 69.7%, 8.4% 58.8%, 6.6% 50.0%, 4.2% 40.3%, 4.7% 29.8%, 12.5% 22.7%, 20.0% 16.7%, 25.1% 6.9%, 37.1% 10.2%, 44.9% 1.5%, 54.6% 6.3%, 63.2% 9.4%, 71.3% 13.2%, 79.5% 17.2%, 89.2% 21.5%, 89.3% 32.5%, 95.4% 40.3%);
 }
 @keyframes balazoAparece{from{transform:scale(2.2) rotate(var(--rot,0deg));opacity:0}to{transform:scale(1) rotate(var(--rot,0deg));opacity:1}}
 @keyframes balazoVase{to{opacity:0}}
@@ -1060,7 +1072,7 @@ html.scrub .mani-lienzo{padding:0}
       <a href="#pruebas">Pruebas</a>
       <a href="#cementerio">Cementerio</a>
       <a href="#archivo">Archivo</a>
-      <a href="#rango">El Rango</a>
+      <a href="#rango">Campo de Práctica</a>
       <a href="#filosofia">Filosofía</a>
       <a href="#chacharas">Tienda</a>
       <a href="#patrocinios">Patrocinios</a>
@@ -1075,7 +1087,7 @@ html.scrub .mani-lienzo{padding:0}
   <a href="#cementerio">El cementerio</a>
   <a href="#buenas">Las que sí sirvieron</a>
   <a href="#archivo">El archivo</a>
-  <a href="#rango">El Rango 🎯</a>
+  <a href="#rango">El Campo de Práctica 🎯</a>
   <a href="#filosofia">Filosofía barata</a>
   <a href="#chacharas">Compra cosas en la tienda</a>
   <a href="#patrocinios">Los que pagan esto</a>
@@ -1339,7 +1351,7 @@ html.scrub .mani-lienzo{padding:0}
   <div class="wrap">
     <div class="rev">
       <div class="kicker"><span class="num">EXTRA</span> A ver si es cierto</div>
-      <h2 class="titulo">El <span class="hot">Rango</span></h2>
+      <h2 class="titulo">El Campo de <span class="hot">Práctica</span></h2>
       <p class="sub">Mucho criticar desde el sillón, ¿no? Órale: 30 segundos, la misma mira del sitio, y a ver cuánta puntería traes. <b>Las fallas se quedan en el video.</b></p>
     </div>
     <div class="rango-hud rev">
@@ -1486,7 +1498,7 @@ html.scrub .mani-lienzo{padding:0}
         <p>Detrás de Pistolas Fritas hay un señor que <b>habla rápido, dispara derecho y no repite tomas</b>. Desde 2013 prueba pistolas, revólveres, rifles y escopetas — del .22 al .50 BMG — en campos de tiro naturales, con la cámara rodando y la boca sin filtro.</p>
         <p>El personaje improvisa, se burla de sus propias fallas y dice lo que piensa de cada fierro que pasa por sus manos. <b>Si el fierro falla, sale en el video. Si sirve, también.</b> Nadie edita nada, porque editar es esconder.</p>
         <div class="rasgos">
-          <div class="rasgo"><div class="ic">🎬</div><div><b>Una sola toma</b><span>Sin guion, sin repetir, sin red de seguridad.</span></div></div>
+          <div class="rasgo"><div class="ic">🎬</div><div><b>Una sola toma</b><span>Sin guion, sin repetir, 100% genuino.</span></div></div>
           <div class="rasgo"><div class="ic">🗣️</div><div><b>Boca sin filtro</b><span>Los chistes salen al vuelo. Igual que las balas.</span></div></div>
           <div class="rasgo"><div class="ic">🌵</div><div><b>Campo de tiro, no estudio</b><span>Al aire libre, con polvo de verdad.</span></div></div>
           <div class="rasgo"><div class="ic">🛡️</div><div><b>Seguridad: sagrada</b><span>El personaje es un loco. El manejo de armas, jamás.</span></div></div>
@@ -1519,8 +1531,8 @@ html.scrub .mani-lienzo{padding:0}
           <li><a href="#pruebas">Pruebas sin cortes</a></li>
           <li><a href="#cementerio">El cementerio</a></li>
           <li><a href="#buenas">Las que sí sirvieron</a></li>
-          <li><a href="#archivo">El archivo</a>
-  <a href="#rango">El Rango 🎯</a></li>
+          <li><a href="#archivo">El archivo</a></li>
+          <li><a href="#rango">El Campo de Práctica 🎯</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -2238,7 +2250,7 @@ window.Logros=(function(){
     curioso:['Curioso profesional','Tocaste el botón que decía que NO. Clásico.'],
     dedo:['Dedo nervioso','20 balazos. El sitio no era el enemigo, pero se respeta.'],
     detective:['Detective del campo','Descubriste el secreto del logo. Nada se te va.'],
-    francotirador:['Francotirador','15+ puntos en El Rango. ¿Quieres trabajo?'],
+    francotirador:['Francotirador','15+ puntos en El Campo de Práctica. ¿Quieres trabajo?'],
     fondo:['Hasta el fondo del cañón','Llegaste al final del sitio. Lectura completa, respeto.'],
     oreja:['Oreja fina','Activaste el Modo Ruidoso. Así se disfruta.']
   };
