@@ -887,6 +887,8 @@ footer{position:relative;padding:90px 0 40px;background:#080706;border-top:1px s
   100%{transform:translate(var(--dx),80px) rotate(560deg);opacity:0}
 }
 /* Lienzo del shader de fuego */
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:saturate(.85) contrast(1.08)}
+@media (max-width:860px),(prefers-reduced-motion:reduce){.hero-video{display:none}}
 #fuegoGL{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:.85;mix-blend-mode:screen}
 .hero-velo{z-index:2}
 #embers{z-index:2}
@@ -1050,6 +1052,51 @@ html.scrub .mani-lienzo{padding:0}
 }
 
 /* ============================================================
+   CHAT DEL PERSONAJE
+   ============================================================ */
+#chatBoton{
+  position:fixed;bottom:92px;right:26px;z-index:860;
+  width:52px;height:52px;border-radius:50%;cursor:pointer;
+  background:var(--grad-fire);border:0;font-size:1.4rem;display:grid;place-items:center;
+  box-shadow:0 10px 30px -8px rgba(255,90,0,.6);
+  transition:transform .25s var(--ease);
+}
+#chatBoton:hover{transform:translateY(-3px) rotate(-6deg)}
+#chatPanel{
+  position:fixed;bottom:92px;right:26px;z-index:2900;width:min(360px,calc(100vw - 32px));
+  background:#14100b;border:1px solid var(--line-hot);border-radius:16px;overflow:hidden;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.85),0 0 60px -30px rgba(255,90,0,.5);
+  display:flex;flex-direction:column;max-height:min(480px,70vh);
+  opacity:0;pointer-events:none;transform:translateY(16px);
+  transition:opacity .3s var(--ease),transform .3s var(--ease);
+}
+#chatPanel.abierto{opacity:1;pointer-events:auto;transform:none}
+.chat-cabeza{
+  display:flex;align-items:center;gap:10px;padding:14px 16px;
+  background:linear-gradient(92deg,#2a1608,#1a1008);border-bottom:1px solid var(--line);
+}
+.chat-cabeza b{font-family:var(--font-cond);font-size:1.1rem;text-transform:uppercase;letter-spacing:.06em}
+.chat-cabeza span{font-family:var(--font-loco);font-size:.75rem;color:var(--hot-2);transform:rotate(-1deg)}
+#chatCerrar{margin-left:auto;background:none;border:0;color:var(--ink-dim);font-size:1rem;cursor:pointer;padding:4px 8px}
+#chatCerrar:hover{color:var(--ink)}
+.chat-mensajes{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:180px}
+.chat-msj{
+  max-width:85%;padding:10px 14px;border-radius:12px;font-size:.95rem;line-height:1.5;
+}
+.chat-msj.pf{align-self:flex-start;background:#221709;border:1px solid rgba(255,157,60,.25);border-bottom-left-radius:3px}
+.chat-msj.tu{align-self:flex-end;background:#2a2119;border-bottom-right-radius:3px;color:var(--ink)}
+.chat-msj.escribe{color:var(--ink-faint);font-style:italic}
+.chat-forma{display:flex;border-top:1px solid var(--line)}
+#chatEntrada{
+  flex:1;background:none;border:0;padding:14px 16px;color:var(--ink);font-family:var(--font-body);font-size:.95rem;
+}
+#chatEntrada:focus{outline:none}
+.chat-envia{
+  background:var(--grad-fire);border:0;color:#160a02;width:52px;cursor:pointer;font-size:1rem;
+}
+@media (max-width:560px){#chatBoton{bottom:80px;right:18px}#chatPanel{bottom:80px;right:16px}}
+
+/* ============================================================
    LOGROS DEL CAMPO DE TIRO
    ============================================================ */
 #logroToast{
@@ -1124,6 +1171,7 @@ html.scrub .mani-lienzo{padding:0}
 <div id="mundo">
 <header class="hero" id="inicio">
   <div class="hero-fondo"></div>
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" src="hero.mp4" onerror="this.remove()" aria-hidden="true"></video>
   <canvas id="fuegoGL"></canvas>
   <div class="humo h1p"></div>
   <div class="humo h2p"></div>
@@ -1221,6 +1269,12 @@ html.scrub .mani-lienzo{padding:0}
         </div>
       </div>
       <div class="lista-lateral rev" data-d="2">
+        <!--ULTIMO_INICIO-->
+        <div class="mini" data-id="H3dCmbfnbLs" data-titulo="¡Qué Emoción! Disparando Armas de Fuego Calibre .22 hasta el .50" data-meta="Lo más nuevo del canal">
+          <div class="tapa"><img src="https://i.ytimg.com/vi/H3dCmbfnbLs/hqdefault.jpg" alt="Lo más nuevo de Pistolas Fritas" loading="lazy"></div>
+          <div><h4>¡Qué Emoción! Disparando Armas de Fuego Calibre .22 hasta el .50</h4><small>🆕 Lo más nuevo</small></div>
+        </div>
+        <!--ULTIMO_FIN-->
         <div class="mini" data-id="apCbkgdY9oA" data-titulo="Calibres Fuertes en Español 4K" data-meta="Calibres · 4K">
           <div class="tapa"><img src="https://i.ytimg.com/vi/apCbkgdY9oA/hqdefault.jpg" alt="Calibres Fuertes en Español 4K" loading="lazy"></div>
           <div><h4>Calibres Fuertes en Español 4K</h4><small>Calibres</small></div>
@@ -1590,6 +1644,19 @@ html.scrub .mani-lienzo{padding:0}
     <small>— Pistolas Fritas</small>
   </div>
 </div>
+<button id="chatBoton" aria-label="Pregúntale a Pistolas Fritas" title="Pregúntale a Pistolas Fritas">💬</button>
+<div id="chatPanel" aria-hidden="true">
+  <div class="chat-cabeza">
+    <b>Pistolas Fritas</b>
+    <span>el mero mero (más o menos)</span>
+    <button id="chatCerrar" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="chat-mensajes" id="chatMensajes"></div>
+  <form class="chat-forma" id="chatForma">
+    <input id="chatEntrada" type="text" maxlength="200" placeholder="Pregúntale lo que sea…" autocomplete="off">
+    <button class="chat-envia" type="submit">▶</button>
+  </form>
+</div>
 <button id="modoRuidoso" aria-label="Activar sonido" title="Modo ruidoso">🔇</button>
 <div id="pilaCasquillos" aria-hidden="true"></div>
 <div id="logroToast" aria-live="polite"></div>
@@ -1601,6 +1668,19 @@ html.scrub .mani-lienzo{padding:0}
   var intro=document.getElementById('intro');
   if(!intro)return;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){intro.remove();return}
+  /* los que regresan no repiten la intro completa */
+  var yaVino=false;
+  try{yaVino=localStorage.getItem('pf_regreso')==='1'}catch(e){}
+  if(yaVino){
+    intro.remove();
+    setTimeout(function(){
+      var t=document.getElementById('toast');
+      if(t){t.textContent='🔥 ¿Otra vez tú? Ya sabes dónde está todo. Bienvenido de vuelta, loco.';t.classList.add('dice');
+        setTimeout(function(){t.classList.remove('dice')},4200)}
+    },900);
+    return;
+  }
+  try{localStorage.setItem('pf_regreso','1')}catch(e){}
   document.body.classList.add('congelado');
   var terminada=false;
   function terminar(){
@@ -2339,6 +2419,67 @@ if(!reducido&&finto){
     if(window.Sonido&&Sonido.activo)Sonido.tick();
   });
 }
+
+/* ---------- CHAT: el cerebro local del personaje ---------- */
+(function(){
+  var boton=document.getElementById('chatBoton'),panel=document.getElementById('chatPanel'),
+      cerrar=document.getElementById('chatCerrar'),forma=document.getElementById('chatForma'),
+      entrada=document.getElementById('chatEntrada'),caja=document.getElementById('chatMensajes');
+  if(!boton)return;
+  var abierto=false,saludado=false;
+  function msj(texto,quien){
+    var d=document.createElement('div');d.className='chat-msj '+quien;d.textContent=texto;
+    caja.appendChild(d);caja.scrollTop=caja.scrollHeight;return d;
+  }
+  function abrir(){
+    abierto=!abierto;panel.classList.toggle('abierto',abierto);
+    panel.setAttribute('aria-hidden',abierto?'false':'true');
+    boton.textContent=abierto?'✕':'💬';
+    if(abierto&&!saludado){
+      saludado=true;
+      responderDirecto('¿Qué onda? Soy Pistolas Fritas… bueno, la versión de bolsillo. Pregúntame del canal, de la tienda, del mezcal o de lo que truena. Una pregunta a la vez, que ando recargando.');
+    }
+    if(abierto)setTimeout(function(){entrada.focus()},250);
+  }
+  boton.addEventListener('click',abrir);
+  cerrar.addEventListener('click',abrir);
+  function responderDirecto(t){
+    var e=msj('está escribiendo…','pf escribe');
+    setTimeout(function(){e.classList.remove('escribe');e.textContent=t;caja.scrollTop=caja.scrollHeight},600+Math.random()*700);
+  }
+  var RESP=[
+    [/hola|buenas|que onda|qué onda|saludos|hey/, ['¿Qué onda, loco? Bienvenido al rancho digital. Aquí nada está editado, ni mis respuestas.','Buenas. Tú pregunta, yo contesto. Si fallo… se queda en el chat.']],
+    [/más visto|mas visto|mejor video|32/, ['El más tronado es "¡Qué Emoción! Disparando Armas de Fuego Calibre .22 hasta el .50" — 32.5 millones de vistas. Y sin editar ni un segundo, para que veas.']],
+    [/video|canal|youtube/, ['Son 345 videos, todos en una sola toma. Están en la sección Pruebas Sin Cortes, o directo en YouTube. Llévate palomitas.','El canal lleva 13 años tronando cosas. 257.5 millones de vistas y contando. Dale a Suscríbete al Relajo y súmate.']],
+    [/desmonetiz|monetiz|dinero|pagan/, ['YouTube nos desmonetizó el 80% del canal. Les quitó el sueldo, no la gracia. Por eso existe la tienda: patrocina malas decisiones de excelente calidad.']],
+    [/mezcal/, ['¡Ah, mi otra mala decisión! Mr. Mezcal, de Oaxaca, premiado y todo. Para el coctelito DESPUÉS de disparar — nunca al revés, eso sí es regla. Está en MrMezcal.com.']],
+    [/tienda|gorra|playera|comprar|merch/, ['La tienda tiene cosas que no necesitas, y justo por eso debes comprarlas: así se mantiene vivo el canal. Playeras y gorras vienen en camino — el mezcal ya está.']],
+    [/calibre|arma favorita|50|bmg|rifle|pistola favorita/, ['Del .22 tierno al .50 "¿para qué?". ¿Mi favorita? La que no se traba frente a cámara. Esa se gana mi respeto y su lugar en Las Que Sí Sirvieron.']],
+    [/quién eres|quien eres|loco|personaje/, ['Un señor que habla rápido, dispara derecho y no repite tomas. El personaje es broma… la seguridad NO. Esa es la casa entera en dos frases.']],
+    [/segur/, ['Ahí sí me pongo serio: el manejo seguro y legal de las armas no se negocia. Nunca. El resto del canal es relajo; eso jamás.']],
+    [/juego|campo de práctica|practica|record|récord/, ['¿Ya probaste El Campo de Práctica? 30 segundos, la misma mira del sitio. Si haces más de 15 puntos te ganas el logro de Francotirador. A ver si es cierto.']],
+    [/cementerio|falla|trabó|trabo/, ['Las fallas no se esconden: se les hace funeral. Pásate al Cementerio y preséntales tus respetos a La Infalible y al Cargador Saltarín. Q.E.P.D... digo, en paz descansen.']],
+    [/patrocin|marca|sponsor|colabor/, ['¿Traes una marca valiente? En 13 años nadie ha pagado esta locura más que mi propia cartera. El formulario está en Los Que Pagan Esta Locura. No muerde. Yo tampoco… casi nunca.']],
+    [/chiste|risa|cuenta algo/, ['¿Sabes por qué no edito mis videos? Porque el que edita, algo esconde… bueno, yo solo escondo las llaves de la bodega fuerte.']],
+    [/gracias|thank/, ['De nada, loco. Ahora ve y dale like a un video, que los likes no se desmonetizan.']],
+    [/adiós|adios|bye|nos vemos/, ['Nos vemos en el próximo video. Una sola toma, ya sabes. ¡Fuego!']],
+    [/ia|inteligencia|robot|bot|eres real/, ['Soy la versión de bolsillo del patrón: puro reflejo y frases guardadas. El cerebro completo viene en camino… cuando el patrón deje de dar flojera.']]
+  ];
+  var FALLBACK=['Esa no me la sé, y no la voy a inventar: aquí no se edita ni se finge. Pregúntame del canal, la tienda o el mezcal.','Mira, yo sé de cosas que echan fuego, hacen ruido y explotan. De eso pregúntame lo que quieras.','Hmm… esa pregunta se me trabó como La Infalible. Inténtale con otra.'];
+  var fbi=0;
+  forma.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var t=entrada.value.trim();
+    if(!t)return;
+    entrada.value='';
+    msj(t,'tu');
+    var bajo=t.toLowerCase();
+    var r=null;
+    for(var i=0;i<RESP.length;i++){if(RESP[i][0].test(bajo)){var ops=RESP[i][1];r=ops[Math.floor(Math.random()*ops.length)];break}}
+    if(!r){r=FALLBACK[fbi%FALLBACK.length];fbi++}
+    responderDirecto(r);
+  });
+})();
 
 /* ---------- EL RANGO: galería de tiro ---------- */
 (function(){
