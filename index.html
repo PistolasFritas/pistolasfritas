@@ -60,6 +60,7 @@ body::after{
   40%{transform:translate(2%,-1%)} 60%{transform:translate(-1%,-2%)} 80%{transform:translate(1%,2%)}
 }
 .wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+#mundo{overflow-x:clip}
 
 /* ---------- Tipografía utilitaria ---------- */
 .kicker{
@@ -180,6 +181,7 @@ body::after{
 .nav-links a{
   position:relative;font-family:var(--font-cond);font-weight:600;font-size:.94rem;
   text-transform:uppercase;letter-spacing:.14em;color:var(--ink-dim);padding:6px 0;transition:color .2s;
+  white-space:nowrap;
 }
 .nav-links a::after{
   content:"";position:absolute;left:0;bottom:0;width:100%;height:2px;
@@ -379,11 +381,13 @@ body::after{
   background:var(--grad-fire);padding:7px 16px;border-radius:6px;transform:rotate(-1deg);
 }
 .etiqueta-top.mero-visto{
-  font-size:1.05rem;letter-spacing:.14em;padding:12px 24px;border-radius:9px;
-  transform:rotate(-2deg);border:2px solid #ffe08a;
+  display:inline-block;line-height:1.5;text-align:left;
+  font-size:.98rem;letter-spacing:.1em;padding:10px 18px;border-radius:9px;
+  transform:rotate(-1.5deg);border:2px solid #ffe08a;
   animation:meroBrilla 2s ease-in-out infinite;
+  max-width:calc(100% - 10px);
 }
-.etiqueta-top.mero-visto b{font-size:1.25em;letter-spacing:.06em}
+.etiqueta-top.mero-visto b{font-size:1.2em;letter-spacing:.05em;white-space:nowrap}
 @keyframes meroBrilla{
   0%,100%{box-shadow:0 6px 26px -6px rgba(255,170,30,.8)}
   50%{box-shadow:0 6px 46px 0 rgba(255,210,80,.95)}
@@ -798,7 +802,7 @@ footer{position:relative;padding:90px 0 40px;background:#080706;border-top:1px s
   body.con-cursor,body.con-cursor *{cursor:none!important}
   #cursor{
     display:block;position:fixed;top:0;left:0;z-index:3500;pointer-events:none;
-    width:24px;height:24px;margin:-12px 0 0 -12px;
+    width:32px;height:32px;margin:-16px 0 0 -16px;
     transition:opacity .25s;opacity:0;
   }
   body.con-cursor #cursor{opacity:1}
@@ -807,10 +811,10 @@ footer{position:relative;padding:90px 0 40px;background:#080706;border-top:1px s
     transition:transform .28s var(--ease),border-color .28s,background .28s;
   }
   #cursor .cruz-h,#cursor .cruz-v{position:absolute;background:rgba(255,157,60,.9);transition:opacity .2s}
-  #cursor .cruz-h{top:50%;left:-4px;right:-4px;height:1px;transform:translateY(-.5px)}
-  #cursor .cruz-v{left:50%;top:-4px;bottom:-4px;width:1px;transform:translateX(-.5px)}
+  #cursor .cruz-h{top:50%;left:-5px;right:-5px;height:1.5px;transform:translateY(-.75px)}
+  #cursor .cruz-v{left:50%;top:-5px;bottom:-5px;width:1.5px;transform:translateX(-.75px)}
   #cursor .punto-c{
-    position:absolute;top:50%;left:50%;width:3px;height:3px;margin:-1.5px 0 0 -1.5px;
+    position:absolute;top:50%;left:50%;width:4px;height:4px;margin:-2px 0 0 -2px;
     border-radius:50%;background:#ffb347;
   }
   #cursor.apunta .aro{transform:scale(1.55);border-color:var(--hot);background:rgba(255,90,0,.08)}
@@ -825,14 +829,13 @@ footer{position:relative;padding:90px 0 40px;background:#080706;border-top:1px s
 }
 @keyframes fogonazo{0%{transform:scale(.3);opacity:1}100%{transform:scale(1.5);opacity:0}}
 .balazo{
-  position:absolute;z-index:5;pointer-events:none;width:26px;height:26px;margin:-13px 0 0 -13px;
-  background:
-    radial-gradient(circle at 50% 50%, #000 0%, #000 24%, rgba(30,22,16,.9) 34%, rgba(60,45,30,.5) 48%, transparent 60%),
-    radial-gradient(circle at 42% 40%, rgba(255,157,60,.25), transparent 55%);
-  border-radius:50%;
+  position:absolute;z-index:5;pointer-events:none;width:48px;height:48px;margin:-24px 0 0 -24px;
+  background:radial-gradient(circle, #ffffff 0 38%, #f3ede2 62%, #d9d0bf 88%, #c4baa6 100%);
+  clip-path:polygon(50% 0%, 62% 10%, 77% 4%, 81% 19%, 97% 25%, 88% 39%, 100% 51%, 87% 61%, 94% 77%, 78% 79%, 71% 97%, 56% 86%, 41% 100%, 34% 84%, 15% 89%, 18% 71%, 2% 62%, 13% 49%, 0% 35%, 14% 28%, 9% 11%, 27% 14%, 33% 2%);
+  transform:rotate(var(--rot,0deg));
   animation:balazoAparece .18s ease-out, balazoVase 1s ease 3.4s forwards;
 }
-@keyframes balazoAparece{from{transform:scale(2.2);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes balazoAparece{from{transform:scale(2.2) rotate(var(--rot,0deg));opacity:0}to{transform:scale(1) rotate(var(--rot,0deg));opacity:1}}
 @keyframes balazoVase{to{opacity:0}}
 /* casquillos de latón volando */
 .casquillo{
@@ -912,11 +915,121 @@ html.scrub .mani-lienzo{padding:0}
 @media (max-width:560px){
   .tienda-grid{grid-template-columns:1fr}
   .mini{grid-template-columns:120px 1fr}
+  .etiqueta-top.mero-visto{font-size:.74rem;letter-spacing:.06em;padding:7px 12px;border-width:1.5px;transform:rotate(-1deg)}
   .hero h1{font-size:clamp(2.4rem,13vw,3.4rem)}
   .hero-in{padding-top:120px}
   .marquesina span{font-size:1.05rem}
   .hito{flex:0 0 280px}
 }
+
+/* ============================================================
+   EL RANGO — galería de tiro
+   ============================================================ */
+.rango{padding:120px 0;background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.rango-hud{display:flex;gap:14px;flex-wrap:wrap;margin-top:40px}
+.hud-chip{
+  font-family:var(--font-cond);font-weight:600;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 20px;color:var(--ink-dim);
+}
+.hud-chip b{color:var(--hot-2);font-size:1.15em}
+.hud-chip.oro{border-color:rgba(255,200,80,.4)}
+.hud-chip.oro b{color:#ffd76e}
+.rango-campo{
+  position:relative;height:440px;margin-top:18px;border-radius:16px;overflow:hidden;
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 110%, rgba(255,90,0,.14), transparent 65%),
+    linear-gradient(180deg,#14100c 0%,#1a130c 70%,#241809 100%);
+  border:1px solid var(--line);
+}
+.rango-campo::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:8px;z-index:2;
+  background:repeating-linear-gradient(-45deg,#0d0b09 0 11px,#ffcf24 11px 22px);opacity:.9;
+}
+.blanco-item{
+  position:absolute;bottom:-10px;font-size:2.7rem;background:none;border:0;line-height:1;
+  padding:8px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.55));z-index:1;
+}
+.blanco-item.dado{animation:itemDado .55s ease-in forwards}
+@keyframes itemDado{to{transform:translate(var(--vx,140px),-180px) rotate(720deg) scale(.5);opacity:0}}
+.ptos-flotan{
+  position:absolute;z-index:3;pointer-events:none;
+  font-family:var(--font-cond);font-weight:700;font-size:1.5rem;color:#8dff9a;
+  text-shadow:0 2px 8px rgba(0,0,0,.6);animation:flotaPts .9s ease-out forwards;
+}
+.ptos-flotan.malo{color:#ff6a5a}
+@keyframes flotaPts{to{transform:translateY(-80px);opacity:0}}
+.rango-overlay{
+  position:absolute;inset:0;z-index:4;display:grid;place-items:center;text-align:center;
+  background:rgba(10,9,8,.84);backdrop-filter:blur(5px);
+  opacity:0;pointer-events:none;transition:opacity .35s;
+}
+.rango-overlay.ver{opacity:1;pointer-events:auto}
+.rango-tarjeta{max-width:520px;padding:30px}
+.rango-tarjeta h3{font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.4rem);text-transform:uppercase;margin-bottom:14px}
+.rango-tarjeta h3 .hot2{background:var(--grad-fire);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rango-tarjeta p{color:var(--ink-dim);font-size:1.04rem;line-height:1.6;margin-bottom:24px}
+.rango-tarjeta p b{color:var(--ink)}
+.rango-nota{margin-top:20px;text-align:center;font-family:var(--font-loco);color:var(--ink-faint);font-size:.95rem;transform:rotate(-1deg)}
+@media(max-width:860px){.rango-campo{height:380px}.blanco-item{font-size:2.3rem}}
+
+/* ============================================================
+   MODO RUIDOSO — botón de sonido
+   ============================================================ */
+#modoRuidoso{
+  position:fixed;bottom:26px;right:26px;z-index:860;
+  width:52px;height:52px;border-radius:50%;cursor:pointer;
+  background:#141009;border:1px solid var(--line);color:var(--ink-dim);
+  font-size:1.3rem;display:grid;place-items:center;
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.7);
+  transition:border-color .25s,transform .25s var(--ease),box-shadow .25s;
+}
+#modoRuidoso:hover{transform:translateY(-3px);border-color:var(--line-hot)}
+#modoRuidoso.prendido{
+  border-color:var(--hot);color:#fff;
+  box-shadow:0 0 0 3px rgba(255,90,0,.2),0 10px 30px -8px rgba(255,90,0,.5);
+  animation:latido 2s infinite;
+}
+@media(max-width:860px){#modoRuidoso{bottom:18px;right:18px;width:46px;height:46px}}
+
+/* ============================================================
+   GAME FEEL — hitmarker y pila de casquillos
+   ============================================================ */
+.hitmarker{
+  position:fixed;z-index:3460;width:22px;height:22px;margin:-11px 0 0 -11px;pointer-events:none;
+  animation:hitm .22s ease-out forwards;
+}
+.hitmarker::before,.hitmarker::after{
+  content:"";position:absolute;top:50%;left:50%;width:22px;height:2.5px;margin:-1.25px 0 0 -11px;
+  background:#fff;box-shadow:0 0 6px rgba(255,255,255,.8);
+}
+.hitmarker::before{transform:rotate(45deg)}
+.hitmarker::after{transform:rotate(-45deg)}
+@keyframes hitm{0%{transform:scale(.6);opacity:1}100%{transform:scale(1.5);opacity:0}}
+#pilaCasquillos{position:fixed;left:0;right:0;bottom:-3px;height:24px;z-index:840;pointer-events:none}
+.casq-piso{
+  position:absolute;width:15px;height:6px;border-radius:2px;
+  background:linear-gradient(90deg,#7a5c18,#e8c15a 50%,#8a6a1f);
+  box-shadow:0 1px 3px rgba(0,0,0,.5);transition:opacity .8s;
+}
+
+/* ============================================================
+   LOGROS DEL CAMPO DE TIRO
+   ============================================================ */
+#logroToast{
+  position:fixed;top:88px;right:26px;z-index:2800;max-width:340px;
+  background:linear-gradient(160deg,#221807,#171208);
+  border:1.5px solid rgba(255,200,80,.55);border-radius:14px;padding:18px 22px;
+  box-shadow:0 20px 50px -16px rgba(255,170,30,.35),0 10px 40px rgba(0,0,0,.5);
+  transform:translateX(130%);transition:transform .5s var(--ease);
+}
+#logroToast.ver{transform:none}
+#logroToast b{
+  display:block;font-family:var(--font-cond);font-weight:700;font-size:.78rem;
+  text-transform:uppercase;letter-spacing:.22em;color:#ffd76e;margin-bottom:6px;
+}
+#logroToast span{display:block;font-family:var(--font-cond);font-weight:700;font-size:1.25rem;color:var(--ink)}
+#logroToast em{display:block;font-style:normal;color:var(--ink-dim);font-size:.92rem;margin-top:4px;line-height:1.45}
+@media(max-width:560px){#logroToast{right:14px;left:14px;max-width:none;top:76px}}
 </style>
 </head>
 <body>
@@ -947,6 +1060,7 @@ html.scrub .mani-lienzo{padding:0}
       <a href="#pruebas">Pruebas</a>
       <a href="#cementerio">Cementerio</a>
       <a href="#archivo">Archivo</a>
+      <a href="#rango">El Rango</a>
       <a href="#filosofia">Filosofía</a>
       <a href="#chacharas">Tienda</a>
       <a href="#patrocinios">Patrocinios</a>
@@ -961,6 +1075,7 @@ html.scrub .mani-lienzo{padding:0}
   <a href="#cementerio">El cementerio</a>
   <a href="#buenas">Las que sí sirvieron</a>
   <a href="#archivo">El archivo</a>
+  <a href="#rango">El Rango 🎯</a>
   <a href="#filosofia">Filosofía barata</a>
   <a href="#chacharas">Compra cosas en la tienda</a>
   <a href="#patrocinios">Los que pagan esto</a>
@@ -969,6 +1084,7 @@ html.scrub .mani-lienzo{padding:0}
 </div>
 
 <!-- ============ HERO ============ -->
+<div id="mundo">
 <header class="hero" id="inicio">
   <div class="hero-fondo"></div>
   <canvas id="fuegoGL"></canvas>
@@ -1218,6 +1334,32 @@ html.scrub .mani-lienzo{padding:0}
   <div class="archivo-nota">← Arrastra el riel · Cada punto naranja es una historia →</div>
 </section>
 
+<!-- ============ EL RANGO ============ -->
+<section class="rango" id="rango">
+  <div class="wrap">
+    <div class="rev">
+      <div class="kicker"><span class="num">EXTRA</span> A ver si es cierto</div>
+      <h2 class="titulo">El <span class="hot">Rango</span></h2>
+      <p class="sub">Mucho criticar desde el sillón, ¿no? Órale: 30 segundos, la misma mira del sitio, y a ver cuánta puntería traes. <b>Las fallas se quedan en el video.</b></p>
+    </div>
+    <div class="rango-hud rev">
+      <div class="hud-chip">🎯 Puntos: <b id="rangoPuntos">0</b></div>
+      <div class="hud-chip">⏱ Tiempo: <b id="rangoTiempo">30</b>s</div>
+      <div class="hud-chip oro">🏆 Récord del campo: <b id="rangoRecord">0</b></div>
+    </div>
+    <div class="rango-campo rev" id="campoRango">
+      <div class="rango-overlay ver" id="rangoOverlay">
+        <div class="rango-tarjeta">
+          <h3 id="rangoTitulo">¿Traes puntería?</h3>
+          <p id="rangoMsj">Latas 🥫 +1 · Botellas 🍾 +2 · Dianas 🎯 +3 · Tacos 🌮 +5 · Bombas 💣 −5 (¡NO le des a la bomba!)</p>
+          <button class="btn" id="rangoEmpezar">Empezar ronda 🔥</button>
+        </div>
+      </div>
+    </div>
+    <p class="rango-nota rev">Consejo profesional: el taco vale más que la lata. Como en la vida real.</p>
+  </div>
+</section>
+
 <!-- ============ FILOSOFÍA BARATA ============ -->
 <section class="blog" id="filosofia">
   <div class="wrap">
@@ -1377,7 +1519,8 @@ html.scrub .mani-lienzo{padding:0}
           <li><a href="#pruebas">Pruebas sin cortes</a></li>
           <li><a href="#cementerio">El cementerio</a></li>
           <li><a href="#buenas">Las que sí sirvieron</a></li>
-          <li><a href="#archivo">El archivo</a></li>
+          <li><a href="#archivo">El archivo</a>
+  <a href="#rango">El Rango 🎯</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1396,17 +1539,23 @@ html.scrub .mani-lienzo{padding:0}
     </div>
   </div>
 </footer>
+</div><!--fin mundo-->
 
 <!-- ============ EASTER EGGS ============ -->
-<button id="botonProhibido">NO TOQUES ESTE BOTÓN</button>
+<button id="botonProhibido">No le piques a este botón</button>
 <div id="cursor"><span class="aro"></span><span class="cruz-h"></span><span class="cruz-v"></span><span class="punto-c"></span></div>
 <div id="glitch">
   <div class="error-falso">FATAL ERROR 0x50F: sitio_web.exe dejó de funcionar<br>&gt; culpable: TÚ<br>&gt; reiniciando…</div>
   <div class="reganio">
-    "¿Ves? Te dije que no le picaras… pero no. Ahí vas, a picarle. Así empezó lo de: «¡No le pongas el dedo al gatillo!»"
-    <small>— Pistolas Fritas: el manual decía "NO"… tú entendiste "pícale a ver qué pasa"</small>
+    "¿Ves? Te dije que no le picaras, pero no… ahí vas de terco."<br>
+    «No le pongas el dedo al gatillo», ¿tú qué haces?<br>
+    «Deja le pico… a ver qué pasa.»
+    <small>— Pistolas Fritas</small>
   </div>
 </div>
+<button id="modoRuidoso" aria-label="Activar sonido" title="Modo ruidoso">🔇</button>
+<div id="pilaCasquillos" aria-hidden="true"></div>
+<div id="logroToast" aria-live="polite"></div>
 <div id="toast"></div>
 
 <script>
@@ -1654,6 +1803,8 @@ html.scrub .mani-lienzo{padding:0}
   },{passive:true});
   boton.addEventListener('click',function(){
     usado=true;boton.classList.remove('asoma');
+    if(window.Sonido&&Sonido.activo)Sonido.estatica();
+    if(window.Logros)Logros.dar('curioso');
     document.body.classList.add('congelado');
     glitch.className='';glitch.classList.add('roto');
     setTimeout(function(){glitch.classList.add('reganiando')},1100);
@@ -1678,6 +1829,7 @@ html.scrub .mani-lienzo{padding:0}
     if(clicks===3)avisar('¿Qué le picas? Eso no hace nada… ¿o sí?');
     if(clicks>=5){
       clicks=0;
+      if(window.Logros)Logros.dar('detective');
       for(var i=0;i<26;i++){
         (function(i){
           setTimeout(function(){
@@ -1858,16 +2010,30 @@ if(!reducido&&finto){
   });
 }
 
-/* ---------- 6. FOGONAZO + agujeros de bala al hacer clic ---------- */
+/* ---------- 6. FOGONAZO + balazos + retroceso + sonido ---------- */
+window.__recoil=function(mult){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var m=document.getElementById('mundo');if(!m||!m.animate)return;
+  mult=mult||1;
+  m.animate([
+    {transform:'translate(0,0)'},
+    {transform:'translate('+(1.2*mult)+'px,'+(3.2*mult)+'px)'},
+    {transform:'translate('+(-1*mult)+'px,'+(1.2*mult)+'px)'},
+    {transform:'none'}
+  ],{duration:160,easing:'ease-out'});
+};
+window.__disparos=0;
 if(!reducido&&finto){
   var balazos=[];
   addEventListener('click',function(e){
-    if(e.target.closest('a,button,input,textarea,label,.mini,.principal,iframe,#cursor,#intro,#glitch,.velo-movil'))return;
+    var esBlanco=e.target.closest('.blanco-item');
+    if(!esBlanco&&e.target.closest('a,button,input,textarea,label,.mini,.principal,iframe,#cursor,#intro,#glitch,.velo-movil'))return;
     var f=document.createElement('div');f.className='fogonazo';
     f.style.left=e.clientX+'px';f.style.top=e.clientY+'px';
     document.body.appendChild(f);setTimeout(function(){f.remove()},320);
     var b=document.createElement('div');b.className='balazo';
     b.style.left=(e.pageX)+'px';b.style.top=(e.pageY)+'px';
+    b.style.setProperty('--rot',Math.floor(Math.random()*360)+'deg');
     document.body.appendChild(b);balazos.push(b);
     /* casquillos que saltan */
     for(var c=0;c<2;c++){
@@ -1880,6 +2046,24 @@ if(!reducido&&finto){
     }
     if(balazos.length>14){var viejo=balazos.shift();viejo.remove()}
     setTimeout(function(){b.remove();var i=balazos.indexOf(b);if(i>-1)balazos.splice(i,1)},4600);
+    /* game feel: retroceso, sonido, contador y casquillo que aterriza */
+    __recoil(1);
+    if(window.Sonido&&Sonido.activo){Sonido.dispara();Sonido.casquillo()}
+    window.__disparos++;
+    if(window.__disparos===20&&window.Logros)Logros.dar('dedo');
+    (function(x){
+      setTimeout(function(){
+        var pila=document.getElementById('pilaCasquillos');
+        if(!pila)return;
+        var cp=document.createElement('div');cp.className='casq-piso';
+        cp.style.left=Math.max(4,Math.min(innerWidth-20,x-40+Math.random()*80))+'px';
+        cp.style.bottom=(Math.random()*12)+'px';
+        cp.style.transform='rotate('+(Math.random()*160-80)+'deg)';
+        pila.appendChild(cp);
+        var todos=pila.querySelectorAll('.casq-piso');
+        if(todos.length>40){todos[0].style.opacity='0';setTimeout(function(){todos[0].remove()},800)}
+      },850);
+    })(e.clientX);
   });
 }
 
@@ -1974,6 +2158,225 @@ if(!reducido&&escritorio){(function(){
     if(v>=100){v=100;clearInterval(iv);carg.style.opacity='0';carg.style.transition='opacity .4s'}
     b.textContent=Math.floor(v)+'%';
   },95);
+})();
+})();
+</script>
+
+<script>
+/* ============================================================
+   MODO RUIDOSO + LOGROS DEL CAMPO DE TIRO + EL RANGO
+   ============================================================ */
+(function(){
+'use strict';
+var reducido=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var finto=matchMedia('(pointer: fine)').matches;
+
+/* ---------- SONIDO: sintetizado en el navegador, apagado por defecto ---------- */
+window.Sonido=(function(){
+  var ctx=null,act=false;
+  function asegurar(){
+    if(!ctx){try{ctx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}
+    if(ctx&&ctx.state==='suspended')ctx.resume();
+  }
+  function ruido(dur,vol,tipo,frec){
+    if(!act||!ctx)return;
+    try{
+      var n=ctx.createBufferSource();
+      var buf=ctx.createBuffer(1,Math.floor(ctx.sampleRate*dur),ctx.sampleRate);
+      var d=buf.getChannelData(0);
+      for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+      n.buffer=buf;
+      var f=ctx.createBiquadFilter();f.type=tipo||'lowpass';f.frequency.value=frec||700;
+      var g=ctx.createGain();
+      g.gain.setValueAtTime(vol,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+dur);
+      n.connect(f);f.connect(g);g.connect(ctx.destination);n.start();
+    }catch(e){}
+  }
+  function tono(freq,dur,tipo,vol,hasta){
+    if(!act||!ctx)return;
+    try{
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.type=tipo||'sine';o.frequency.setValueAtTime(freq,ctx.currentTime);
+      if(hasta)o.frequency.exponentialRampToValueAtTime(hasta,ctx.currentTime+dur);
+      g.gain.setValueAtTime(vol||.15,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+dur);
+      o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur+.02);
+    }catch(e){}
+  }
+  return {
+    get activo(){return act},
+    alternar:function(){act=!act;if(act)asegurar();return act},
+    dispara:function(){ruido(.09,.5,'lowpass',600);tono(150,.13,'sine',.4,55)},
+    casquillo:function(){var q=this;setTimeout(function(){tono(2600+Math.random()*900,.05,'triangle',.11);setTimeout(function(){tono(1900+Math.random()*700,.045,'triangle',.07)},65)},380)},
+    tick:function(){tono(1300,.03,'square',.05)},
+    pop:function(){tono(500,.09,'square',.18,950)},
+    mal:function(){tono(170,.28,'sawtooth',.2,70)},
+    estatica:function(){ruido(.9,.22,'highpass',1800)},
+    logro:function(){tono(660,.09,'square',.14);setTimeout(function(){tono(990,.16,'square',.14)},110)},
+    fin:function(){tono(440,.12,'square',.16);setTimeout(function(){tono(587,.12,'square',.16)},130);setTimeout(function(){tono(880,.22,'square',.16)},260)}
+  };
+})();
+var btnSon=document.getElementById('modoRuidoso');
+btnSon.addEventListener('click',function(){
+  var on=Sonido.alternar();
+  btnSon.textContent=on?'🔊':'🔇';
+  btnSon.classList.toggle('prendido',on);
+  btnSon.title=on?'Modo ruidoso activado':'Modo ruidoso';
+  var t=document.getElementById('toast');
+  t.textContent=on?'🔊 Modo ruidoso ACTIVADO. Los vecinos, encantados.':'🔇 Modo silencioso. Aburrido, pero respetable.';
+  t.classList.add('dice');
+  clearTimeout(btnSon._t);btnSon._t=setTimeout(function(){t.classList.remove('dice')},2600);
+  if(on){Sonido.pop();if(window.Logros)Logros.dar('oreja')}
+});
+
+/* ---------- LOGROS DEL CAMPO DE TIRO ---------- */
+window.Logros=(function(){
+  var dados={};
+  try{dados=JSON.parse(localStorage.getItem('pf_logros')||'{}')}catch(e){dados={}}
+  var defs={
+    curioso:['Curioso profesional','Tocaste el botón que decía que NO. Clásico.'],
+    dedo:['Dedo nervioso','20 balazos. El sitio no era el enemigo, pero se respeta.'],
+    detective:['Detective del campo','Descubriste el secreto del logo. Nada se te va.'],
+    francotirador:['Francotirador','15+ puntos en El Rango. ¿Quieres trabajo?'],
+    fondo:['Hasta el fondo del cañón','Llegaste al final del sitio. Lectura completa, respeto.'],
+    oreja:['Oreja fina','Activaste el Modo Ruidoso. Así se disfruta.']
+  };
+  var el=document.getElementById('logroToast');
+  function dar(k){
+    if(dados[k]||!defs[k])return;
+    dados[k]=1;
+    try{localStorage.setItem('pf_logros',JSON.stringify(dados))}catch(e){}
+    el.innerHTML='<b>🏅 Logro del Campo de Tiro</b><span>'+defs[k][0]+'</span><em>'+defs[k][1]+'</em>';
+    el.classList.add('ver');
+    if(window.Sonido&&Sonido.activo)Sonido.logro();
+    clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('ver')},4600);
+  }
+  return {dar:dar};
+})();
+/* logro: llegar al fondo */
+(function(){
+  var f=document.querySelector('footer .aviso');
+  if(!f)return;
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting)Logros.dar('fondo')});
+  },{threshold:.5}).observe(f);
+})();
+
+/* ---------- HITMARKER en botones y enlaces ---------- */
+if(!reducido&&finto){
+  addEventListener('click',function(e){
+    if(!e.target.closest('a,button'))return;
+    if(e.target.closest('.blanco-item,#modoRuidoso'))return;
+    var h=document.createElement('div');h.className='hitmarker';
+    h.style.left=e.clientX+'px';h.style.top=e.clientY+'px';
+    document.body.appendChild(h);
+    setTimeout(function(){h.remove()},260);
+    if(window.Sonido&&Sonido.activo)Sonido.tick();
+  });
+}
+
+/* ---------- EL RANGO: galería de tiro ---------- */
+(function(){
+  var campo=document.getElementById('campoRango');
+  if(!campo)return;
+  var elP=document.getElementById('rangoPuntos'),
+      elT=document.getElementById('rangoTiempo'),
+      elR=document.getElementById('rangoRecord'),
+      overlay=document.getElementById('rangoOverlay'),
+      titulo=document.getElementById('rangoTitulo'),
+      msj=document.getElementById('rangoMsj'),
+      btn=document.getElementById('rangoEmpezar');
+  var puntos=0,fallos=0,tiempo=30,activo=false,timerInt,spawnTO;
+  var record=0;
+  try{record=parseInt(localStorage.getItem('pf_record')||'0',10)||0}catch(e){}
+  elR.textContent=record;
+  var TIPOS=[
+    {e:'🥫',p:1,prob:.38},
+    {e:'🍾',p:2,prob:.28},
+    {e:'🎯',p:3,prob:.16},
+    {e:'🌮',p:5,prob:.10},
+    {e:'💣',p:-5,prob:.08}
+  ];
+  function elegir(){
+    var r=Math.random(),acc=0;
+    for(var i=0;i<TIPOS.length;i++){acc+=TIPOS[i].prob;if(r<=acc)return TIPOS[i]}
+    return TIPOS[0];
+  }
+  function spawn(){
+    if(!activo)return;
+    var t=elegir();
+    var d=document.createElement('button');
+    d.className='blanco-item';d.type='button';d.textContent=t.e;d.dataset.p=t.p;
+    var W=campo.clientWidth;
+    d.style.left=(20+Math.random()*(W-90))+'px';
+    campo.appendChild(d);
+    var trans=30-tiempo;
+    var dur=Math.max(1400, 2600-trans*45+Math.random()*500);
+    var apex=140+Math.random()*(campo.clientHeight-230);
+    var anim=d.animate([
+      {transform:'translateY(60px) rotate(-8deg)'},
+      {transform:'translateY(-'+apex+'px) rotate(7deg)',offset:.5},
+      {transform:'translateY(60px) rotate(-4deg)'}
+    ],{duration:dur,easing:'cubic-bezier(.35,.65,.65,.35)'});
+    anim.onfinish=function(){d.remove()};
+    d.addEventListener('click',function(){
+      if(!activo||d.classList.contains('dado'))return;
+      var p=parseInt(d.dataset.p,10);
+      puntos+=p;if(puntos<0)puntos=0;
+      elP.textContent=puntos;
+      try{anim.pause()}catch(e){}
+      var r=d.getBoundingClientRect(),cr=campo.getBoundingClientRect();
+      d.style.bottom='auto';d.style.top=(r.top-cr.top)+'px';
+      d.classList.add('dado');
+      d.style.setProperty('--vx',((Math.random()<.5?-1:1)*(120+Math.random()*180))+'px');
+      var fs=document.createElement('span');
+      fs.className='ptos-flotan'+(p<0?' malo':'');
+      fs.textContent=(p>0?'+':'')+p;
+      fs.style.left=d.style.left;fs.style.top=(r.top-cr.top)+'px';
+      campo.appendChild(fs);
+      setTimeout(function(){fs.remove()},950);
+      setTimeout(function(){d.remove()},600);
+      if(window.Sonido&&Sonido.activo){p<0?Sonido.mal():Sonido.pop()}
+      if(p<0&&window.__recoil)__recoil(2.6);
+    });
+    spawnTO=setTimeout(spawn, Math.max(420, 900-trans*14)+Math.random()*350);
+  }
+  campo.addEventListener('click',function(e){
+    if(activo&&!e.target.closest('.blanco-item'))fallos++;
+  });
+  function empezar(){
+    if(activo)return;
+    puntos=0;fallos=0;tiempo=30;activo=true;
+    elP.textContent='0';elT.textContent='30';
+    overlay.classList.remove('ver');
+    spawn();
+    timerInt=setInterval(function(){
+      tiempo--;elT.textContent=Math.max(0,tiempo);
+      if(tiempo<=0)terminar();
+    },1000);
+  }
+  function terminar(){
+    activo=false;clearInterval(timerInt);clearTimeout(spawnTO);
+    campo.querySelectorAll('.blanco-item,.ptos-flotan').forEach(function(x){x.remove()});
+    var esRecord=puntos>record;
+    if(esRecord){
+      record=puntos;elR.textContent=record;
+      try{localStorage.setItem('pf_record',''+record)}catch(e){}
+    }
+    var frase;
+    if(puntos<=5)frase='¿Seguro que este es tu canal favorito? Practica y regresa.';
+    else if(puntos<=14)frase='Nada mal… para ser tu primera vez, ¿verdad?';
+    else if(puntos<=24)frase='Puntería seria. El rancho te saluda.';
+    else frase='Tranquilo, campeón. Deja algo para el canal.';
+    titulo.innerHTML='<span class="hot2">'+puntos+' puntos</span>'+(esRecord?' · ¡RÉCORD! 🏆':'');
+    msj.innerHTML=frase+'<br>Fallos: <b>'+fallos+'</b> — tranquilo, aquí las fallas se quedan en el video.';
+    btn.innerHTML='Otra ronda 🔥';
+    overlay.classList.add('ver');
+    if(puntos>=15&&window.Logros)Logros.dar('francotirador');
+    if(window.Sonido&&Sonido.activo)Sonido.fin();
+  }
+  btn.addEventListener('click',empezar);
 })();
 })();
 </script>
