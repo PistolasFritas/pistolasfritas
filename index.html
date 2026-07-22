@@ -178,9 +178,9 @@ body::after{
 .nav{position:fixed;top:0;left:0;right:0;z-index:900;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
 .nav.compacta{background:rgba(10,9,8,.88);backdrop-filter:blur(14px);border-color:var(--line)}
 .nav-in{max-width:1280px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.marca{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;cursor:pointer}
+.marca{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-size:1.38rem;text-transform:uppercase;letter-spacing:.02em;cursor:pointer}
 .marca .chispa{
-  width:38px;height:38px;border-radius:9px;display:grid;place-items:center;
+  width:46px;height:46px;border-radius:10px;display:grid;place-items:center;
   background:none;color:#160a02;font-size:1.05rem;
   box-shadow:0 6px 18px -6px rgba(0,0,0,.55);transition:transform .2s var(--ease);
   user-select:none;padding:0;overflow:hidden;
@@ -189,7 +189,7 @@ body::after{
 .marca .chispa:active{transform:scale(.9) rotate(-8deg)}
 .marca b{font-weight:400}
 .marca span{color:var(--hot)}
-.nav-links{display:flex;gap:15px;align-items:center}
+.nav-links{display:flex;gap:13px;align-items:center}
 .nav-links a{
   position:relative;font-family:var(--font-cond);font-weight:600;font-size:.9rem;
   text-transform:uppercase;letter-spacing:.1em;color:var(--ink-dim);padding:6px 0;transition:color .2s;
@@ -312,9 +312,13 @@ body::after{
 .boca-suelta p.dice{opacity:1;transform:none}
 .boca-suelta b{color:var(--ink)}
 .tip-disparo{
-  margin-top:22px;font-family:var(--font-cond);font-weight:600;font-size:.92rem;
-  text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint);
+  position:absolute;right:5%;top:42%;z-index:3;max-width:330px;
+  font-family:var(--font-cond);font-weight:600;font-size:.95rem;line-height:1.6;
+  text-transform:uppercase;letter-spacing:.12em;color:var(--ink);text-align:center;
+  background:rgba(10,9,8,.55);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,157,60,.4);border-radius:12px;padding:14px 20px;
   animation:tipParpadea 3s ease-in-out infinite;
+  box-shadow:0 14px 40px -14px rgba(0,0,0,.7);
 }
 .tip-disparo b{color:var(--hot-2)}
 @keyframes tipParpadea{0%,100%{opacity:.55}50%{opacity:1}}
@@ -1125,6 +1129,7 @@ html.scrub .mani-lienzo{padding:0}
   <div class="humo h2p"></div>
   <div class="hero-velo"></div>
   <canvas id="embers"></canvas>
+  <p class="tip-disparo">🎯 Presiona tu mouse para disparar<br>Mantenlo presionado: <b>modo automático</b></p>
   <div class="emblema" aria-hidden="true">
     <svg viewBox="0 0 200 200">
       <defs>
@@ -1153,7 +1158,6 @@ html.scrub .mani-lienzo{padding:0}
       <span class="linea fuego explota"><span class="tilta">¡Y explota!</span></span>
     </h1>
     <div class="boca-suelta"><p id="fraseViva" class="dice"><b>Pistolas Fritas</b> — una sola toma, cero ediciones. Lo que sale, sale.</p></div>
-    <p class="tip-disparo">🎯 Presiona tu mouse para disparar · mantenlo presionado: <b>modo automático</b></p>
     <div class="hero-acciones">
       <a class="btn" href="https://www.youtube.com/channel/UC0XDoSl8rSdW3WiZuK9v8fA?sub_confirmation=1" target="_blank" rel="noopener"><span class="ico">▶</span> Suscríbete al relajo</a>
       <a class="btn fantasma" href="#pruebas">A ver qué tanto truena</a>
